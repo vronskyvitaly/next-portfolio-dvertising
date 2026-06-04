@@ -1,31 +1,3 @@
-const services = [
-  {
-    icon: "🌐",
-    title: "Создаю сайты\nи приложения",
-    desc: "Современный сайт или сложное веб-приложение — под ключ, в срок",
-    glow: "#0070f3",
-    border: "rgba(0,112,243,0.3)",
-    bg: "rgba(0,112,243,0.07)",
-  },
-  {
-    icon: "🤖",
-    title: "Внедряю\nИИ в бизнес",
-    desc: "Умный ассистент отвечает клиентам, обрабатывает заявки и экономит часы работы",
-    glow: "#7d2cc8",
-    border: "rgba(125,44,200,0.35)",
-    bg: "rgba(125,44,200,0.08)",
-    featured: true,
-  },
-  {
-    icon: "⚡",
-    title: "Автоматизирую\nпроцессы",
-    desc: "Убираю рутину: отчёты, уведомления, документы — всё работает само",
-    glow: "#00d4ff",
-    border: "rgba(0,212,255,0.25)",
-    bg: "rgba(0,212,255,0.06)",
-  },
-];
-
 const stats = [
   { value: "5+", label: "лет опыта" },
   { value: "30+", label: "проектов" },
@@ -87,48 +59,6 @@ export default function Hero() {
         <p className="text-lg sm:text-xl text-gray-300 mb-12 font-light">
           Делаю сайты · Разрабатываю приложения · Внедряю искусственный интеллект
         </p>
-
-        {/* Три карточки услуг */}
-        <div className="grid sm:grid-cols-3 gap-4 mb-12">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="relative rounded-2xl p-6 text-left transition-transform hover:-translate-y-1"
-              style={{
-                background: s.bg,
-                border: `1px solid ${s.border}`,
-                boxShadow: s.featured ? `0 0 40px ${s.glow}33` : "none",
-              }}
-            >
-              {s.featured && (
-                <div
-                  className="absolute -top-px left-6 right-6 h-px"
-                  style={{ background: `linear-gradient(90deg, transparent, ${s.glow}, transparent)` }}
-                />
-              )}
-
-              <div className="text-4xl mb-4">{s.icon}</div>
-
-              <h2 className="text-white font-bold text-xl leading-tight mb-3 whitespace-pre-line">
-                {s.title}
-              </h2>
-
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {s.desc}
-              </p>
-
-              {s.featured && (
-                <div
-                  className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full"
-                  style={{ background: `${s.glow}22`, color: "#c084fc" }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c084fc]" />
-                  Популярно у клиентов
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
