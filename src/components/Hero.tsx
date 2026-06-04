@@ -58,7 +58,7 @@ export default function Hero() {
 
         {/* Подзаголовок */}
         <p className="text-base sm:text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
-          Беру на себя рутину и общение с клиентами — через сайты, AI и автоматизацию,
+          Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
           которые работают круглосуточно
         </p>
 
