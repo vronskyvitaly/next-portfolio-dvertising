@@ -57,10 +57,29 @@ export default function Hero() {
         </h1>
 
         {/* Подзаголовок */}
-        <p className="text-base sm:text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
           Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
           которые работают круглосуточно
         </p>
+
+        {/* Услуги-пилюли */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {[
+            { icon: "🌐", label: "Сайты" },
+            { icon: "⚙️", label: "Веб-приложения" },
+            { icon: "🤖", label: "AI-ассистенты" },
+            { icon: "💬", label: "Telegram-боты" },
+            { icon: "⚡", label: "Автоматизация" },
+          ].map((item) => (
+            <span
+              key={item.label}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm text-gray-300 border border-white/10 bg-white/4"
+            >
+              <span>{item.icon}</span>
+              {item.label}
+            </span>
+          ))}
+        </div>
 
         {/* CTA */}
         <div className="flex justify-center mb-14">
