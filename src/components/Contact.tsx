@@ -39,12 +39,34 @@ export default function Contact() {
             <h2 className="relative text-3xl sm:text-4xl font-bold text-white mb-3">
               Готовы обсудить задачу?
             </h2>
-            <p className="relative text-gray-300 text-base max-w-lg mx-auto leading-relaxed">
-              Напишите боту — он поможет сформулировать задачу,
-              расскажет об услугах и передаст заявку мне.
-              <br />
-              <span className="text-gray-400 text-sm">Первая консультация бесплатно.</span>
+            <p className="relative text-gray-300 text-base max-w-lg mx-auto leading-relaxed mb-6">
+              Напишите боту — он примет заявку, расскажет об услугах
+              и передаст всё мне. Отвечу лично, как только появится возможность.
             </p>
+
+            {/* Два обещания */}
+            <div className="relative flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto">
+              <div
+                className="flex items-start gap-3 px-4 py-3 rounded-xl text-left flex-1"
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
+                <span className="text-lg mt-0.5">🔒</span>
+                <div>
+                  <div className="text-white text-sm font-medium">Заявка не пропадёт</div>
+                  <div className="text-gray-400 text-xs mt-0.5">Бот сохраняет каждое обращение — я увижу и отвечу</div>
+                </div>
+              </div>
+              <div
+                className="flex items-start gap-3 px-4 py-3 rounded-xl text-left flex-1"
+                style={{ background: "rgba(125,44,200,0.08)", border: "1px solid rgba(125,44,200,0.2)" }}
+              >
+                <span className="text-lg mt-0.5">🤖</span>
+                <div>
+                  <div className="text-white text-sm font-medium">Такой бот — и для вас</div>
+                  <div className="text-gray-400 text-xs mt-0.5">Сделаю вашему бизнесу точно такого же помощника</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Главная CTA */}
