@@ -75,12 +75,12 @@ export default function Hero() {
         </div>
 
         {/* Статистика */}
-        <div className="flex items-center justify-center gap-6">
+        <div className="flex items-center justify-center gap-3 sm:gap-6">
           {stats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center gap-6">
+            <div key={stat.label} className="flex items-center gap-3 sm:gap-6">
               {stat.accent ? (
                 <div
-                  className="relative px-6 py-3 rounded-2xl text-center"
+                  className="relative px-3 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl text-center"
                   style={{
                     background: "linear-gradient(135deg, rgba(125,44,200,0.15), rgba(0,112,243,0.15))",
                     border: "1px solid rgba(125,44,200,0.4)",
@@ -88,30 +88,30 @@ export default function Hero() {
                   }}
                 >
                   <div
-                    className="absolute -top-px left-4 right-4 h-px"
+                    className="absolute -top-px left-3 right-3 h-px"
                     style={{ background: "linear-gradient(90deg, transparent, #7d2cc8, #0070f3, transparent)" }}
                   />
                   <div
-                    className="text-2xl font-bold bg-clip-text text-transparent"
+                    className="text-lg sm:text-2xl font-bold bg-clip-text text-transparent"
                     style={{ backgroundImage: "linear-gradient(135deg, #c084fc, #60a5fa)" }}
                   >
                     {stat.value}
                   </div>
-                  <div className="text-xs text-gray-400 mt-0.5 whitespace-nowrap">{stat.label}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5 whitespace-nowrap">{stat.label}</div>
                 </div>
               ) : (
                 <div className="text-center">
                   <div
-                    className="text-2xl font-bold bg-clip-text text-transparent"
+                    className="text-lg sm:text-2xl font-bold bg-clip-text text-transparent"
                     style={{ backgroundImage: "linear-gradient(135deg, #c084fc, #60a5fa)" }}
                   >
                     {stat.value}
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5">{stat.label}</div>
                 </div>
               )}
               {i < stats.length - 1 && (
-                <div className="w-px h-8 bg-white/10" />
+                <div className="w-px h-6 sm:h-8 bg-white/10" />
               )}
             </div>
           ))}
