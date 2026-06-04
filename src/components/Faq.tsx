@@ -41,13 +41,18 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
     <div className="border-b border-white/8">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-5 text-left gap-4"
+        style={{ touchAction: "manipulation" }}
       >
         <span className="text-base font-medium text-white">{question}</span>
         <span
-          className="flex-shrink-0 w-6 h-6 rounded-full border border-white/15 flex items-center justify-center text-gray-400 transition-transform"
-          style={{ transform: open ? "rotate(45deg)" : "none" }}
+          className="flex-shrink-0 w-7 h-7 rounded-full border border-white/15 flex items-center justify-center text-gray-400"
+          style={{
+            transform: open ? "rotate(45deg)" : "rotate(0deg)",
+            transition: "transform 0.2s ease",
+          }}
         >
           +
         </span>
