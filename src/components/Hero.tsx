@@ -43,7 +43,7 @@ export default function Hero() {
 
         {/* Главный заголовок */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-4">
-          <span className="text-white">Пока бот работает за вас —</span>
+          <span className="text-white">Пока AI работает за вас —</span>
           <br />
           <span
             className="bg-clip-text text-transparent animate-shimmer"
@@ -58,7 +58,7 @@ export default function Hero() {
 
         {/* Подзаголовок */}
         <p className="text-base sm:text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
-          Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
+          Беру на себя рутину и общение с клиентами — через сайты, AI и автоматизацию,
           которые работают круглосуточно
         </p>
 
