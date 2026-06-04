@@ -1,7 +1,7 @@
 const stats = [
   { value: "5+", label: "лет опыта" },
   { value: "30+", label: "проектов" },
-  { value: "24ч", label: "время ответа" },
+  { value: "✓", label: "работаю по договору" },
 ];
 
 export default function Hero() {
