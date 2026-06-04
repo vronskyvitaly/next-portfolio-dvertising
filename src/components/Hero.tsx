@@ -43,7 +43,8 @@ export default function Hero() {
 
         {/* Главный заголовок */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-4">
-          <span className="text-white">Помогаю бизнесу </span>
+          <span className="text-white">Пока бот работает за вас —</span>
+          <br />
           <span
             className="bg-clip-text text-transparent animate-shimmer"
             style={{
@@ -51,13 +52,14 @@ export default function Hero() {
               backgroundSize: "200% auto",
             }}
           >
-            расти и зарабатывать
+            вы занимаетесь главным
           </span>
         </h1>
 
-        {/* Подзаголовок прямой */}
-        <p className="text-lg sm:text-xl text-gray-300 mb-12 font-light">
-          Делаю сайты · Разрабатываю приложения · Создаю ботов · Внедряю ИИ
+        {/* Подзаголовок */}
+        <p className="text-base sm:text-lg text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+          Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
+          которые работают круглосуточно
         </p>
 
         {/* CTA */}
