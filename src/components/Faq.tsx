@@ -33,7 +33,7 @@ const faqs = [
 
 export default function Faq() {
   return (
-    <section className="py-24 px-6 bg-[#0d0d0d]">
+    <section id="faq" className="py-24 px-6 bg-[#0d0d0d]">
       <style>{`
         .faq-item summary {
           list-style: none;
@@ -88,7 +88,7 @@ export default function Faq() {
                 <span className="faq-question text-base font-medium text-white">
                   {faq.question}
                 </span>
-                <span className="faq-icon">
+                <span className="faq-icon" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>

@@ -10,6 +10,7 @@ export default function Hero() {
 
       {/* Точечная сетка */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px)",
@@ -17,6 +18,7 @@ export default function Hero() {
         }}
       />
       <div
+        aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           background: "radial-gradient(ellipse at 50% 50%, transparent 30%, #0a0a0a 80%)",
@@ -25,10 +27,12 @@ export default function Hero() {
 
       {/* Сферы */}
       <div
+        aria-hidden="true"
         className="absolute top-[-15%] left-[-10%] w-[700px] h-[700px] rounded-full pointer-events-none animate-pulse-slow"
         style={{ background: "radial-gradient(circle, #7d2cc8 0%, transparent 65%)", filter: "blur(100px)" }}
       />
       <div
+        aria-hidden="true"
         className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none animate-pulse-slow-2"
         style={{ background: "radial-gradient(circle, #0070f3 0%, transparent 65%)", filter: "blur(100px)" }}
       />
@@ -140,7 +144,7 @@ export default function Hero() {
       </div>
 
       {/* Стрелка */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-float pointer-events-none">
+      <div aria-hidden="true" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-float pointer-events-none">
         <span className="text-[10px] text-gray-600 tracking-widest uppercase">scroll</span>
         <svg width="14" height="20" viewBox="0 0 14 20" fill="none" className="text-gray-600">
           <path d="M7 0v14M1 9l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

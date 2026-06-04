@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,10 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Автоматизация бизнеса и внедрение ИИ — Виталий Вронский",
-  description:
-    "Автоматизирую бизнес-процессы, создаю сайты и веб-приложения, внедряю искусственный интеллект в организации.",
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({

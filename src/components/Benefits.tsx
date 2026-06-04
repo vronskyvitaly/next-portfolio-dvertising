@@ -39,7 +39,7 @@ const benefits = [
 
 export default function Benefits() {
   return (
-    <section className="py-24 px-6 bg-[#0d0d0d]">
+    <section id="benefits" className="py-24 px-6 bg-[#0d0d0d]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
