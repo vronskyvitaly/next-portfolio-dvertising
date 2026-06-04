@@ -43,7 +43,7 @@ export default function Hero() {
 
         {/* Главный заголовок */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-4">
-          <span className="text-white">Пока AI работает за вас —</span>
+          <span className="text-white">Ваш бизнес работает сам —</span>
           <br />
           <span
             className="bg-clip-text text-transparent animate-shimmer"
@@ -52,7 +52,7 @@ export default function Hero() {
               backgroundSize: "200% auto",
             }}
           >
-            вы занимаетесь главным
+            вы только считаете прибыль
           </span>
         </h1>
 
