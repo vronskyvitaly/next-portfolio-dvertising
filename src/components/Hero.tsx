@@ -1,7 +1,7 @@
 const stats = [
-  { value: "5+", label: "лет опыта" },
-  { value: "30+", label: "проектов" },
-  { value: "✓", label: "работаю по договору" },
+  { value: "5+", label: "лет опыта", accent: false },
+  { value: "✓", label: "работаю по договору", accent: true },
+  { value: "30+", label: "проектов", accent: false },
 ];
 
 export default function Hero() {
@@ -61,7 +61,7 @@ export default function Hero() {
         </p>
 
         {/* CTA */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
+        <div className="flex justify-center mb-14">
           <a
             href="#contact"
             className="inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-white text-base transition-all hover:scale-105"
@@ -72,29 +72,44 @@ export default function Hero() {
           >
             Обсудить проект →
           </a>
-          <a
-            href="https://vronskyvitaly.ru"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold border border-white/12 text-gray-300 hover:border-white/25 hover:text-white transition-all bg-white/3"
-          >
-            Посмотреть портфолио
-          </a>
         </div>
 
         {/* Статистика */}
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex items-center justify-center gap-6">
           {stats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center gap-8">
-              <div className="text-center">
+            <div key={stat.label} className="flex items-center gap-6">
+              {stat.accent ? (
                 <div
-                  className="text-2xl font-bold bg-clip-text text-transparent"
-                  style={{ backgroundImage: "linear-gradient(135deg, #c084fc, #60a5fa)" }}
+                  className="relative px-6 py-3 rounded-2xl text-center"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(125,44,200,0.15), rgba(0,112,243,0.15))",
+                    border: "1px solid rgba(125,44,200,0.4)",
+                    boxShadow: "0 0 24px rgba(125,44,200,0.2)",
+                  }}
                 >
-                  {stat.value}
+                  <div
+                    className="absolute -top-px left-4 right-4 h-px"
+                    style={{ background: "linear-gradient(90deg, transparent, #7d2cc8, #0070f3, transparent)" }}
+                  />
+                  <div
+                    className="text-2xl font-bold bg-clip-text text-transparent"
+                    style={{ backgroundImage: "linear-gradient(135deg, #c084fc, #60a5fa)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-gray-400 mt-0.5 whitespace-nowrap">{stat.label}</div>
                 </div>
-                <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
-              </div>
+              ) : (
+                <div className="text-center">
+                  <div
+                    className="text-2xl font-bold bg-clip-text text-transparent"
+                    style={{ backgroundImage: "linear-gradient(135deg, #c084fc, #60a5fa)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
+                </div>
+              )}
               {i < stats.length - 1 && (
                 <div className="w-px h-8 bg-white/10" />
               )}
