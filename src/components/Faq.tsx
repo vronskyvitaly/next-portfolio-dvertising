@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
 const faqs = [
   {
     question: "Сколько стоит разработка сайта?",
@@ -35,40 +31,37 @@ const faqs = [
   },
 ];
 
-function FaqItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="border-b border-white/8">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left gap-4"
-        style={{ touchAction: "manipulation" }}
-      >
-        <span className="text-base font-medium text-white">{question}</span>
-        <span
-          className="flex-shrink-0 w-7 h-7 rounded-full border border-white/15 flex items-center justify-center text-gray-400"
-          style={{
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-            transition: "transform 0.2s ease",
-          }}
-        >
-          +
-        </span>
-      </button>
-      {open && (
-        <div className="pb-5 text-sm text-gray-400 leading-relaxed">
-          {answer}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function Faq() {
   return (
     <section className="py-24 px-6 bg-[#0d0d0d]">
+      <style>{`
+        .faq-item summary {
+          list-style: none;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .faq-item summary::-webkit-details-marker {
+          display: none;
+        }
+        .faq-icon {
+          transition: transform 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.15);
+          color: #9ca3af;
+          font-size: 18px;
+          line-height: 1;
+        }
+        .faq-item[open] .faq-icon {
+          transform: rotate(45deg);
+        }
+      `}</style>
+
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
@@ -81,7 +74,17 @@ export default function Faq() {
 
         <div>
           {faqs.map((faq) => (
-            <FaqItem key={faq.question} {...faq} />
+            <details key={faq.question} className="faq-item border-b border-white/8">
+              <summary className="flex items-center justify-between gap-4 py-5">
+                <span className="text-base font-medium text-white">
+                  {faq.question}
+                </span>
+                <span className="faq-icon">+</span>
+              </summary>
+              <p className="pb-5 text-sm text-gray-400 leading-relaxed">
+                {faq.answer}
+              </p>
+            </details>
           ))}
         </div>
       </div>
