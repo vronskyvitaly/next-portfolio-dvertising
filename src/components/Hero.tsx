@@ -42,12 +42,12 @@ export default function Hero() {
 
         {/* Имя */}
         <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-4 sm:mb-5 font-mono">
-          Виталий Вронский — разработчик · Москва и Санкт-Петербург
+          Виталий Вронский — разработчик
         </p>
 
         {/* Главный заголовок */}
         <h1 className="text-[1.6rem] sm:text-5xl md:text-6xl font-bold leading-tight sm:leading-[1.1] tracking-tight mb-3 sm:mb-4">
-          <span className="block text-white">Ваш бизнес работает сам —</span>
+          <span className="block text-white">Ваш бизнес работает сам<span className="hidden sm:inline"> —</span></span>
           <span
             className="block bg-clip-text text-transparent animate-shimmer"
             style={{
@@ -99,7 +99,7 @@ export default function Hero() {
         </div>
 
         {/* Статистика */}
-        <div className="flex items-center justify-center gap-3 sm:gap-6">
+        <div className="hidden lg:flex items-center justify-center gap-6">
           {stats.map((stat, i) => (
             <div key={stat.label} className="flex items-center gap-3 sm:gap-6">
               {stat.accent ? (
