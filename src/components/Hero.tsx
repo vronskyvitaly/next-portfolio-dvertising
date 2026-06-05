@@ -46,11 +46,10 @@ export default function Hero() {
         </p>
 
         {/* Главный заголовок */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-3 sm:mb-4">
-          <span className="text-white">Ваш бизнес работает сам —</span>
-          <br />
+        <h1 className="text-[1.6rem] sm:text-5xl md:text-6xl font-bold leading-tight sm:leading-[1.1] tracking-tight mb-3 sm:mb-4">
+          <span className="block text-white">Ваш бизнес работает сам —</span>
           <span
-            className="bg-clip-text text-transparent animate-shimmer"
+            className="block bg-clip-text text-transparent animate-shimmer"
             style={{
               backgroundImage: "linear-gradient(90deg, #7d2cc8, #0070f3, #00d4ff, #0070f3, #7d2cc8)",
               backgroundSize: "200% auto",
