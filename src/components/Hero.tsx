@@ -42,7 +42,7 @@ export default function Hero() {
 
         {/* Имя */}
         <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-5 font-mono">
-          Виталий Вронский — разработчик
+          Виталий Вронский — разработчик · Москва и Санкт-Петербург
         </p>
 
         {/* Главный заголовок */}
