@@ -70,18 +70,18 @@ export default function Contact() {
           </div>
 
           {/* Главная CTA */}
-          <div className="px-8 pt-10 pb-6 bg-[#111] flex flex-col items-center gap-4">
+          <div className="px-4 sm:px-8 pt-8 pb-6 bg-[#111] flex flex-col items-center gap-4">
             <a
               href="https://t.me/vitalyvronsky"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-white text-lg transition-all hover:scale-105 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-2 px-6 sm:px-10 py-3.5 sm:py-4 rounded-full font-semibold text-white text-base transition-all hover:scale-105 w-full sm:w-auto justify-center whitespace-nowrap"
               style={{
                 background: "linear-gradient(135deg, #7d2cc8, #0070f3)",
                 boxShadow: "0 0 36px rgba(125,44,200,0.4)",
               }}
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="shrink-0">
                 <rect x="2" y="5" width="16" height="11" rx="3" stroke="white" strokeWidth="1.5"/>
                 <path d="M6 10h2M12 10h2M6 13h8" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>

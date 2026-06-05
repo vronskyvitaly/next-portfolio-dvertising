@@ -6,7 +6,7 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 py-24">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden px-6 py-16 sm:py-24">
 
       {/* Точечная сетка */}
       <div
@@ -41,12 +41,12 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-5xl mx-auto text-center">
 
         {/* Имя */}
-        <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-5 font-mono">
+        <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-4 sm:mb-5 font-mono">
           Виталий Вронский — разработчик · Москва и Санкт-Петербург
         </p>
 
         {/* Главный заголовок */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-3 sm:mb-4">
           <span className="text-white">Ваш бизнес работает сам —</span>
           <br />
           <span
@@ -61,13 +61,13 @@ export default function Hero() {
         </h1>
 
         {/* Подзаголовок */}
-        <p className="text-base sm:text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-lg text-gray-400 mb-6 sm:mb-8 max-w-xl mx-auto leading-relaxed">
           Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
           которые работают круглосуточно
         </p>
 
         {/* Услуги-пилюли */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12">
           {[
             { icon: "🌐", label: "Сайты" },
             { icon: "⚙️", label: "Веб-приложения" },
@@ -86,7 +86,7 @@ export default function Hero() {
         </div>
 
         {/* CTA */}
-        <div className="flex justify-center mb-14">
+        <div className="flex justify-center mb-8 sm:mb-14">
           <a
             href="#contact"
             className="inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-white text-base transition-all hover:scale-105"
