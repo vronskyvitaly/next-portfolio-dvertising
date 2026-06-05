@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     "geo.region": "RU-MOW, RU-SPE",
     "geo.placename": "Москва, Санкт-Петербург",
     "yandex-verification": "46d64c47c02e1a18",
+    "google-site-verification": "3OsRTsw2ZFhcutmozCJRh_fQ8cJjHrOU_39hzQe5Et8",
   },
 };
 
