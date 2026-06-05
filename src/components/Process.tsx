@@ -31,7 +31,7 @@ export default function Process() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Как мы работаем
+            Как я работаю
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
             Простой процесс без лишней бюрократии
