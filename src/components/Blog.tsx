@@ -2,8 +2,23 @@ import Link from "next/link";
 
 const posts = [
   {
+    href: "/blog/sozdanie-sajtov-nado-znat",
+    tag: "Разработка",
+    tagColor: "rgba(0,112,243,0.35)",
+    tagBg: "rgba(0,112,243,0.1)",
+    tagText: "#60a5fa",
+    date: "8 июня 2026",
+    readTime: "12 мин",
+    title: "Создать сайт сейчас легко. Но это ещё не сайт.",
+    excerpt:
+      "No-code и ИИ-конструкторы дали всем возможность «сделать сайт». Разбираю, почему большинство таких сайтов не приносят клиентов — и что реально нужно знать.",
+  },
+  {
     href: "/blog/avtomatizaciya-biznesa",
     tag: "Автоматизация",
+    tagColor: "rgba(125,44,200,0.35)",
+    tagBg: "rgba(125,44,200,0.1)",
+    tagText: "#c084fc",
     date: "8 июня 2026",
     readTime: "10 мин",
     title: "Автоматизация бизнеса: как убрать рутину и сосредоточиться на росте",
@@ -13,6 +28,9 @@ const posts = [
   {
     href: "/blog/kak-ustanovit-claude-code",
     tag: "Инструменты",
+    tagColor: "rgba(125,44,200,0.35)",
+    tagBg: "rgba(125,44,200,0.1)",
+    tagText: "#c084fc",
     date: "8 июня 2026",
     readTime: "7 мин",
     title: "Как установить Claude Code и начать работать: простая инструкция",
@@ -32,7 +50,7 @@ export default function Blog() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Link
               key={post.href}
@@ -43,9 +61,9 @@ export default function Blog() {
                 <span
                   className="text-xs px-3 py-1 rounded-full"
                   style={{
-                    border: "1px solid rgba(125,44,200,0.35)",
-                    background: "rgba(125,44,200,0.1)",
-                    color: "#c084fc",
+                    border: `1px solid ${post.tagColor}`,
+                    background: post.tagBg,
+                    color: post.tagText,
                   }}
                 >
                   {post.tag}

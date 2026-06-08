@@ -20,5 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.8,
     },
+    {
+      url: "https://vitalyvronsky.ru/blog/sozdanie-sajtov-nado-znat",
+      lastModified: new Date("2026-06-08"),
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
   ];
 }
