@@ -8,5 +8,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: "https://vitalyvronsky.ru/blog/avtomatizaciya-biznesa",
+      lastModified: new Date("2026-06-08"),
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
+    {
+      url: "https://vitalyvronsky.ru/blog/kak-ustanovit-claude-code",
+      lastModified: new Date("2026-06-08"),
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
   ];
 }
