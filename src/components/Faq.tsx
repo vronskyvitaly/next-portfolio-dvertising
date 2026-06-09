@@ -1,39 +1,39 @@
 const faqs = [
   {
-    question: "Сколько стоит разработка сайта?",
+    question: 'Сколько стоит разработка сайта?',
     answer:
-      "Стоимость зависит от сложности. Лендинг — от 30 000 ₽, корпоративный сайт — от 60 000 ₽, веб-приложение — от 100 000 ₽. Точную цену назову после изучения задачи.",
+      'Стоимость зависит от сложности. Лендинг — от 30 000 ₽, корпоративный сайт — от 60 000 ₽, веб-приложение — от 100 000 ₽. Точную цену назову после изучения задачи.'
   },
   {
-    question: "Как долго занимает разработка?",
+    question: 'Как долго занимает разработка?',
     answer:
-      "Лендинг — 3–7 дней, корпоративный сайт — 2–4 недели, сложное приложение — 1–3 месяца. Сроки фиксируем в договоре.",
+      'Лендинг — 3–7 дней, корпоративный сайт — 2–4 недели, сложное приложение — 1–3 месяца. Сроки фиксируем в договоре.'
   },
   {
-    question: "Что такое автоматизация бизнеса и как она помогает?",
+    question: 'Что такое автоматизация бизнеса и как она помогает?',
     answer:
-      "Это перевод ручных повторяющихся задач в автоматический режим: автоматическая выгрузка отчётов, уведомления клиентам, обработка заявок, интеграция сервисов. В среднем экономит 2–5 часов работы в день.",
+      'Это перевод ручных повторяющихся задач в автоматический режим: автоматическая выгрузка отчётов, уведомления клиентам, обработка заявок, интеграция сервисов. В среднем экономит 2–5 часов работы в день.'
   },
   {
-    question: "Как внедряется ИИ в организацию?",
+    question: 'Как внедряется ИИ в организацию?',
     answer:
-      "Анализирую процессы компании, нахожу задачи, где ИИ даёт эффект. Затем настраиваю и интегрирую: ИИ-ассистент для сотрудников, автоматическая обработка входящих, генерация документов и ответов.",
+      'Анализирую процессы компании, нахожу задачи, где ИИ даёт эффект. Затем настраиваю и интегрирую: ИИ-ассистент для сотрудников, автоматическая обработка входящих, генерация документов и ответов.'
   },
   {
-    question: "Работаете ли вы с небольшими компаниями?",
+    question: 'Работаете ли вы с небольшими компаниями?',
     answer:
-      "Да. Работаю как с малым бизнесом и ИП, так и со средними компаниями. Решения подбираю под реальный бюджет и задачи.",
+      'Да. Работаю как с малым бизнесом и ИП, так и со средними компаниями. Решения подбираю под реальный бюджет и задачи.'
   },
   {
-    question: "Остаётесь ли на связи после завершения проекта?",
+    question: 'Остаётесь ли на связи после завершения проекта?',
     answer:
-      "Да. После сдачи проекта включается период поддержки. Мелкие правки — бесплатно. Доработки и новые задачи — по договорённости.",
-  },
-];
+      'Да. После сдачи проекта включается период поддержки. Мелкие правки — бесплатно. Доработки и новые задачи — по договорённости.'
+  }
+]
 
 export default function Faq() {
   return (
-    <section id="faq" className="py-24 px-6 bg-[#0d0d0d]">
+    <section id='faq' className='py-24 px-6 bg-[#0d0d0d]'>
       <style>{`
         .faq-item summary {
           list-style: none;
@@ -71,30 +71,39 @@ export default function Faq() {
         }
       `}</style>
 
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+      <div className='max-w-3xl mx-auto'>
+        <div className='text-center mb-12'>
+          <h2 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
             Частые вопросы
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className='text-gray-400 text-lg'>
             Отвечаю на то, что спрашивают чаще всего
           </p>
         </div>
 
         <div>
-          {faqs.map((faq) => (
-            <details key={faq.question} className="faq-item border-b border-white/8">
-              <summary className="flex items-center justify-between gap-4 py-5">
-                <span className="faq-question text-base font-medium text-white">
+          {faqs.map(faq => (
+            <details
+              key={faq.question}
+              className='faq-item border-b border-white/8'
+            >
+              <summary className='flex items-center justify-between gap-4 py-5'>
+                <span className='faq-question text-base font-medium text-white'>
                   {faq.question}
                 </span>
-                <span className="faq-icon" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <span className='faq-icon' aria-hidden='true'>
+                  <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
+                    <path
+                      d='M3 6l5 5 5-5'
+                      stroke='currentColor'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
                   </svg>
                 </span>
               </summary>
-              <p className="pb-5 text-sm text-gray-400 leading-relaxed">
+              <p className='pb-5 text-sm text-gray-400 leading-relaxed'>
                 {faq.answer}
               </p>
             </details>
@@ -102,5 +111,5 @@ export default function Faq() {
         </div>
       </div>
     </section>
-  );
+  )
 }
