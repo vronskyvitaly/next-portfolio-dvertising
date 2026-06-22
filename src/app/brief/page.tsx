@@ -448,6 +448,7 @@ export default function BriefPage() {
 
   // Список всех брифов для дашборда
   const [briefs, setBriefs] = useState<BriefRecord[]>([])
+  const [deletingId, setDeletingId] = useState<number | null>(null)
 
   const loadUserBriefs = useCallback(async (email: string) => {
     const res = await fetch(`/api/brief/user?email=${encodeURIComponent(email)}`)
@@ -561,6 +562,16 @@ export default function BriefPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  async function handleDeleteBrief(briefId: number) {
+    await fetch('/api/brief/progress', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ briefId })
+    }).catch(() => {})
+    setBriefs(prev => prev.filter(b => b.id !== briefId))
+    setDeletingId(null)
   }
 
   function handleContinueBrief(brief: BriefRecord) {
@@ -789,11 +800,39 @@ export default function BriefPage() {
                             </p>
                           </div>
                           {!b.submitted && (
-                            <button onClick={() => handleContinueBrief(b)}
-                              className='text-xs px-3 py-1.5 rounded-lg shrink-0 transition-all hover:opacity-80'
-                              style={{ background: 'rgba(125,44,200,0.15)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.2)' }}>
-                              Продолжить
-                            </button>
+                            <div className='flex items-center gap-2 shrink-0'>
+                              {deletingId === b.id ? (
+                                <>
+                                  <span className='text-xs text-[#888]'>Удалить?</span>
+                                  <button onClick={() => handleDeleteBrief(b.id)}
+                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    style={{ background: 'rgba(239,68,68,0.12)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>
+                                    Да
+                                  </button>
+                                  <button onClick={() => setDeletingId(null)}
+                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    style={{ background: 'rgba(255,255,255,0.04)', color: '#666', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                    Нет
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <button onClick={() => setDeletingId(b.id)}
+                                    className='p-1.5 rounded-lg transition-all hover:opacity-80'
+                                    style={{ color: '#444', border: '1px solid rgba(255,255,255,0.06)' }}
+                                    title='Удалить проект'>
+                                    <svg width='14' height='14' viewBox='0 0 24 24' fill='none'>
+                                      <path d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                                    </svg>
+                                  </button>
+                                  <button onClick={() => handleContinueBrief(b)}
+                                    className='text-xs px-3 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    style={{ background: 'rgba(125,44,200,0.15)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.2)' }}>
+                                    Продолжить
+                                  </button>
+                                </>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>

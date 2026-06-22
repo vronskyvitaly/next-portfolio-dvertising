@@ -16,6 +16,16 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ briefId: rows[0].id })
 }
 
+// DELETE — удалить неотправленный бриф
+export async function DELETE(req: NextRequest) {
+  await ensureTables()
+  const { briefId } = await req.json()
+  if (!briefId) return NextResponse.json({ error: 'briefId required' }, { status: 400 })
+
+  await db.query('DELETE FROM briefs WHERE id = $1 AND submitted = false', [briefId])
+  return NextResponse.json({ ok: true })
+}
+
 // PUT — обновить существующий бриф
 export async function PUT(req: NextRequest) {
   await ensureTables()
