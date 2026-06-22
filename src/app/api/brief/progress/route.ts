@@ -1,56 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { db, ensureTables } from '@/lib/db'
 
-// PUT /api/brief/progress — сохранить или обновить прогресс
 export async function PUT(req: NextRequest) {
+  await ensureTables()
   const { login, projectType, answers } = await req.json()
 
-  const user = await prisma.briefUser.findUnique({ where: { login } })
-  if (!user) return NextResponse.json({ error: 'user not found' }, { status: 404 })
+  const { rows: users } = await db.query('SELECT id FROM brief_users WHERE login = $1', [login])
+  if (!users[0]) return NextResponse.json({ error: 'user not found' }, { status: 404 })
+  const userId = users[0].id
 
-  // Найти незавершённый бриф или создать новый
-  let brief = await prisma.brief.findFirst({
-    where: { userId: user.id, submitted: false }
-  })
+  const { rows: existing } = await db.query(
+    'SELECT id FROM briefs WHERE user_id = $1 AND submitted = false',
+    [userId]
+  )
 
-  if (brief) {
-    brief = await prisma.brief.update({
-      where: { id: brief.id },
-      data: { projectType, answers }
-    })
+  if (existing[0]) {
+    await db.query(
+      'UPDATE briefs SET project_type = $1, answers = $2, updated_at = NOW() WHERE id = $3',
+      [projectType, JSON.stringify(answers), existing[0].id]
+    )
   } else {
-    brief = await prisma.brief.create({
-      data: { userId: user.id, projectType, answers }
-    })
+    await db.query(
+      'INSERT INTO briefs (user_id, project_type, answers) VALUES ($1, $2, $3)',
+      [userId, projectType, JSON.stringify(answers)]
+    )
   }
 
-  return NextResponse.json({ brief })
+  return NextResponse.json({ ok: true })
 }
 
-// GET /api/brief/progress?login=xxx — загрузить сохранённый прогресс
 export async function GET(req: NextRequest) {
+  await ensureTables()
   const login = req.nextUrl.searchParams.get('login')
   if (!login) return NextResponse.json({ error: 'login required' }, { status: 400 })
 
-  const user = await prisma.briefUser.findUnique({
-    where: { login },
-    include: {
-      briefs: {
-        where: { submitted: false },
-        orderBy: { updatedAt: 'desc' },
-        take: 1
-      }
-    }
-  })
+  const { rows: users } = await db.query('SELECT * FROM brief_users WHERE login = $1', [login])
+  if (!users[0]) return NextResponse.json({ user: null })
 
-  if (!user) return NextResponse.json({ user: null })
+  const u = users[0]
+  const { rows: briefs } = await db.query(
+    'SELECT * FROM briefs WHERE user_id = $1 AND submitted = false ORDER BY updated_at DESC LIMIT 1',
+    [u.id]
+  )
 
   return NextResponse.json({
-    user: {
-      login: user.login,
-      firstName: user.firstName,
-      lastName: user.lastName
-    },
-    brief: user.briefs[0] ?? null
+    user: { login: u.login, firstName: u.first_name, lastName: u.last_name },
+    brief: briefs[0] ?? null
   })
 }
