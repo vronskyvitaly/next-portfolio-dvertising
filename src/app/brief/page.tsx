@@ -704,7 +704,7 @@ export default function BriefPage() {
                     <textarea value={answers[q.id] ?? ''}
                       onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
                       placeholder={q.placeholder} rows={3}
-                      className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all'
+                      className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all placeholder:text-[#333]'
                       style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                       onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
                       onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
