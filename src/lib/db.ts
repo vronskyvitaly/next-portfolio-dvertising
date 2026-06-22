@@ -8,6 +8,11 @@ export const db =
 
 if (process.env.NODE_ENV !== 'production') globalForDb.db = db
 
+// Предотвращаем uncaughtException при обрыве соединений в пуле
+db.on('error', (err) => {
+  console.error('[db] pool connection error:', err.message)
+})
+
 let initialized = false
 export async function ensureTables() {
   if (initialized) return

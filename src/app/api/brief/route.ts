@@ -147,8 +147,9 @@ async function sendBriefEmail(brief: Record<string, unknown>, briefId: unknown) 
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
+    requireTLS: true,
     connectionTimeout: 10000,
     socketTimeout: 15000,
     auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD }
