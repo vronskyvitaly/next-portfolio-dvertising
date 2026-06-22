@@ -1,50 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db, ensureTables } from '@/lib/db'
 
-export async function PUT(req: NextRequest) {
+// POST — создать новый бриф
+export async function POST(req: NextRequest) {
   await ensureTables()
-  const { login, projectType, answers } = await req.json()
+  const { login, projectType } = await req.json()
 
   const { rows: users } = await db.query('SELECT id FROM brief_users WHERE login = $1', [login])
   if (!users[0]) return NextResponse.json({ error: 'user not found' }, { status: 404 })
-  const userId = users[0].id
 
-  const { rows: existing } = await db.query(
-    'SELECT id FROM briefs WHERE user_id = $1 AND submitted = false',
-    [userId]
+  const { rows } = await db.query(
+    'INSERT INTO briefs (user_id, project_type, answers) VALUES ($1, $2, $3) RETURNING id',
+    [users[0].id, projectType, '{}']
   )
-
-  if (existing[0]) {
-    await db.query(
-      'UPDATE briefs SET project_type = $1, answers = $2, updated_at = NOW() WHERE id = $3',
-      [projectType, JSON.stringify(answers), existing[0].id]
-    )
-  } else {
-    await db.query(
-      'INSERT INTO briefs (user_id, project_type, answers) VALUES ($1, $2, $3)',
-      [userId, projectType, JSON.stringify(answers)]
-    )
-  }
-
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ briefId: rows[0].id })
 }
 
-export async function GET(req: NextRequest) {
+// PUT — обновить существующий бриф
+export async function PUT(req: NextRequest) {
   await ensureTables()
-  const login = req.nextUrl.searchParams.get('login')
-  if (!login) return NextResponse.json({ error: 'login required' }, { status: 400 })
+  const { briefId, projectType, answers } = await req.json()
+  if (!briefId) return NextResponse.json({ error: 'briefId required' }, { status: 400 })
 
-  const { rows: users } = await db.query('SELECT * FROM brief_users WHERE login = $1', [login])
-  if (!users[0]) return NextResponse.json({ user: null })
-
-  const u = users[0]
-  const { rows: briefs } = await db.query(
-    'SELECT * FROM briefs WHERE user_id = $1 AND submitted = false ORDER BY updated_at DESC LIMIT 1',
-    [u.id]
+  await db.query(
+    'UPDATE briefs SET project_type = $1, answers = $2, updated_at = NOW() WHERE id = $3',
+    [projectType, JSON.stringify(answers), briefId]
   )
-
-  return NextResponse.json({
-    user: { login: u.login, firstName: u.first_name, lastName: u.last_name },
-    brief: briefs[0] ?? null
-  })
+  return NextResponse.json({ ok: true })
 }
