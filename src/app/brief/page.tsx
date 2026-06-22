@@ -35,64 +35,220 @@ interface Question {
   required?: boolean
 }
 
-const QUESTIONS: Record<string, Question[]> = {
-  site: [
-    { id: 'goal', label: 'Цель сайта', placeholder: 'Продажи, портфолио, информация об услугах', required: true },
-    { id: 'audience', label: 'Целевая аудитория', placeholder: 'Кто ваши клиенты?' },
-    { id: 'branding', label: 'Есть ли фирменный стиль?', placeholder: 'Логотип, цвета, шрифты...' },
-    { id: 'examples', label: 'Примеры сайтов которые нравятся', placeholder: 'Ссылки или описание' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  shop: [
-    { id: 'catalog', label: 'Что продаёте?', placeholder: 'Товары, категории, примерный объём каталога', required: true },
-    { id: 'payments', label: 'Нужна ли оплата онлайн?', placeholder: 'Карты, СБП, ЮKassa...' },
-    { id: 'delivery', label: 'Как устроена доставка?', placeholder: 'Самовывоз, курьер, СДЭК...' },
-    { id: 'integrations', label: 'Нужны интеграции?', placeholder: 'CRM, 1С, склад, маркетплейсы...' },
-    { id: 'examples', label: 'Примеры магазинов которые нравятся', placeholder: 'Ссылки или описание' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  bot: [
-    { id: 'goal', label: 'Цель бота', placeholder: 'Поддержка, продажи, уведомления, автоматизация?', required: true },
-    { id: 'integrations', label: 'Какие интеграции нужны?', placeholder: 'CRM, Google Sheets, платежи...' },
-    { id: 'tools', label: 'Какие инструменты используете сейчас?', placeholder: 'Что уже есть?' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  automation: [
-    { id: 'process', label: 'Какой процесс автоматизировать?', placeholder: 'Опишите подробно', required: true },
-    { id: 'tools', label: 'Текущие инструменты', placeholder: 'CRM, таблицы, сервисы...' },
-    { id: 'volume', label: 'Объём операций', placeholder: 'В день / месяц' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  ai: [
-    { id: 'task', label: 'Какую задачу решить с помощью ИИ?', placeholder: 'Опишите проблему', required: true },
-    { id: 'data', label: 'Есть ли данные для контекста?', placeholder: 'База знаний, документы, история...' },
-    { id: 'integrations', label: 'Интеграция с существующими системами?', placeholder: 'Что нужно подключить?' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  webapp: [
-    { id: 'type', label: 'Тип приложения', placeholder: 'SaaS, внутренний инструмент, маркетплейс?', required: true },
-    { id: 'features', label: 'Ключевые функции', placeholder: 'Что должно уметь приложение?' },
-    { id: 'mobile', label: 'Нужна ли мобильная версия?', placeholder: 'Да / нет / нативное приложение?' },
-    { id: 'auth', label: 'Авторизация и роли', placeholder: 'Какие уровни доступа нужны?' },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ],
-  other: [
-    { id: 'description', label: 'Опишите проект', placeholder: 'Расскажите всё что считаете важным', required: true },
-    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
-  ]
+interface QuestionSection {
+  title: string
+  questions: Question[]
 }
 
-const COMMON_QUESTIONS: Question[] = [
-  { id: 'extra', label: 'Дополнительные пожелания', placeholder: 'Что ещё важно знать?' },
-  { id: 'source', label: 'Откуда узнали обо мне?', placeholder: 'Поиск, рекомендация, соцсети...' }
+const QUESTION_SECTIONS: QuestionSection[] = [
+  {
+    title: 'Общие сведения о проекте',
+    questions: [
+      {
+        id: 'description',
+        label: 'Описание проекта',
+        placeholder: 'Опишите контекст бизнеса, чтобы разработчик понимал свою задачу. Можно своими словами',
+        required: true
+      },
+      {
+        id: 'project_type_detail',
+        label: 'Тип проекта',
+        placeholder: 'Одностраничный сайт, многостраничный сайт, Telegram-бот, мобильное приложение под Android/iOS'
+      },
+      {
+        id: 'goal',
+        label: 'Цель создания проекта',
+        placeholder: 'Продажи, визитка, бот, приложение, блог, сервис, другое',
+        required: true
+      },
+      {
+        id: 'audience',
+        label: 'Целевая аудитория',
+        placeholder: 'Краткое описание: география, возраст, интересы'
+      },
+      {
+        id: 'competitors',
+        label: 'Основные конкуренты',
+        placeholder: 'Ссылки на сайты, которые нравятся / не нравятся'
+      },
+      {
+        id: 'contacts',
+        label: 'Контакты в проекте',
+        placeholder: 'Телефон, никнейм в Telegram, WhatsApp, Max, почта, адрес и другие'
+      }
+    ]
+  },
+  {
+    title: 'Функциональные требования',
+    questions: [
+      {
+        id: 'pages',
+        label: 'Количество страниц',
+        placeholder: 'Одностраничный сайт / другое'
+      },
+      {
+        id: 'catalog',
+        label: 'Каталог товаров / услуг',
+        placeholder: 'Да / Нет / Другое'
+      },
+      {
+        id: 'feedback_forms',
+        label: 'Формы обратной связи',
+        placeholder: 'Какие поля, куда отправляются (на почту, в бот?)'
+      },
+      {
+        id: 'search',
+        label: 'Поиск по сайту',
+        placeholder: 'Да / Нет'
+      },
+      {
+        id: 'blog',
+        label: 'Блог / новостная лента',
+        placeholder: 'Да / нет, необходимость категорий'
+      },
+      {
+        id: 'cart',
+        label: 'Корзина / оформление заказа',
+        placeholder: 'Да / нет, способ оплаты/доставки'
+      },
+      {
+        id: 'schedule',
+        label: 'Режим работы',
+        placeholder: 'Указать если в проекте есть продажи'
+      },
+      {
+        id: 'payment_method',
+        label: 'Как клиент будет оплачивать заказ?',
+        placeholder: 'В офисе, курьеру, другое'
+      },
+      {
+        id: 'cms',
+        label: 'Административная панель (CMS)',
+        placeholder: 'Да / Нет'
+      }
+    ]
+  },
+  {
+    title: 'Дизайн и интерфейс',
+    questions: [
+      {
+        id: 'style',
+        label: 'Стиль и настроение',
+        placeholder: 'Строгий, яркий, минимализм, корпоративный и т.п. — предпочтения, либо на усмотрение разработчика'
+      },
+      {
+        id: 'colors',
+        label: 'Цветовая гамма',
+        placeholder: 'Основные цвета, ссылка на брендбук при наличии — либо на усмотрение разработчика'
+      },
+      {
+        id: 'references',
+        label: 'Примеры сайтов для референса',
+        placeholder: 'Ссылки на сайты, которые понравились'
+      },
+      {
+        id: 'logo',
+        label: 'Логотип и фирменный стиль',
+        placeholder: 'В каком виде будут предоставлены исходники / либо на усмотрение разработчика'
+      },
+      {
+        id: 'responsive',
+        label: 'Адаптивность (мобильная версия)',
+        placeholder: 'Да / Нет'
+      },
+      {
+        id: 'animation',
+        label: 'Анимация / спецэффекты',
+        placeholder: 'Ваши пожелания'
+      }
+    ]
+  },
+  {
+    title: 'Контент / наполнение',
+    questions: [
+      {
+        id: 'texts',
+        label: 'Кто пишет тексты на сайт?',
+        placeholder:
+          'О вас, ваши преимущества, прочие разделы. По-хорошему лучше обратиться к копирайтеру. [ Укажите дату предоставления ] / либо тексты пишет разработчик на своё усмотрение'
+      },
+      {
+        id: 'media',
+        label: 'Фотографии / иллюстрации / видео',
+        placeholder:
+          'Уникальные изображения вашего бизнеса (рекомендуется — скачивать из сети рискованно, штраф от 40 000 ₽). [ Укажите дату предоставления ] / либо медиа добавляет разработчик из бесплатных источников'
+      }
+    ]
+  },
+  {
+    title: 'Доменное имя и хостинг',
+    questions: [
+      {
+        id: 'hosting',
+        label: 'Кто выбирает хостинг для сайта?',
+        placeholder:
+          'Можно разместить на Vercel (сейчас бесплатно). Либо на усмотрение разработчика — стоимость будет указана в договоре. После сдачи проекта права и инструкции передаются вам'
+      },
+      {
+        id: 'domain',
+        label: 'Кто выбирает доменное имя?',
+        placeholder: 'Например: mtplast.ru, dublikatnomera.com — вы или разработчик?'
+      },
+      {
+        id: 'domain_payment',
+        label: 'Кто оплачивает продление домена и хостинга каждый год?',
+        placeholder: 'Разработчик (после пополнения его счёта на сумму услуги) / вы сами оплачиваете'
+      }
+    ]
+  },
+  {
+    title: 'Дополнительные вопросы',
+    questions: [
+      {
+        id: 'products',
+        label: 'Товарные позиции (если проект связан с продажами)',
+        placeholder: 'Названия, цены, описания товаров / услуг'
+      },
+      {
+        id: 'future_updates',
+        label: 'Планируете ли дорабатывать сайт в будущем?',
+        placeholder: 'Вносить изменения, добавлять блоки (обратите внимание — это платная услуга)'
+      },
+      {
+        id: 'extra_pages',
+        label: 'Требуется ли создание дополнительных страниц?',
+        placeholder: '404, обработка персональных данных под формой и др. — обсуждается на созвоне'
+      },
+      {
+        id: 'preferences',
+        label: 'Ваши предпочтения',
+        placeholder: 'Если есть'
+      },
+      {
+        id: 'code_delivery',
+        label: 'В каком виде предоставить код проекта?',
+        placeholder: 'Архив (.zip / .tar.gz) или репозиторий на GitHub — обсудим при созвоне'
+      }
+    ]
+  },
+  {
+    title: 'Вопросы к разработчику',
+    questions: [
+      {
+        id: 'dev_questions',
+        label: 'Что хотели бы уточнить у разработчика на созвоне?',
+        placeholder: 'Любые вопросы, которые у вас есть'
+      }
+    ]
+  }
 ]
 
-function getQuestions(projectType: string): Question[] {
-  return [...(QUESTIONS[projectType] ?? []), ...COMMON_QUESTIONS]
+function getQuestions(): Question[] {
+  return QUESTION_SECTIONS.flatMap(s => s.questions)
 }
 
-function calcProgress(projectType: string, answers: Record<string, string>): number {
-  const qs = getQuestions(projectType)
+function calcProgress(answers: Record<string, string>): number {
+  const qs = getQuestions()
   if (!qs.length) return 0
   const filled = qs.filter(q => answers[q.id]?.trim()).length
   return Math.round((filled / qs.length) * 100)
@@ -271,8 +427,7 @@ export default function BriefPage() {
     }
   }
 
-  const questions = getQuestions(projectType)
-  const progress = calcProgress(projectType, answers)
+  const progress = calcProgress(answers)
 
   const STEPS_MAP: Record<Step, number> = { login: 1, name: 2, dashboard: 2, 'project-type': 3, questions: 4, success: 4 }
   const totalSteps = 4
@@ -407,7 +562,7 @@ export default function BriefPage() {
                 <div className='space-y-3 mb-6'>
                   <p className='text-xs text-[#555] uppercase tracking-widest mb-4'>Ваши проекты</p>
                   {briefs.map(b => {
-                    const prog = calcProgress(b.project_type, b.answers ?? {})
+                    const prog = calcProgress(b.answers ?? {})
                     const pt = PROJECT_TYPES.find(p => p.id === b.project_type)
                     return (
                       <div key={b.id} className='rounded-xl p-4 transition-all'
@@ -516,20 +671,32 @@ export default function BriefPage() {
                 <span className='text-xs text-[#555]'>заполнено {progress}%</span>
               </div>
 
-              <div className='space-y-5'>
-                {questions.map(q => (
-                  <div key={q.id}>
-                    <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>
-                      {q.label}
-                      {q.required && <span className='text-purple-400 ml-1'>*</span>}
-                    </label>
-                    <textarea value={answers[q.id] ?? ''}
-                      onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
-                      placeholder={q.placeholder} rows={3}
-                      className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all'
-                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
-                      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
+              <div className='space-y-8'>
+                {QUESTION_SECTIONS.map((section, si) => (
+                  <div key={si}>
+                    {/* Разделитель секции */}
+                    <div className='flex items-center gap-3 mb-5'>
+                      <div className='flex-1 h-px' style={{ background: 'rgba(255,255,255,0.06)' }} />
+                      <span className='text-[10px] text-[#444] uppercase tracking-widest shrink-0'>{section.title}</span>
+                      <div className='flex-1 h-px' style={{ background: 'rgba(255,255,255,0.06)' }} />
+                    </div>
+                    <div className='space-y-5'>
+                      {section.questions.map(q => (
+                        <div key={q.id}>
+                          <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>
+                            {q.label}
+                            {q.required && <span className='text-purple-400 ml-1'>*</span>}
+                          </label>
+                          <textarea value={answers[q.id] ?? ''}
+                            onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                            placeholder={q.placeholder} rows={3}
+                            className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all'
+                            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                            onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
+                            onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
