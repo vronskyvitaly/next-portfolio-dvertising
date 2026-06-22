@@ -338,9 +338,81 @@ const AI_SECTIONS: QuestionSection[] = [
   }
 ]
 
+const AUTOMATION_SECTIONS: QuestionSection[] = [
+  {
+    title: 'Процесс и задача',
+    questions: [
+      {
+        id: 'auto_process',
+        label: 'Какой процесс нужно автоматизировать?',
+        placeholder:
+          'Опишите подробно: что сейчас происходит шаг за шагом, кто это делает, сколько времени занимает. Чем детальнее — тем точнее будет решение',
+        required: true
+      },
+      {
+        id: 'auto_trigger',
+        label: 'Что запускает процесс?',
+        placeholder:
+          'Новая заявка, входящее письмо, заполненная форма, время (расписание), действие сотрудника, другое...'
+      },
+      {
+        id: 'auto_result',
+        label: 'Что должно происходить на выходе?',
+        placeholder:
+          'Что должна делать автоматизация: отправить письмо, создать запись в CRM, уведомить в Telegram, заполнить таблицу, выставить счёт...'
+      }
+    ]
+  },
+  {
+    title: 'Инструменты и данные',
+    questions: [
+      {
+        id: 'auto_tools',
+        label: 'Какие сервисы и системы задействованы?',
+        placeholder:
+          'CRM (AmoCRM, Битрикс, другое), Google Sheets / Excel, почта, мессенджеры, 1С, сайт, маркетплейсы, кассы, другие сервисы — перечислите всё',
+        required: true
+      },
+      {
+        id: 'auto_data_flow',
+        label: 'Как сейчас передаются данные между системами?',
+        placeholder:
+          'Вручную копируете, выгружаете файлы, вводите повторно, или уже есть частичная интеграция?'
+      },
+      {
+        id: 'auto_volume',
+        label: 'Объём операций',
+        placeholder: 'Сколько раз в день / месяц запускается этот процесс? Сколько записей / заявок обрабатывается?'
+      }
+    ]
+  },
+  {
+    title: 'Требования и сроки',
+    questions: [
+      {
+        id: 'auto_errors',
+        label: 'Какие ошибки или потери возникают сейчас?',
+        placeholder: 'Что идёт не так: данные теряются, запаздывают, дублируются, сотрудники тратят время впустую...'
+      },
+      {
+        id: 'auto_success',
+        label: 'Как поймёте, что автоматизация работает?',
+        placeholder: 'Конкретный результат: экономия X часов в день, нулевые ошибки в данных, скорость обработки заявки до N минут...'
+      },
+      {
+        id: 'auto_deadline',
+        label: 'Дедлайн и бюджет',
+        placeholder: 'Когда нужно и на что рассчитываете?',
+        required: true
+      }
+    ]
+  }
+]
+
 function getSections(projectType: string): QuestionSection[] {
   if (projectType === 'bot') return BOT_SECTIONS
   if (projectType === 'ai') return AI_SECTIONS
+  if (projectType === 'automation') return AUTOMATION_SECTIONS
   return QUESTION_SECTIONS
 }
 
