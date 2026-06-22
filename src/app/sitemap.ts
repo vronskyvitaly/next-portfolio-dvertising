@@ -25,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-06-08'),
       changeFrequency: 'yearly',
       priority: 0.8
+    },
+    {
+      url: 'https://vitalyvronsky.ru/brief',
+      lastModified: new Date('2026-06-22'),
+      changeFrequency: 'monthly',
+      priority: 0.9
     }
   ]
 }

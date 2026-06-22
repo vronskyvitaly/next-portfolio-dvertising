@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BriefUser {
+  id          Int       @id @default(autoincrement())
+  login       String    @unique
+  firstName   String
+  lastName    String
+  createdAt   DateTime  @default(now())
+  briefs      Brief[]
+}
+
+model Brief {
+  id          Int       @id @default(autoincrement())
+  user        BriefUser @relation(fields: [userId], references: [id])
+  userId      Int
+  projectType String
+  answers     Json      @default("{}")
+  submitted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
