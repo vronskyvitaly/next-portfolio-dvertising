@@ -231,6 +231,21 @@ export default function BriefPage() {
     setStep('questions')
   }
 
+  async function handleBackToDashboard() {
+    // Сохранить немедленно, не дожидаясь debounce
+    if (briefId && projectType) {
+      await fetch('/api/brief/progress', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ briefId, projectType, answers })
+      }).catch(() => {})
+    }
+    // Обновить список брифов из БД
+    const data = await loadUserBriefs(user.login).catch(() => ({ briefs: [] }))
+    setBriefs((data as { briefs: BriefRecord[] }).briefs ?? [])
+    setStep('dashboard')
+  }
+
   async function handleSubmit() {
     setSending(true)
     try {
@@ -520,7 +535,7 @@ export default function BriefPage() {
               </div>
 
               <div className='flex gap-3 pt-6'>
-                <button onClick={() => setStep('dashboard')}
+                <button onClick={handleBackToDashboard}
                   className='flex-1 py-3 rounded-xl text-sm text-[#666] transition-all hover:text-[#999]'
                   style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
                   К проектам
@@ -548,7 +563,7 @@ export default function BriefPage() {
                 Изучу задачу и отвечу лично в течение дня
               </p>
               <div className='flex flex-col gap-3'>
-                <button onClick={() => setStep('dashboard')}
+                <button onClick={handleBackToDashboard}
                   className='py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02]'
                   style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
                   Мои проекты
