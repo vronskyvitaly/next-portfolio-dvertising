@@ -958,7 +958,16 @@ export default function BriefPage() {
                     {sending ? 'Отправляем...' : 'Отправить бриф'}
                   </button>
                 ) : (
-                  <button onClick={() => setSectionIndex(i => i + 1)}
+                  <button onClick={() => {
+                    if (briefId && projectType) {
+                      fetch('/api/brief/progress', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ briefId, projectType, answers })
+                      }).catch(() => {})
+                    }
+                    setSectionIndex(i => i + 1)
+                  }}
                     className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90'
                     style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
                     Далее →
