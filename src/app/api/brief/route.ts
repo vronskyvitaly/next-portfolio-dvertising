@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-import { setDefaultResultOrder } from 'dns'
 import { db, ensureTables } from '@/lib/db'
-
-// Принудительно IPv4 — иначе nodemailer идёт через IPv6 и падает с EHOSTUNREACH
-setDefaultResultOrder('ipv4first')
 
 const PROJECT_LABELS: Record<string, string> = {
   site: 'Сайт / лендинг',
@@ -146,12 +142,10 @@ async function sendBriefEmail(brief: Record<string, unknown>, briefId: unknown) 
 </html>`
 
   const transporter = nodemailer.createTransport({
+    pool: true,
     host: 'smtp.mail.ru',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    connectionTimeout: 10000,
-    socketTimeout: 15000,
+    port: 465,
+    secure: true,
     auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD }
   })
 
