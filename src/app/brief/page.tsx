@@ -22,6 +22,7 @@ const EMPTY: BriefData = {
 
 const PROJECT_TYPES = [
   { id: 'site', label: 'Сайт / лендинг', icon: '🌐' },
+  { id: 'shop', label: 'Интернет-магазин', icon: '🛒' },
   { id: 'bot', label: 'Telegram-бот', icon: '🤖' },
   { id: 'automation', label: 'Автоматизация бизнеса', icon: '⚙️' },
   { id: 'ai', label: 'Внедрение ИИ', icon: '🧠' },
@@ -43,6 +44,14 @@ const QUESTIONS: Record<string, Question[]> = {
     { id: 'audience', label: 'Целевая аудитория', placeholder: 'Кто ваши клиенты?' },
     { id: 'branding', label: 'Есть ли фирменный стиль?', placeholder: 'Логотип, цвета, шрифты...' },
     { id: 'examples', label: 'Примеры сайтов которые нравятся', placeholder: 'Ссылки или описание' },
+    { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
+  ],
+  shop: [
+    { id: 'catalog', label: 'Что продаёте?', placeholder: 'Товары, категории, примерный объём каталога', required: true },
+    { id: 'payments', label: 'Нужна ли оплата онлайн?', placeholder: 'Карты, СБП, ЮKassa...' },
+    { id: 'delivery', label: 'Как устроена доставка?', placeholder: 'Самовывоз, курьер, СДЭК...' },
+    { id: 'integrations', label: 'Нужны интеграции?', placeholder: 'CRM, 1С, склад, маркетплейсы...' },
+    { id: 'examples', label: 'Примеры магазинов которые нравятся', placeholder: 'Ссылки или описание' },
     { id: 'deadline', label: 'Дедлайн и бюджет', placeholder: 'Когда нужно и на что рассчитываете?', required: true }
   ],
   bot: [
@@ -89,11 +98,27 @@ export default function BriefPage() {
   const [sending, setSending] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Восстановить логин из localStorage и загрузить прогресс с сервера
+  // Восстановить прогресс: сначала из localStorage (мгновенно), потом уточняем из БД
   useEffect(() => {
     const savedLogin = localStorage.getItem('brief_login')
     if (!savedLogin) return
     setLoginInput(savedLogin)
+
+    // 1. Мгновенно восстановить из localStorage
+    const savedProgress = localStorage.getItem('brief_progress')
+    if (savedProgress) {
+      try {
+        const parsed: BriefData = JSON.parse(savedProgress)
+        if (parsed.login === savedLogin) {
+          setData(parsed)
+          if (parsed.projectType) setStep('questions')
+          else if (parsed.firstName) setStep('project-type')
+          else setStep('name')
+        }
+      } catch {}
+    }
+
+    // 2. Синхронизировать с БД (может быть актуальнее)
     setLoading(true)
     fetch(`/api/brief/progress?login=${encodeURIComponent(savedLogin)}`)
       .then(r => r.json())
@@ -110,13 +135,18 @@ export default function BriefPage() {
         if (brief?.projectType) setStep('questions')
         else setStep('project-type')
       })
-      .catch(() => {})
+      .catch(() => {}) // если БД недоступна — остаёмся на localStorage
       .finally(() => setLoading(false))
   }, [])
 
-  // Автосохранение прогресса в БД при изменении ответов
+  // Автосохранение прогресса — localStorage + БД
   useEffect(() => {
     if (!data.login || !data.projectType) return
+
+    // localStorage — мгновенно
+    localStorage.setItem('brief_progress', JSON.stringify(data))
+
+    // БД — с дебаунсом 1 сек
     const timer = setTimeout(() => {
       fetch('/api/brief/progress', {
         method: 'PUT',
@@ -225,6 +255,7 @@ export default function BriefPage() {
         body: JSON.stringify({ login: data.login, projectType: data.projectType, answers: data.answers })
       })
       localStorage.removeItem('brief_login')
+      localStorage.removeItem('brief_progress')
       setStep('success')
     } catch {
       alert('Ошибка отправки. Попробуйте ещё раз.')
@@ -426,7 +457,39 @@ export default function BriefPage() {
                 </span>
                 ?
               </h2>
-              <p className='text-[#666] text-sm mb-8'>Выберите тип проекта</p>
+
+              {/* Уже выбран — показываем и даём продолжить */}
+              {data.projectType && (
+                <div className='mb-6'>
+                  <p className='text-[#555] text-xs mb-3'>Вы уже выбрали:</p>
+                  <div
+                    className='flex items-center gap-3 p-4 rounded-xl mb-3'
+                    style={{
+                      background: 'rgba(125,44,200,0.1)',
+                      border: '1px solid rgba(125,44,200,0.35)'
+                    }}
+                  >
+                    <span className='text-2xl'>{PROJECT_TYPES.find(p => p.id === data.projectType)?.icon}</span>
+                    <span className='text-[#e0d0f8] font-medium'>
+                      {PROJECT_TYPES.find(p => p.id === data.projectType)?.label}
+                    </span>
+                    <svg className='ml-auto shrink-0' width='18' height='18' viewBox='0 0 24 24' fill='none'>
+                      <path d='M20 6L9 17l-5-5' stroke='#a78bfa' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+                    </svg>
+                  </div>
+                  <button
+                    onClick={() => setStep('questions')}
+                    className='w-full py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 mb-4'
+                    style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}
+                  >
+                    Продолжить заполнение →
+                  </button>
+                  <p className='text-[#444] text-xs text-center mb-4'>или выберите другой тип ниже</p>
+                </div>
+              )}
+
+              {!data.projectType && <p className='text-[#666] text-sm mb-6'>Выберите тип проекта</p>}
+
               <div className='grid grid-cols-2 gap-3'>
                 {PROJECT_TYPES.map(pt => (
                   <button
@@ -434,16 +497,8 @@ export default function BriefPage() {
                     onClick={() => handleProjectType(pt.id)}
                     className='flex flex-col items-start gap-2 p-4 rounded-xl text-left transition-all hover:scale-[1.02]'
                     style={{
-                      background: 'rgba(255,255,255,0.03)',
-                      border: '1px solid rgba(255,255,255,0.06)'
-                    }}
-                    onMouseEnter={e => {
-                      ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(125,44,200,0.4)'
-                      ;(e.currentTarget as HTMLButtonElement).style.background = 'rgba(125,44,200,0.06)'
-                    }}
-                    onMouseLeave={e => {
-                      ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.06)'
-                      ;(e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.03)'
+                      background: data.projectType === pt.id ? 'rgba(125,44,200,0.08)' : 'rgba(255,255,255,0.03)',
+                      border: data.projectType === pt.id ? '1px solid rgba(125,44,200,0.3)' : '1px solid rgba(255,255,255,0.06)'
                     }}
                   >
                     <span className='text-2xl'>{pt.icon}</span>
@@ -480,13 +535,19 @@ export default function BriefPage() {
                   </p>
                   <p className='text-xs text-[#555] truncate'>@{data.login}</p>
                 </div>
-                <div
-                  className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0'
+                <button
+                  onClick={() => setStep('project-type')}
+                  className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0 transition-opacity hover:opacity-70'
                   style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}
+                  title='Изменить тип проекта'
                 >
                   <span>{PROJECT_TYPES.find(p => p.id === data.projectType)?.icon}</span>
                   <span>{PROJECT_TYPES.find(p => p.id === data.projectType)?.label}</span>
-                </div>
+                  <svg width='10' height='10' viewBox='0 0 24 24' fill='none'>
+                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7' stroke='currentColor' strokeWidth='2' strokeLinecap='round'/>
+                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' stroke='currentColor' strokeWidth='2' strokeLinecap='round'/>
+                  </svg>
+                </button>
               </div>
 
               <div className='space-y-5'>
@@ -519,16 +580,9 @@ export default function BriefPage() {
 
               <div className='flex gap-3 pt-6'>
                 <button
-                  onClick={() => setStep('project-type')}
-                  className='flex-1 py-3 rounded-xl text-sm text-[#666] transition-all hover:text-[#999]'
-                  style={{ border: '1px solid rgba(255,255,255,0.06)' }}
-                >
-                  Назад
-                </button>
-                <button
                   onClick={handleSubmit}
                   disabled={sending}
-                  className='flex-2 py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
+                  className='w-full py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
                   style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}
                 >
                   {sending ? 'Отправляем...' : 'Отправить бриф'}
