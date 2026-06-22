@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { setDefaultResultOrder } from 'dns'
 import { db, ensureTables } from '@/lib/db'
+
+// Принудительно IPv4 — иначе nodemailer идёт через IPv6 и падает с EHOSTUNREACH
+setDefaultResultOrder('ipv4first')
 
 const PROJECT_LABELS: Record<string, string> = {
   site: 'Сайт / лендинг',
