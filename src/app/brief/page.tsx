@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react'
 type Step = 'login' | 'name' | 'dashboard' | 'project-type' | 'questions' | 'success'
 
 interface UserData {
-  login: string
+  email: string
   firstName: string
   lastName: string
 }
@@ -260,8 +260,9 @@ function formatDate(iso: string): string {
 
 export default function BriefPage() {
   const [step, setStep] = useState<Step>('login')
-  const [user, setUser] = useState<UserData>({ login: '', firstName: '', lastName: '' })
-  const [loginInput, setLoginInput] = useState('')
+  const [user, setUser] = useState<UserData>({ email: '', firstName: '', lastName: '' })
+  const [emailInput, setEmailInput] = useState('')
+  const [passwordInput, setPasswordInput] = useState('')
   const [loginError, setLoginError] = useState('')
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
@@ -275,11 +276,11 @@ export default function BriefPage() {
   // Список всех брифов для дашборда
   const [briefs, setBriefs] = useState<BriefRecord[]>([])
 
-  const loadUserBriefs = useCallback(async (login: string) => {
-    const res = await fetch(`/api/brief/user?login=${encodeURIComponent(login)}`)
+  const loadUserBriefs = useCallback(async (email: string) => {
+    const res = await fetch(`/api/brief/user?email=${encodeURIComponent(email)}`)
     const data = await res.json()
     if (data.user) {
-      setUser({ login: data.user.login, firstName: data.user.firstName, lastName: data.user.lastName })
+      setUser({ email: data.user.email, firstName: data.user.firstName, lastName: data.user.lastName })
       setBriefs(data.briefs ?? [])
     }
     return data
@@ -287,11 +288,11 @@ export default function BriefPage() {
 
   // Восстановить сессию при загрузке
   useEffect(() => {
-    const savedLogin = localStorage.getItem('brief_login')
-    if (!savedLogin) return
-    setLoginInput(savedLogin)
+    const savedEmail = localStorage.getItem('brief_email')
+    if (!savedEmail) return
+    setEmailInput(savedEmail)
     setLoading(true)
-    loadUserBriefs(savedLogin)
+    loadUserBriefs(savedEmail)
       .then(data => {
         if (data.user) setStep('dashboard')
       })
@@ -313,26 +314,30 @@ export default function BriefPage() {
   }, [answers, briefId, projectType])
 
   async function handleLogin() {
-    const login = loginInput.trim()
-    if (!login) { setLoginError('Введите логин'); return }
-    if (login.length < 3) { setLoginError('Минимум 3 символа'); return }
+    const email = emailInput.trim()
+    const password = passwordInput
+    if (!email) { setLoginError('Введите почту'); return }
+    if (!email.includes('@')) { setLoginError('Некорректный email'); return }
+    if (!password) { setLoginError('Введите пароль'); return }
+    if (password.length < 6) { setLoginError('Минимум 6 символов'); return }
     setLoginError('')
     setLoading(true)
     try {
       const res = await fetch('/api/brief/user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ login })
+        body: JSON.stringify({ email, password })
       })
-      const { exists, user: u } = await res.json()
-      localStorage.setItem('brief_login', login)
-      if (exists && u) {
-        setUser({ login: u.login, firstName: u.first_name, lastName: u.last_name })
-        const data = await loadUserBriefs(login)
-        setBriefs(data.briefs ?? [])
+      const data = await res.json()
+      if (res.status === 401) { setLoginError('Неверный пароль'); return }
+      if (data.exists && data.user) {
+        localStorage.setItem('brief_email', email)
+        setUser({ email: data.user.email, firstName: data.user.firstName, lastName: data.user.lastName })
+        const d = await loadUserBriefs(email)
+        setBriefs(d.briefs ?? [])
         setStep('dashboard')
-      } else {
-        setUser(prev => ({ ...prev, login }))
+      } else if (!data.exists) {
+        setUser(prev => ({ ...prev, email }))
         setStep('name')
       }
     } catch {
@@ -343,15 +348,18 @@ export default function BriefPage() {
   }
 
   async function handleName() {
-    if (!user.firstName.trim() || !user.lastName.trim()) return
+    if (!user.firstName.trim()) return
     setLoading(true)
     try {
       const res = await fetch('/api/brief/user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ login: user.login, firstName: user.firstName, lastName: user.lastName })
+        body: JSON.stringify({ email: user.email, password: passwordInput, firstName: user.firstName, lastName: user.lastName })
       })
-      if (res.status === 409) { setLoginError('Логин занят'); setStep('login'); return }
+      if (res.status === 409) { setLoginError('Этот email уже занят'); setStep('login'); return }
+      const { user: u } = await res.json()
+      localStorage.setItem('brief_email', user.email)
+      setUser({ email: u.email, firstName: u.firstName, lastName: u.lastName })
       setBriefs([])
       setStep('dashboard')
     } catch {
@@ -370,7 +378,7 @@ export default function BriefPage() {
       const res = await fetch('/api/brief/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ login: user.login, projectType: type })
+        body: JSON.stringify({ email: user.email, projectType: type })
       })
       const { briefId: id } = await res.json()
       setBriefId(id)
@@ -400,7 +408,7 @@ export default function BriefPage() {
       }).catch(() => {})
     }
     // Обновить список брифов из БД
-    const data = await loadUserBriefs(user.login).catch(() => ({ briefs: [] }))
+    const data = await loadUserBriefs(user.email).catch(() => ({ briefs: [] }))
     setBriefs((data as { briefs: BriefRecord[] }).briefs ?? [])
     setStep('dashboard')
   }
@@ -417,10 +425,10 @@ export default function BriefPage() {
       await fetch('/api/brief', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ briefId, login: user.login })
+        body: JSON.stringify({ briefId })
       })
       // Обновить список брифов
-      const data = await loadUserBriefs(user.login)
+      const data = await loadUserBriefs(user.email)
       setBriefs(data.briefs ?? [])
       setStep('success')
     } catch {
@@ -470,7 +478,7 @@ export default function BriefPage() {
 
         <div className='rounded-2xl p-8' style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}>
 
-          {/* ШАГ 1: Логин */}
+          {/* ШАГ 1: Email + пароль */}
           {step === 'login' && (
             <div>
               <div className='w-12 h-12 rounded-xl flex items-center justify-center mb-6'
@@ -481,33 +489,44 @@ export default function BriefPage() {
                 </svg>
               </div>
               <h1 className='text-2xl font-semibold text-[#f0f0f0] mb-2'>Описать проект</h1>
-              <p className='text-[#666] text-sm mb-8'>Введите логин — войдёте в личный кабинет или создадите новый</p>
+              <p className='text-[#666] text-sm mb-8'>Войдите или создайте аккаунт, чтобы сохранять и продолжать с любого устройства</p>
               <div className='space-y-4'>
                 <div>
-                  <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Ваш логин</label>
-                  <input type='text' value={loginInput}
-                    onChange={e => setLoginInput(e.target.value)}
+                  <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Email</label>
+                  <input type='email' value={emailInput}
+                    onChange={e => { setEmailInput(e.target.value); setLoginError('') }}
                     onKeyDown={e => e.key === 'Enter' && handleLogin()}
-                    placeholder='например: ivan_petrov'
+                    placeholder='ivan@example.com'
                     className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none transition-all'
                     style={{ background: 'rgba(255,255,255,0.04)', border: loginError ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(255,255,255,0.08)' }}
                     autoFocus />
+                </div>
+                <div>
+                  <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Пароль</label>
+                  <input type='password' value={passwordInput}
+                    onChange={e => { setPasswordInput(e.target.value); setLoginError('') }}
+                    onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                    placeholder='минимум 6 символов'
+                    className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none transition-all'
+                    style={{ background: 'rgba(255,255,255,0.04)', border: loginError ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(255,255,255,0.08)' }} />
                   {loginError && <p className='text-xs text-red-400 mt-1'>{loginError}</p>}
                 </div>
                 <button onClick={handleLogin} disabled={loading}
                   className='w-full py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
                   style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
-                  {loading ? 'Проверяем...' : 'Войти'}
+                  {loading ? 'Проверяем...' : 'Войти / Зарегистрироваться'}
                 </button>
               </div>
             </div>
           )}
 
-          {/* ШАГ 2: Имя */}
+          {/* ШАГ 2: Имя (только для новых пользователей) */}
           {step === 'name' && (
             <div>
               <h2 className='text-2xl font-semibold text-[#f0f0f0] mb-2'>Как вас зовут?</h2>
-              <p className='text-[#666] text-sm mb-8'>Логин: <span className='text-[#888]'>{user.login}</span></p>
+              <p className='text-[#666] text-sm mb-8'>
+                Новый аккаунт: <span className='text-[#888]'>{user.email}</span>
+              </p>
               <div className='space-y-4'>
                 <div>
                   <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Имя</label>
@@ -519,7 +538,7 @@ export default function BriefPage() {
                     autoFocus />
                 </div>
                 <div>
-                  <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Фамилия</label>
+                  <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>Фамилия <span className='text-[#444] normal-case'>(необязательно)</span></label>
                   <input type='text' value={user.lastName}
                     onChange={e => setUser(prev => ({ ...prev, lastName: e.target.value }))}
                     onKeyDown={e => e.key === 'Enter' && handleName()}
@@ -534,10 +553,10 @@ export default function BriefPage() {
                     Назад
                   </button>
                   <button onClick={handleName}
-                    disabled={!user.firstName.trim() || !user.lastName.trim() || loading}
+                    disabled={!user.firstName.trim() || loading}
                     className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed'
                     style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
-                    Продолжить
+                    {loading ? 'Создаём...' : 'Зарегистрироваться'}
                   </button>
                 </div>
               </div>
@@ -555,9 +574,9 @@ export default function BriefPage() {
                 </div>
                 <div className='flex-1 min-w-0'>
                   <p className='text-[#f0f0f0] font-semibold truncate'>{user.firstName} {user.lastName}</p>
-                  <p className='text-xs text-[#555]'>@{user.login}</p>
+                  <p className='text-xs text-[#555] truncate'>{user.email}</p>
                 </div>
-                <button onClick={() => { localStorage.removeItem('brief_login'); setStep('login'); setUser({ login: '', firstName: '', lastName: '' }) }}
+                <button onClick={() => { localStorage.removeItem('brief_email'); setStep('login'); setUser({ email: '', firstName: '', lastName: '' }) }}
                   className='text-xs text-[#444] hover:text-[#666] transition-colors'>
                   Выйти
                 </button>
@@ -659,7 +678,7 @@ export default function BriefPage() {
                   </div>
                   <div className='flex-1 min-w-0'>
                     <p className='text-sm text-[#d0d0d0] font-medium truncate'>{user.firstName} {user.lastName}</p>
-                    <p className='text-xs text-[#555] truncate'>@{user.login}</p>
+                    <p className='text-xs text-[#555] truncate'>{user.email}</p>
                   </div>
                   <span className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0'
                     style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>

@@ -8,16 +8,31 @@ export const db =
 
 if (process.env.NODE_ENV !== 'production') globalForDb.db = db
 
-// Создаём таблицы если не существуют (выполняется при первом запросе)
 let initialized = false
 export async function ensureTables() {
   if (initialized) return
+
+  // Миграция: если есть старая схема с login — дропаем и пересоздаём
+  await db.query(`
+    DO $$
+    BEGIN
+      IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'brief_users' AND column_name = 'login'
+      ) THEN
+        DROP TABLE IF EXISTS briefs;
+        DROP TABLE IF EXISTS brief_users;
+      END IF;
+    END $$;
+  `)
+
   await db.query(`
     CREATE TABLE IF NOT EXISTS brief_users (
       id SERIAL PRIMARY KEY,
-      login TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
       first_name TEXT NOT NULL,
-      last_name TEXT NOT NULL,
+      last_name TEXT NOT NULL DEFAULT '',
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
     CREATE TABLE IF NOT EXISTS briefs (

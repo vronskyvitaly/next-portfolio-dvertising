@@ -13,10 +13,10 @@ const PROJECT_LABELS: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   await ensureTables()
-  const { briefId, login } = await req.json()
+  const { briefId } = await req.json()
 
   const { rows: briefs } = await db.query(
-    'SELECT b.*, u.login, u.first_name, u.last_name FROM briefs b JOIN brief_users u ON b.user_id = u.id WHERE b.id = $1',
+    'SELECT b.*, u.email, u.first_name, u.last_name FROM briefs b JOIN brief_users u ON b.user_id = u.id WHERE b.id = $1',
     [briefId]
   )
   if (!briefs[0]) return NextResponse.json({ error: 'brief not found' }, { status: 404 })
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     <div style="background:linear-gradient(135deg,#7d2cc8,#0070f3);border-radius:16px;padding:24px 32px;margin-bottom:24px">
       <h1 style="color:white;margin:0;font-size:22px">Новый бриф</h1>
       <p style="color:rgba(255,255,255,0.75);margin:8px 0 0;font-size:15px">
-        ${brief.first_name} ${brief.last_name} · @${brief.login}
+        ${brief.first_name} ${brief.last_name} · ${brief.email}
       </p>
     </div>
     <div style="background:#111;border-radius:16px;padding:24px;border:1px solid rgba(255,255,255,0.06)">

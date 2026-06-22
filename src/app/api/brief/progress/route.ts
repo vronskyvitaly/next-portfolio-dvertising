@@ -4,9 +4,9 @@ import { db, ensureTables } from '@/lib/db'
 // POST — создать новый бриф
 export async function POST(req: NextRequest) {
   await ensureTables()
-  const { login, projectType } = await req.json()
+  const { email, projectType } = await req.json()
 
-  const { rows: users } = await db.query('SELECT id FROM brief_users WHERE login = $1', [login])
+  const { rows: users } = await db.query('SELECT id FROM brief_users WHERE email = $1', [email])
   if (!users[0]) return NextResponse.json({ error: 'user not found' }, { status: 404 })
 
   const { rows } = await db.query(
