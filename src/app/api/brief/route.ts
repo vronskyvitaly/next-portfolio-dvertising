@@ -91,42 +91,49 @@ export async function POST(req: NextRequest) {
 
   await db.query('UPDATE briefs SET submitted = true, updated_at = NOW() WHERE id = $1', [briefId])
 
+  // Email отправляется в фоне — не блокируем ответ клиенту
+  sendBriefEmail(brief, briefId).catch(err => console.error('[brief] email error:', err))
+
+  return NextResponse.json({ ok: true })
+}
+
+async function sendBriefEmail(brief: Record<string, unknown>, briefId: unknown) {
   const EMAIL_USER = process.env.EMAIL_USER
   const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD
+  if (!EMAIL_USER || !EMAIL_PASSWORD) {
+    console.warn('[brief] EMAIL_USER or EMAIL_PASSWORD not set, skipping email')
+    return
+  }
 
-  if (EMAIL_USER && EMAIL_PASSWORD) {
-    const answers = brief.answers as Record<string, string>
-    const projectLabel = PROJECT_LABELS[brief.project_type] ?? brief.project_type
+  const answers = brief.answers as Record<string, string>
+  const projectLabel = PROJECT_LABELS[brief.project_type as string] ?? brief.project_type
 
-    const answersHtml = Object.entries(answers)
-      .filter(([, v]) => v?.trim())
-      .map(([k, v]) => {
-        const label = QUESTION_LABELS[k] ?? k
-        return `
-          <tr>
-            <td style="padding:10px 16px;color:#666;font-size:13px;vertical-align:top;width:38%;border-bottom:1px solid rgba(255,255,255,0.04)">${label}</td>
-            <td style="padding:10px 16px;color:#e0e0e0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04)">${String(v).replace(/\n/g, '<br/>')}</td>
-          </tr>`
-      })
-      .join('')
+  const answersHtml = Object.entries(answers)
+    .filter(([, v]) => v?.trim())
+    .map(([k, v]) => {
+      const label = QUESTION_LABELS[k] ?? k
+      return `
+        <tr>
+          <td style="padding:10px 16px;color:#666;font-size:13px;vertical-align:top;width:38%;border-bottom:1px solid rgba(255,255,255,0.04)">${label}</td>
+          <td style="padding:10px 16px;color:#e0e0e0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04)">${String(v).replace(/\n/g, '<br/>')}</td>
+        </tr>`
+    })
+    .join('')
 
-    const html = `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html>
 <body style="background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:32px 16px">
   <div style="max-width:620px;margin:0 auto">
-
     <div style="background:linear-gradient(135deg,#7d2cc8,#0070f3);border-radius:16px;padding:28px 32px;margin-bottom:20px">
       <p style="color:rgba(255,255,255,0.6);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px">Новый бриф</p>
       <h1 style="color:white;margin:0 0 4px;font-size:22px;font-weight:600">${projectLabel}</h1>
       <p style="color:rgba(255,255,255,0.75);margin:0;font-size:15px">${brief.first_name} ${brief.last_name} · ${brief.email}</p>
     </div>
-
     <div style="background:#111;border-radius:16px;border:1px solid rgba(255,255,255,0.06);overflow:hidden">
       <table style="width:100%;border-collapse:collapse">
         ${answersHtml}
       </table>
     </div>
-
     <p style="color:#333;font-size:12px;text-align:center;margin-top:24px">
       Бриф #${briefId} · ${new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
     </p>
@@ -134,25 +141,20 @@ export async function POST(req: NextRequest) {
 </body>
 </html>`
 
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.mail.ru',
-      port: 465,
-      secure: true,
-      auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD }
-    })
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.mail.ru',
+    port: 465,
+    secure: true,
+    connectionTimeout: 10000,
+    socketTimeout: 15000,
+    auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD }
+  })
 
-    try {
-      await transporter.sendMail({
-        from: `"Бриф" <${EMAIL_USER}>`,
-        to: EMAIL_USER,
-        subject: `Бриф: ${projectLabel} — ${brief.first_name} ${brief.last_name}`,
-        html
-      })
-      console.log('[brief] email sent to', EMAIL_USER)
-    } catch (err) {
-      console.error('[brief] email error:', err)
-    }
-  }
-
-  return NextResponse.json({ ok: true })
+  await transporter.sendMail({
+    from: `"Бриф" <${EMAIL_USER}>`,
+    to: EMAIL_USER,
+    subject: `Бриф: ${projectLabel} — ${brief.first_name} ${brief.last_name}`,
+    html
+  })
+  console.log('[brief] email sent to', EMAIL_USER)
 }
