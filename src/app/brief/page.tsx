@@ -270,6 +270,7 @@ export default function BriefPage() {
   const [briefId, setBriefId] = useState<number | null>(null)
   const [projectType, setProjectType] = useState('')
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [sectionIndex, setSectionIndex] = useState(0)
 
   // Список всех брифов для дашборда
   const [briefs, setBriefs] = useState<BriefRecord[]>([])
@@ -363,6 +364,7 @@ export default function BriefPage() {
   async function handleNewProject(type: string) {
     setProjectType(type)
     setAnswers({})
+    setSectionIndex(0)
     setLoading(true)
     try {
       const res = await fetch('/api/brief/progress', {
@@ -384,6 +386,7 @@ export default function BriefPage() {
     setBriefId(brief.id)
     setProjectType(brief.project_type)
     setAnswers(brief.answers ?? {})
+    setSectionIndex(0)
     setStep('questions')
   }
 
@@ -428,6 +431,9 @@ export default function BriefPage() {
   }
 
   const progress = calcProgress(answers)
+  const currentSection = QUESTION_SECTIONS[sectionIndex]
+  const isFirstSection = sectionIndex === 0
+  const isLastSection = sectionIndex === QUESTION_SECTIONS.length - 1
 
   const STEPS_MAP: Record<Step, number> = { login: 1, name: 2, dashboard: 2, 'project-type': 3, questions: 4, success: 4 }
   const totalSteps = 4
@@ -643,7 +649,7 @@ export default function BriefPage() {
           {step === 'questions' && (
             <div>
               {/* Плашка пользователя + тип */}
-              <div className='flex items-center gap-3 p-3 rounded-xl mb-6'
+              <div className='flex items-center gap-3 p-3 rounded-xl mb-5'
                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div className='w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold text-white'
                   style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
@@ -653,65 +659,76 @@ export default function BriefPage() {
                   <p className='text-sm text-[#d0d0d0] font-medium truncate'>{user.firstName} {user.lastName}</p>
                   <p className='text-xs text-[#555] truncate'>@{user.login}</p>
                 </div>
-                <div className='flex items-center gap-2 shrink-0'>
-                  <span className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs'
-                    style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>
-                    {PROJECT_TYPES.find(p => p.id === projectType)?.icon}
-                    {' '}{PROJECT_TYPES.find(p => p.id === projectType)?.label}
+                <span className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0'
+                  style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>
+                  {PROJECT_TYPES.find(p => p.id === projectType)?.icon}
+                  {' '}{PROJECT_TYPES.find(p => p.id === projectType)?.label}
+                </span>
+              </div>
+
+              {/* Прогресс по секциям */}
+              <div className='mb-6'>
+                <div className='flex items-center justify-between mb-2'>
+                  <span className='text-xs text-[#555]'>
+                    Раздел {sectionIndex + 1} из {QUESTION_SECTIONS.length} — {currentSection.title}
                   </span>
+                  <span className='text-xs text-[#555]'>заполнено {progress}%</span>
+                </div>
+                <div className='flex gap-1'>
+                  {QUESTION_SECTIONS.map((_, i) => (
+                    <div key={i} className='flex-1 h-1 rounded-full overflow-hidden' style={{ background: 'rgba(255,255,255,0.05)' }}>
+                      <div className='h-full rounded-full transition-all duration-300'
+                        style={{
+                          width: i < sectionIndex ? '100%' : i === sectionIndex ? '100%' : '0%',
+                          background: i < sectionIndex
+                            ? 'rgba(74,222,128,0.5)'
+                            : 'linear-gradient(90deg, #7d2cc8, #0070f3)',
+                          opacity: i > sectionIndex ? 0 : 1
+                        }} />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Прогресс заполнения */}
-              <div className='flex items-center gap-2 mb-6'>
-                <div className='flex-1 h-1 bg-white/5 rounded-full overflow-hidden'>
-                  <div className='h-full rounded-full transition-all duration-300'
-                    style={{ width: `${progress}%`, background: 'linear-gradient(90deg, #7d2cc8, #0070f3)' }} />
-                </div>
-                <span className='text-xs text-[#555]'>заполнено {progress}%</span>
-              </div>
-
-              <div className='space-y-8'>
-                {QUESTION_SECTIONS.map((section, si) => (
-                  <div key={si}>
-                    {/* Разделитель секции */}
-                    <div className='flex items-center gap-3 mb-5'>
-                      <div className='flex-1 h-px' style={{ background: 'rgba(255,255,255,0.06)' }} />
-                      <span className='text-[10px] text-[#444] uppercase tracking-widest shrink-0'>{section.title}</span>
-                      <div className='flex-1 h-px' style={{ background: 'rgba(255,255,255,0.06)' }} />
-                    </div>
-                    <div className='space-y-5'>
-                      {section.questions.map(q => (
-                        <div key={q.id}>
-                          <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>
-                            {q.label}
-                            {q.required && <span className='text-purple-400 ml-1'>*</span>}
-                          </label>
-                          <textarea value={answers[q.id] ?? ''}
-                            onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
-                            placeholder={q.placeholder} rows={3}
-                            className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all'
-                            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                            onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
-                            onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
-                        </div>
-                      ))}
-                    </div>
+              {/* Вопросы текущего раздела */}
+              <div className='space-y-5'>
+                {currentSection.questions.map(q => (
+                  <div key={q.id}>
+                    <label className='block text-xs text-[#555] uppercase tracking-wider mb-2'>
+                      {q.label}
+                      {q.required && <span className='text-purple-400 ml-1'>*</span>}
+                    </label>
+                    <textarea value={answers[q.id] ?? ''}
+                      onChange={e => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                      placeholder={q.placeholder} rows={3}
+                      className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all'
+                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
+                      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
                   </div>
                 ))}
               </div>
 
               <div className='flex gap-3 pt-6'>
-                <button onClick={handleBackToDashboard}
+                <button
+                  onClick={isFirstSection ? handleBackToDashboard : () => setSectionIndex(i => i - 1)}
                   className='flex-1 py-3 rounded-xl text-sm text-[#666] transition-all hover:text-[#999]'
                   style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
-                  К проектам
+                  {isFirstSection ? 'К проектам' : '← Назад'}
                 </button>
-                <button onClick={handleSubmit} disabled={sending}
-                  className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
-                  style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
-                  {sending ? 'Отправляем...' : 'Отправить бриф'}
-                </button>
+                {isLastSection ? (
+                  <button onClick={handleSubmit} disabled={sending}
+                    className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
+                    style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
+                    {sending ? 'Отправляем...' : 'Отправить бриф'}
+                  </button>
+                ) : (
+                  <button onClick={() => setSectionIndex(i => i + 1)}
+                    className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90'
+                    style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
+                    Далее →
+                  </button>
+                )}
               </div>
             </div>
           )}
