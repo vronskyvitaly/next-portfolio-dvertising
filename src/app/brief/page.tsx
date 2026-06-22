@@ -648,47 +648,50 @@ export default function BriefPage() {
           {/* ВОПРОСЫ */}
           {step === 'questions' && (
             <div>
-              {/* Плашка пользователя + тип */}
-              <div className='flex items-center gap-3 p-3 rounded-xl mb-5'
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className='w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold text-white'
-                  style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
-                  {user.firstName.charAt(0).toUpperCase()}
+              {/* Sticky-шапка: пользователь + прогресс по секциям */}
+              <div className='sticky top-0 z-10 -mx-8 -mt-8 px-8 pt-6 pb-4 rounded-t-2xl' style={{ background: '#111' }}>
+                {/* Плашка пользователя + тип */}
+                <div className='flex items-center gap-3 p-3 rounded-xl mb-4'
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className='w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold text-white'
+                    style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
+                    {user.firstName.charAt(0).toUpperCase()}
+                  </div>
+                  <div className='flex-1 min-w-0'>
+                    <p className='text-sm text-[#d0d0d0] font-medium truncate'>{user.firstName} {user.lastName}</p>
+                    <p className='text-xs text-[#555] truncate'>@{user.login}</p>
+                  </div>
+                  <span className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0'
+                    style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>
+                    {PROJECT_TYPES.find(p => p.id === projectType)?.icon}
+                    {' '}{PROJECT_TYPES.find(p => p.id === projectType)?.label}
+                  </span>
                 </div>
-                <div className='flex-1 min-w-0'>
-                  <p className='text-sm text-[#d0d0d0] font-medium truncate'>{user.firstName} {user.lastName}</p>
-                  <p className='text-xs text-[#555] truncate'>@{user.login}</p>
+
+                {/* Прогресс по секциям */}
+                <div className='mb-2'>
+                  <div className='flex items-center justify-between mb-2'>
+                    <span className='text-xs text-[#555]'>
+                      Раздел {sectionIndex + 1} из {QUESTION_SECTIONS.length} — {currentSection.title}
+                    </span>
+                    <span className='text-xs text-[#555]'>{progress}%</span>
+                  </div>
+                  <div className='flex gap-1'>
+                    {QUESTION_SECTIONS.map((_, i) => (
+                      <div key={i} className='flex-1 h-1 rounded-full overflow-hidden' style={{ background: 'rgba(255,255,255,0.05)' }}>
+                        <div className='h-full rounded-full transition-all duration-300'
+                          style={{
+                            width: i <= sectionIndex ? '100%' : '0%',
+                            background: i < sectionIndex ? 'rgba(74,222,128,0.5)' : 'linear-gradient(90deg, #7d2cc8, #0070f3)'
+                          }} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <span className='flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs shrink-0'
-                  style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>
-                  {PROJECT_TYPES.find(p => p.id === projectType)?.icon}
-                  {' '}{PROJECT_TYPES.find(p => p.id === projectType)?.label}
-                </span>
               </div>
 
-              {/* Прогресс по секциям */}
-              <div className='mb-6'>
-                <div className='flex items-center justify-between mb-2'>
-                  <span className='text-xs text-[#555]'>
-                    Раздел {sectionIndex + 1} из {QUESTION_SECTIONS.length} — {currentSection.title}
-                  </span>
-                  <span className='text-xs text-[#555]'>заполнено {progress}%</span>
-                </div>
-                <div className='flex gap-1'>
-                  {QUESTION_SECTIONS.map((_, i) => (
-                    <div key={i} className='flex-1 h-1 rounded-full overflow-hidden' style={{ background: 'rgba(255,255,255,0.05)' }}>
-                      <div className='h-full rounded-full transition-all duration-300'
-                        style={{
-                          width: i < sectionIndex ? '100%' : i === sectionIndex ? '100%' : '0%',
-                          background: i < sectionIndex
-                            ? 'rgba(74,222,128,0.5)'
-                            : 'linear-gradient(90deg, #7d2cc8, #0070f3)',
-                          opacity: i > sectionIndex ? 0 : 1
-                        }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* Отступ под sticky-шапкой */}
+              <div className='pt-5' />
 
               {/* Вопросы текущего раздела */}
               <div className='space-y-5'>
