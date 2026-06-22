@@ -141,12 +141,17 @@ export async function POST(req: NextRequest) {
       auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD }
     })
 
-    await transporter.sendMail({
-      from: `"Бриф" <${EMAIL_USER}>`,
-      to: EMAIL_USER,
-      subject: `Бриф: ${projectLabel} — ${brief.first_name} ${brief.last_name}`,
-      html
-    })
+    try {
+      await transporter.sendMail({
+        from: `"Бриф" <${EMAIL_USER}>`,
+        to: EMAIL_USER,
+        subject: `Бриф: ${projectLabel} — ${brief.first_name} ${brief.last_name}`,
+        html
+      })
+      console.log('[brief] email sent to', EMAIL_USER)
+    } catch (err) {
+      console.error('[brief] email error:', err)
+    }
   }
 
   return NextResponse.json({ ok: true })
