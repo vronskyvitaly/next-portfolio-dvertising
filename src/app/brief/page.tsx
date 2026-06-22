@@ -243,12 +243,48 @@ const QUESTION_SECTIONS: QuestionSection[] = [
   }
 ]
 
-function getQuestions(): Question[] {
-  return QUESTION_SECTIONS.flatMap(s => s.questions)
+const BOT_SECTIONS: QuestionSection[] = [
+  {
+    title: 'Telegram-бот',
+    questions: [
+      {
+        id: 'bot_description',
+        label: 'Подробно опишите функционал бота',
+        placeholder:
+          'Что бот должен делать? Опишите все сценарии: как пользователь взаимодействует, какие команды, что происходит в ответ. Чем подробнее — тем лучше',
+        required: true
+      },
+      {
+        id: 'bot_integrations',
+        label: 'Какие интеграции нужны?',
+        placeholder: 'CRM, Google Sheets, база данных, платежи, внешние API, другие сервисы...'
+      },
+      {
+        id: 'bot_existing_tools',
+        label: 'Какие инструменты / системы уже используете?',
+        placeholder: 'Что есть сейчас и к чему нужно подключить бота'
+      },
+      {
+        id: 'bot_deadline',
+        label: 'Дедлайн и бюджет',
+        placeholder: 'Когда нужно и на что рассчитываете?',
+        required: true
+      }
+    ]
+  }
+]
+
+function getSections(projectType: string): QuestionSection[] {
+  if (projectType === 'bot') return BOT_SECTIONS
+  return QUESTION_SECTIONS
 }
 
-function calcProgress(answers: Record<string, string>): number {
-  const qs = getQuestions()
+function getQuestions(projectType: string): Question[] {
+  return getSections(projectType).flatMap(s => s.questions)
+}
+
+function calcProgress(projectType: string, answers: Record<string, string>): number {
+  const qs = getQuestions(projectType)
   if (!qs.length) return 0
   const filled = qs.filter(q => answers[q.id]?.trim()).length
   return Math.round((filled / qs.length) * 100)
@@ -438,10 +474,11 @@ export default function BriefPage() {
     }
   }
 
-  const progress = calcProgress(answers)
-  const currentSection = QUESTION_SECTIONS[sectionIndex]
+  const sections = getSections(projectType)
+  const progress = calcProgress(projectType, answers)
+  const currentSection = sections[sectionIndex]
   const isFirstSection = sectionIndex === 0
-  const isLastSection = sectionIndex === QUESTION_SECTIONS.length - 1
+  const isLastSection = sectionIndex === sections.length - 1
 
   const STEPS_MAP: Record<Step, number> = { login: 1, name: 2, dashboard: 2, 'project-type': 3, questions: 4, success: 4 }
   const totalSteps = 4
@@ -587,7 +624,7 @@ export default function BriefPage() {
                 <div className='space-y-3 mb-6'>
                   <p className='text-xs text-[#555] uppercase tracking-widest mb-4'>Ваши проекты</p>
                   {briefs.map(b => {
-                    const prog = calcProgress(b.answers ?? {})
+                    const prog = calcProgress(b.project_type, b.answers ?? {})
                     const pt = PROJECT_TYPES.find(p => p.id === b.project_type)
                     return (
                       <div key={b.id} className='rounded-xl p-4 transition-all'
@@ -691,12 +728,12 @@ export default function BriefPage() {
                 <div className='mb-2'>
                   <div className='flex items-center justify-between mb-2'>
                     <span className='text-xs text-[#555]'>
-                      Раздел {sectionIndex + 1} из {QUESTION_SECTIONS.length} — {currentSection.title}
+                      Раздел {sectionIndex + 1} из {sections.length} — {currentSection.title}
                     </span>
                     <span className='text-xs text-[#555]'>{progress}%</span>
                   </div>
                   <div className='flex gap-1'>
-                    {QUESTION_SECTIONS.map((_, i) => (
+                    {sections.map((_, i) => (
                       <div key={i} className='flex-1 h-1 rounded-full overflow-hidden' style={{ background: 'rgba(255,255,255,0.05)' }}>
                         <div className='h-full rounded-full transition-all duration-300'
                           style={{
