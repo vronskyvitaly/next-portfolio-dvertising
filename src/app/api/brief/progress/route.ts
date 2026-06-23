@@ -26,15 +26,21 @@ export async function DELETE(req: NextRequest) {
   return NextResponse.json({ ok: true })
 }
 
-// PUT — обновить существующий бриф
+// PUT — обновить бриф (ответы или статус архива)
 export async function PUT(req: NextRequest) {
   await ensureTables()
-  const { briefId, projectType, answers } = await req.json()
+  const body = await req.json()
+  const { briefId } = body
   if (!briefId) return NextResponse.json({ error: 'briefId required' }, { status: 400 })
 
-  await db.query(
-    'UPDATE briefs SET project_type = $1, answers = $2, updated_at = NOW() WHERE id = $3',
-    [projectType, JSON.stringify(answers), briefId]
-  )
+  if (typeof body.archived === 'boolean') {
+    await db.query('UPDATE briefs SET archived = $1, updated_at = NOW() WHERE id = $2', [body.archived, briefId])
+  } else {
+    const { projectType, answers } = body
+    await db.query(
+      'UPDATE briefs SET project_type = $1, answers = $2, updated_at = NOW() WHERE id = $3',
+      [projectType, JSON.stringify(answers), briefId]
+    )
+  }
   return NextResponse.json({ ok: true })
 }

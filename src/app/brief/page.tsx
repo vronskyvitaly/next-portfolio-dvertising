@@ -15,6 +15,7 @@ interface BriefRecord {
   project_type: string
   answers: Record<string, string>
   submitted: boolean
+  archived: boolean
   updated_at: string
 }
 
@@ -449,6 +450,7 @@ export default function BriefPage() {
   // Список всех брифов для дашборда
   const [briefs, setBriefs] = useState<BriefRecord[]>([])
   const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [briefFilter, setBriefFilter] = useState<'all' | 'active' | 'sent' | 'archive'>('all')
 
   const loadUserBriefs = useCallback(async (email: string) => {
     const res = await fetch(`/api/brief/user?email=${encodeURIComponent(email)}`)
@@ -572,6 +574,16 @@ export default function BriefPage() {
     }).catch(() => {})
     setBriefs(prev => prev.filter(b => b.id !== briefId))
     setDeletingId(null)
+  }
+
+  async function handleArchiveBrief(briefId: number) {
+    await fetch('/api/brief/progress', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ briefId, archived: true })
+    }).catch(() => {})
+    setBriefs(prev => prev.map(b => b.id === briefId ? { ...b, archived: true } : b))
+    setBriefFilter('archive')
   }
 
   function handleContinueBrief(brief: BriefRecord) {
@@ -770,9 +782,39 @@ export default function BriefPage() {
               {/* Список проектов */}
               {briefs.length > 0 && (
                 <div className='mb-6'>
-                  <p className='text-xs text-[#555] uppercase tracking-widest mb-3'>Ваши проекты</p>
-                <div className='space-y-2 max-h-[52vh] overflow-y-auto pr-1'>
-                  {briefs.map(b => {
+                  {/* Фильтр */}
+                  <div className='flex items-center gap-1 mb-3 flex-wrap'>
+                    {(['all', 'active', 'sent', 'archive'] as const).map(f => {
+                      const labels = { all: 'Все', active: 'В процессе', sent: 'Отправленные', archive: 'Архив' }
+                      const count = {
+                        all: briefs.filter(b => !b.archived).length,
+                        active: briefs.filter(b => !b.archived && !b.submitted).length,
+                        sent: briefs.filter(b => !b.archived && b.submitted).length,
+                        archive: briefs.filter(b => b.archived).length
+                      }[f]
+                      return (
+                        <button key={f} onClick={() => setBriefFilter(f)}
+                          className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer'
+                          style={briefFilter === f
+                            ? { background: 'rgba(125,44,200,0.18)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.3)' }
+                            : { background: 'rgba(255,255,255,0.03)', color: '#555', border: '1px solid rgba(255,255,255,0.06)' }
+                          }>
+                          {labels[f]}
+                          <span className='px-1 rounded text-[10px]'
+                            style={{ background: briefFilter === f ? 'rgba(125,44,200,0.25)' : 'rgba(255,255,255,0.05)', color: briefFilter === f ? '#a78bfa' : '#444' }}>
+                            {count}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                <div className='space-y-2 max-h-[48vh] overflow-y-auto pr-1'>
+                  {briefs.filter(b => {
+                    if (briefFilter === 'archive') return b.archived
+                    if (briefFilter === 'active') return !b.archived && !b.submitted
+                    if (briefFilter === 'sent') return !b.archived && b.submitted
+                    return !b.archived
+                  }).map(b => {
                     const prog = calcProgress(b.project_type, b.answers ?? {})
                     const pt = PROJECT_TYPES.find(p => p.id === b.project_type)
                     return (
@@ -792,18 +834,41 @@ export default function BriefPage() {
                               {b.submitted ? 'Отправлен' : 'Изменён'} {formatDate(b.updated_at)}
                             </p>
                           </div>
+                          {b.submitted && !b.archived && (
+                            <button onClick={() => handleArchiveBrief(b.id)}
+                              className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 shrink-0 cursor-pointer'
+                              style={{ background: 'rgba(255,255,255,0.04)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}
+                              title='В архив'>
+                              В архив
+                            </button>
+                          )}
+                          {b.archived && (
+                            <button onClick={async () => {
+                              await fetch('/api/brief/progress', {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ briefId: b.id, archived: false })
+                              }).catch(() => {})
+                              setBriefs(prev => prev.map(x => x.id === b.id ? { ...x, archived: false } : x))
+                              setBriefFilter('sent')
+                            }}
+                              className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 shrink-0 cursor-pointer'
+                              style={{ background: 'rgba(255,255,255,0.04)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+                              Восстановить
+                            </button>
+                          )}
                           {!b.submitted && (
                             <div className='flex items-center gap-2 shrink-0'>
                               {deletingId === b.id ? (
                                 <>
                                   <span className='text-xs text-[#888]'>Удалить?</span>
                                   <button onClick={() => handleDeleteBrief(b.id)}
-                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(239,68,68,0.12)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>
                                     Да
                                   </button>
                                   <button onClick={() => setDeletingId(null)}
-                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(255,255,255,0.04)', color: '#666', border: '1px solid rgba(255,255,255,0.08)' }}>
                                     Нет
                                   </button>
@@ -811,7 +876,7 @@ export default function BriefPage() {
                               ) : (
                                 <>
                                   <button onClick={() => setDeletingId(b.id)}
-                                    className='p-1.5 rounded-lg transition-all hover:opacity-80'
+                                    className='p-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ color: '#444', border: '1px solid rgba(255,255,255,0.06)' }}
                                     title='Удалить проект'>
                                     <svg width='14' height='14' viewBox='0 0 24 24' fill='none'>
@@ -819,7 +884,7 @@ export default function BriefPage() {
                                     </svg>
                                   </button>
                                   <button onClick={() => handleContinueBrief(b)}
-                                    className='text-xs px-3 py-1.5 rounded-lg transition-all hover:opacity-80'
+                                    className='text-xs px-3 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(125,44,200,0.15)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.2)' }}>
                                     Продолжить
                                   </button>

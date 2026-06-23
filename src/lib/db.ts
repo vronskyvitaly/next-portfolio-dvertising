@@ -50,5 +50,11 @@ export async function ensureTables() {
       updated_at TIMESTAMPTZ DEFAULT NOW()
     );
   `)
+
+  // Миграция: добавить archived если ещё нет
+  await db.query(`
+    ALTER TABLE briefs ADD COLUMN IF NOT EXISTS archived BOOLEAN NOT NULL DEFAULT false;
+  `)
+
   initialized = true
 }

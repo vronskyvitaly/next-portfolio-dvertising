@@ -51,23 +51,9 @@ export default function Contact() {
                 Просто напишите что хотите сделать — обсудим детали в переписке и придём к решению
               </p>
             </div>
-            <div className='flex items-center gap-2 mt-5 text-[#60a5fa] text-sm font-medium'>
-              @vitalyvronsky
-              <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                className='transition-transform group-hover:translate-x-1'
-              >
-                <path
-                  d='M5 12h14M13 6l6 6-6 6'
-                  stroke='currentColor'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                />
-              </svg>
+            <div className='mt-5 w-full py-3 rounded-xl text-center text-sm font-semibold text-white transition-all group-hover:opacity-90'
+              style={{ background: 'linear-gradient(135deg, #0070f3, #1d9bf0)' }}>
+              Написать в Telegram →
             </div>
           </a>
 
@@ -125,26 +111,9 @@ export default function Contact() {
                 предложу решение
               </p>
             </div>
-            <div
-              className='flex items-center gap-2 mt-5 text-sm font-medium'
-              style={{ color: '#c084fc' }}
-            >
-              Начать
-              <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                className='transition-transform group-hover:translate-x-1'
-              >
-                <path
-                  d='M5 12h14M13 6l6 6-6 6'
-                  stroke='currentColor'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                />
-              </svg>
+            <div className='mt-5 w-full py-3 rounded-xl text-center text-sm font-semibold text-white transition-all group-hover:opacity-90'
+              style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
+              Описать проект →
             </div>
           </a>
         </div>
