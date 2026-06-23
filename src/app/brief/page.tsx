@@ -782,10 +782,10 @@ export default function BriefPage() {
               {/* Список проектов */}
               {briefs.length > 0 && (
                 <div className='mb-6'>
-                  {/* Фильтр */}
-                  <div className='flex items-center gap-1 mb-3 flex-wrap'>
+                  {/* Фильтр — горизонтальный скролл */}
+                  <div className='flex gap-1 mb-3 overflow-x-auto pb-1' style={{ scrollbarWidth: 'none' }}>
                     {(['all', 'active', 'sent', 'archive'] as const).map(f => {
-                      const labels = { all: 'Все', active: 'В процессе', sent: 'Отправленные', archive: 'Архив' }
+                      const labels = { all: 'Все', active: 'В процессе', sent: 'Отправлен.', archive: 'Архив' }
                       const count = {
                         all: briefs.filter(b => !b.archived).length,
                         active: briefs.filter(b => !b.archived && !b.submitted).length,
@@ -794,7 +794,7 @@ export default function BriefPage() {
                       }[f]
                       return (
                         <button key={f} onClick={() => setBriefFilter(f)}
-                          className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer'
+                          className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer shrink-0'
                           style={briefFilter === f
                             ? { background: 'rgba(125,44,200,0.18)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.3)' }
                             : { background: 'rgba(255,255,255,0.03)', color: '#555', border: '1px solid rgba(255,255,255,0.06)' }
@@ -818,57 +818,56 @@ export default function BriefPage() {
                     const prog = calcProgress(b.project_type, b.answers ?? {})
                     const pt = PROJECT_TYPES.find(p => p.id === b.project_type)
                     return (
-                      <div key={b.id} className='rounded-xl p-3 transition-all'
+                      <div key={b.id} className='rounded-xl px-3 py-2.5 transition-all'
                         style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div className='flex items-center gap-2.5'>
-                          <span className='text-lg shrink-0'>{pt?.icon ?? '📋'}</span>
-                          <div className='flex-1 min-w-0'>
-                            <div className='flex items-center gap-2'>
-                              <span className='text-[#e0e0e0] text-sm font-medium truncate'>{pt?.label ?? b.project_type}</span>
-                              {b.submitted
-                                ? <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(34,197,94,0.12)', color: '#4ade80' }}>Отправлен</span>
-                                : <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>{prog}%</span>
-                              }
-                            </div>
-                            <p className='text-[11px] text-[#444] mt-0.5'>
-                              {b.submitted ? 'Отправлен' : 'Изменён'} {formatDate(b.updated_at)}
-                            </p>
-                          </div>
-                          {b.submitted && !b.archived && (
-                            <button onClick={() => handleArchiveBrief(b.id)}
-                              className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 shrink-0 cursor-pointer'
-                              style={{ background: 'rgba(255,255,255,0.04)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}
-                              title='В архив'>
-                              В архив
-                            </button>
-                          )}
-                          {b.archived && (
-                            <button onClick={async () => {
-                              await fetch('/api/brief/progress', {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ briefId: b.id, archived: false })
-                              }).catch(() => {})
-                              setBriefs(prev => prev.map(x => x.id === b.id ? { ...x, archived: false } : x))
-                              setBriefFilter('sent')
-                            }}
-                              className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 shrink-0 cursor-pointer'
-                              style={{ background: 'rgba(255,255,255,0.04)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
-                              Восстановить
-                            </button>
-                          )}
-                          {!b.submitted && (
-                            <div className='flex items-center gap-2 shrink-0'>
-                              {deletingId === b.id ? (
+                        {/* Строка 1: иконка + название + бейдж */}
+                        <div className='flex items-center gap-2 mb-1.5'>
+                          <span className='text-base shrink-0'>{pt?.icon ?? '📋'}</span>
+                          <span className='text-[#e0e0e0] text-sm font-medium truncate flex-1'>{pt?.label ?? b.project_type}</span>
+                          {b.submitted
+                            ? <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(34,197,94,0.12)', color: '#4ade80' }}>Отправлен</span>
+                            : <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>{prog}%</span>
+                          }
+                        </div>
+                        {/* Строка 2: дата + кнопки */}
+                        <div className='flex items-center justify-between pl-6'>
+                          <p className='text-[11px] text-[#444]'>
+                            {b.submitted ? 'Отправлен' : 'Изменён'} {formatDate(b.updated_at)}
+                          </p>
+                          <div className='flex items-center gap-1.5'>
+                            {b.submitted && !b.archived && (
+                              <button onClick={() => handleArchiveBrief(b.id)}
+                                className='text-[11px] px-2 py-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                style={{ background: 'rgba(255,255,255,0.04)', color: '#666', border: '1px solid rgba(255,255,255,0.07)' }}>
+                                В архив
+                              </button>
+                            )}
+                            {b.archived && (
+                              <button onClick={async () => {
+                                await fetch('/api/brief/progress', {
+                                  method: 'PUT',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ briefId: b.id, archived: false })
+                                }).catch(() => {})
+                                setBriefs(prev => prev.map(x => x.id === b.id ? { ...x, archived: false } : x))
+                                setBriefFilter('sent')
+                              }}
+                                className='text-[11px] px-2 py-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                style={{ background: 'rgba(255,255,255,0.04)', color: '#666', border: '1px solid rgba(255,255,255,0.07)' }}>
+                                Восстановить
+                              </button>
+                            )}
+                            {!b.submitted && (
+                              deletingId === b.id ? (
                                 <>
-                                  <span className='text-xs text-[#888]'>Удалить?</span>
+                                  <span className='text-[11px] text-[#666]'>Удалить?</span>
                                   <button onClick={() => handleDeleteBrief(b.id)}
-                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                    className='text-[11px] px-2 py-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(239,68,68,0.12)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>
                                     Да
                                   </button>
                                   <button onClick={() => setDeletingId(null)}
-                                    className='text-xs px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                    className='text-[11px] px-2 py-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(255,255,255,0.04)', color: '#666', border: '1px solid rgba(255,255,255,0.08)' }}>
                                     Нет
                                   </button>
@@ -876,22 +875,22 @@ export default function BriefPage() {
                               ) : (
                                 <>
                                   <button onClick={() => setDeletingId(b.id)}
-                                    className='p-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                    className='p-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ color: '#444', border: '1px solid rgba(255,255,255,0.06)' }}
-                                    title='Удалить проект'>
-                                    <svg width='14' height='14' viewBox='0 0 24 24' fill='none'>
+                                    title='Удалить'>
+                                    <svg width='13' height='13' viewBox='0 0 24 24' fill='none'>
                                       <path d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
                                     </svg>
                                   </button>
                                   <button onClick={() => handleContinueBrief(b)}
-                                    className='text-xs px-3 py-1.5 rounded-lg transition-all hover:opacity-80 cursor-pointer'
+                                    className='text-[11px] px-2.5 py-1 rounded-lg transition-all hover:opacity-80 cursor-pointer'
                                     style={{ background: 'rgba(125,44,200,0.15)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.2)' }}>
-                                    Продолжить
+                                    Открыть
                                   </button>
                                 </>
-                              )}
-                            </div>
-                          )}
+                              )
+                            )}
+                          </div>
                         </div>
                       </div>
                     )

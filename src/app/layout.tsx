@@ -41,6 +41,12 @@ export default function RootLayout({
         className='min-h-full flex flex-col bg-[#0a0a0a] text-[#f0f0f0]'
         suppressHydrationWarning
       >
+        {/* Блокировка pinch-zoom на iOS (user-scalable=no игнорируется с iOS 10+) */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          document.addEventListener('gesturestart', function(e){e.preventDefault();});
+          document.addEventListener('gesturechange', function(e){e.preventDefault();});
+          document.addEventListener('gestureend', function(e){e.preventDefault();});
+        `}} />
         {children}
       </body>
     </html>
