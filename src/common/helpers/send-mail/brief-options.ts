@@ -73,21 +73,33 @@ const QUESTION_LABELS: Record<string, string> = {
   auto_deadline: 'Дедлайн и бюджет'
 }
 
+const PROJECT_QUESTIONS: Record<string, string[]> = {
+  site:       ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
+  shop:       ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
+  webapp:     ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
+  other:      ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
+  bot:        ['bot_description','bot_integrations','bot_existing_tools','bot_deadline'],
+  ai:         ['ai_task','ai_type','ai_example','ai_data','ai_systems','ai_stack','ai_quality','ai_deadline'],
+  automation: ['auto_process','auto_trigger','auto_result','auto_tools','auto_data_flow','auto_volume','auto_errors','auto_success','auto_deadline'],
+}
+
 export const briefOptions = (
   brief: Record<string, unknown>,
   briefId: unknown
 ) => {
   const answers = brief.answers as Record<string, string>
-  const projectLabel = PROJECT_LABELS[brief.project_type as string] ?? brief.project_type
+  const projectType = brief.project_type as string
+  const projectLabel = PROJECT_LABELS[projectType] ?? projectType
+  const questionIds = PROJECT_QUESTIONS[projectType] ?? Object.keys(answers)
 
-  const answersHtml = Object.entries(answers)
-    .filter(([, v]) => v?.trim())
-    .map(([k, v]) => {
+  const answersHtml = questionIds
+    .map(k => {
       const label = QUESTION_LABELS[k] ?? k
+      const v = answers[k]?.trim()
       return `
         <tr>
           <td style="padding:10px 16px;color:#666;font-size:13px;vertical-align:top;width:38%;border-bottom:1px solid rgba(255,255,255,0.04)">${label}</td>
-          <td style="padding:10px 16px;color:#e0e0e0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04)">${String(v).replace(/\n/g, '<br/>')}</td>
+          <td style="padding:10px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);${v ? 'color:#e0e0e0' : 'color:#444;font-style:italic'}">${v ? String(v).replace(/\n/g, '<br/>') : 'Пользователь не ответил'}</td>
         </tr>`
     })
     .join('')
