@@ -61,6 +61,13 @@ const QUESTION_LABELS: Record<string, string> = {
   ai_stack: 'Предпочтения по технологиям',
   ai_quality: 'Критерии оценки результата',
   ai_deadline: 'Дедлайн и бюджет',
+  // Другое
+  other_description: 'Что нужно сделать',
+  other_result: 'Ожидаемый результат',
+  other_audience: 'Для кого и в каком контексте',
+  other_references: 'Примеры или аналоги',
+  other_tech: 'Предпочтения по технологиям',
+  other_deadline: 'Дедлайн и бюджет',
   // Автоматизация бизнеса
   auto_process: 'Процесс для автоматизации',
   auto_trigger: 'Что запускает процесс',
@@ -77,7 +84,7 @@ const PROJECT_QUESTIONS: Record<string, string[]> = {
   site:       ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
   shop:       ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
   webapp:     ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
-  other:      ['description','project_type_detail','goal','audience','competitors','contacts','pages','catalog','feedback_forms','search','blog','cart','schedule','payment_method','cms','style','colors','references','logo','responsive','animation','texts','media','hosting','domain','domain_payment','products','future_updates','extra_pages','preferences','code_delivery','dev_questions'],
+  other:      ['other_description','other_result','other_audience','other_references','other_tech','other_deadline'],
   bot:        ['bot_description','bot_integrations','bot_existing_tools','bot_deadline'],
   ai:         ['ai_task','ai_type','ai_example','ai_data','ai_systems','ai_stack','ai_quality','ai_deadline'],
   automation: ['auto_process','auto_trigger','auto_result','auto_tools','auto_data_flow','auto_volume','auto_errors','auto_success','auto_deadline'],

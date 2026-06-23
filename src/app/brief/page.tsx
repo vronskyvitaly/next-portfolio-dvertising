@@ -410,10 +410,59 @@ const AUTOMATION_SECTIONS: QuestionSection[] = [
   }
 ]
 
+const OTHER_SECTIONS: QuestionSection[] = [
+  {
+    title: 'Опишите проект',
+    questions: [
+      {
+        id: 'other_description',
+        label: 'Что нужно сделать?',
+        placeholder:
+          'Опишите задачу своими словами: что это, зачем, как должно работать. Чем подробнее — тем точнее разработчик поймёт задачу',
+        required: true
+      },
+      {
+        id: 'other_result',
+        label: 'Какой результат хотите получить?',
+        placeholder:
+          'Что должно быть на выходе: сайт, приложение, скрипт, интеграция, что-то другое? Как поймёте, что задача выполнена?',
+        required: true
+      },
+      {
+        id: 'other_audience',
+        label: 'Для кого это и в каком контексте используется?',
+        placeholder: 'Кто будет пользоваться? Внутри компании или для клиентов? Какая сфера бизнеса?'
+      }
+    ]
+  },
+  {
+    title: 'Детали и сроки',
+    questions: [
+      {
+        id: 'other_references',
+        label: 'Есть ли примеры или аналоги?',
+        placeholder: 'Ссылки на похожие решения, сервисы, которые нравятся — или опишите словами'
+      },
+      {
+        id: 'other_tech',
+        label: 'Есть ли предпочтения по технологиям?',
+        placeholder: 'Конкретный язык, платформа, стек — или на усмотрение разработчика'
+      },
+      {
+        id: 'other_deadline',
+        label: 'Дедлайн и бюджет',
+        placeholder: 'Когда нужно и на что рассчитываете?',
+        required: true
+      }
+    ]
+  }
+]
+
 function getSections(projectType: string): QuestionSection[] {
   if (projectType === 'bot') return BOT_SECTIONS
   if (projectType === 'ai') return AI_SECTIONS
   if (projectType === 'automation') return AUTOMATION_SECTIONS
+  if (projectType === 'other') return OTHER_SECTIONS
   return QUESTION_SECTIONS
 }
 
