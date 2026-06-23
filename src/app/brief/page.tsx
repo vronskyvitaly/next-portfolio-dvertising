@@ -1011,7 +1011,7 @@ export default function BriefPage() {
                       placeholder={q.placeholder} rows={q.placeholder && q.placeholder.length > 80 ? 5 : 4}
                       className='w-full rounded-xl px-4 py-3 text-[#f0f0f0] text-sm outline-none resize-none transition-all placeholder:text-[#333]'
                       style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)' }}
+                      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(125,44,200,0.4)'; setOpenTooltip(null) }}
                       onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }} />
                   </div>
                 ))}
