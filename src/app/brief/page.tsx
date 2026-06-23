@@ -584,7 +584,6 @@ export default function BriefPage() {
       body: JSON.stringify({ briefId, archived: true })
     }).catch(() => {})
     setBriefs(prev => prev.map(b => b.id === briefId ? { ...b, archived: true } : b))
-    setBriefFilter('archive')
   }
 
   function handleContinueBrief(brief: BriefRecord) {
@@ -784,9 +783,9 @@ export default function BriefPage() {
               {briefs.length > 0 && (
                 <div className='mb-6'>
                   {/* Фильтр — горизонтальный скролл */}
-                  <div className='flex gap-1 mb-3 overflow-x-auto pb-1' style={{ scrollbarWidth: 'none' }}>
+                  <div className='grid grid-cols-4 gap-1 mb-3'>
                     {(['all', 'active', 'sent', 'archive'] as const).map(f => {
-                      const labels = { all: 'Все', active: 'В процессе', sent: 'Отправлен.', archive: 'Архив' }
+                      const labels = { all: 'Все', active: 'Черновики', sent: 'Отправлено', archive: 'Архив' }
                       const count = {
                         all: briefs.filter(b => !b.archived).length,
                         active: briefs.filter(b => !b.archived && !b.submitted).length,
@@ -795,14 +794,14 @@ export default function BriefPage() {
                       }[f]
                       return (
                         <button key={f} onClick={() => setBriefFilter(f)}
-                          className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer shrink-0'
+                          className='flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg text-xs transition-all cursor-pointer'
                           style={briefFilter === f
                             ? { background: 'rgba(125,44,200,0.18)', color: '#c084fc', border: '1px solid rgba(125,44,200,0.3)' }
                             : { background: 'rgba(255,255,255,0.03)', color: '#555', border: '1px solid rgba(255,255,255,0.06)' }
                           }>
-                          {labels[f]}
-                          <span className='px-1 rounded text-[10px]'
-                            style={{ background: briefFilter === f ? 'rgba(125,44,200,0.25)' : 'rgba(255,255,255,0.05)', color: briefFilter === f ? '#a78bfa' : '#444' }}>
+                          <span className='text-[11px] font-medium leading-none'>{labels[f]}</span>
+                          <span className='text-[10px] leading-none'
+                            style={{ color: briefFilter === f ? '#a78bfa' : '#444' }}>
                             {count}
                           </span>
                         </button>
@@ -919,12 +918,12 @@ export default function BriefPage() {
                 Что нужно сделать?
               </h2>
               <p className='text-[#666] text-sm mb-6'>Выберите тип проекта</p>
-              <div className='grid grid-cols-2 gap-3'>
+              <div className='flex flex-col gap-2 sm:grid sm:grid-cols-2 sm:gap-3'>
                 {PROJECT_TYPES.map(pt => (
                   <button key={pt.id} onClick={() => handleNewProject(pt.id)} disabled={loading}
-                    className='flex flex-col items-start gap-2 p-4 rounded-xl text-left transition-all hover:scale-[1.02] disabled:opacity-60'
+                    className='flex items-center gap-3 p-3 sm:flex-col sm:items-start sm:gap-2 sm:p-4 rounded-xl text-left transition-all hover:scale-[1.02] disabled:opacity-60 cursor-pointer'
                     style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <span className='text-2xl'>{pt.icon}</span>
+                    <span className='text-xl sm:text-2xl shrink-0'>{pt.icon}</span>
                     <span className='text-[#d0d0d0] text-sm font-medium leading-tight'>{pt.label}</span>
                   </button>
                 ))}
