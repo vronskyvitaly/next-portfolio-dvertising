@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   icons: {
-    icon: [{ url: '/favicon.ico', sizes: 'any' }],
-    shortcut: '/favicon.ico'
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', sizes: '120x120', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/favicon.png',
   }
 }
 
