@@ -769,33 +769,26 @@ export default function BriefPage() {
 
               {/* Список проектов */}
               {briefs.length > 0 && (
-                <div className='space-y-3 mb-6'>
-                  <p className='text-xs text-[#555] uppercase tracking-widest mb-4'>Ваши проекты</p>
+                <div className='mb-6'>
+                  <p className='text-xs text-[#555] uppercase tracking-widest mb-3'>Ваши проекты</p>
+                <div className='space-y-2 max-h-[52vh] overflow-y-auto pr-1'>
                   {briefs.map(b => {
                     const prog = calcProgress(b.project_type, b.answers ?? {})
                     const pt = PROJECT_TYPES.find(p => p.id === b.project_type)
                     return (
-                      <div key={b.id} className='rounded-xl p-4 transition-all'
+                      <div key={b.id} className='rounded-xl p-3 transition-all'
                         style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div className='flex items-start gap-3'>
-                          <span className='text-xl mt-0.5 shrink-0'>{pt?.icon ?? '📋'}</span>
+                        <div className='flex items-center gap-2.5'>
+                          <span className='text-lg shrink-0'>{pt?.icon ?? '📋'}</span>
                           <div className='flex-1 min-w-0'>
-                            <div className='flex items-center gap-2 mb-1 flex-wrap'>
-                              <span className='text-[#e0e0e0] text-sm font-medium'>{pt?.label ?? b.project_type}</span>
+                            <div className='flex items-center gap-2'>
+                              <span className='text-[#e0e0e0] text-sm font-medium truncate'>{pt?.label ?? b.project_type}</span>
                               {b.submitted
-                                ? <span className='text-xs px-2 py-0.5 rounded-full' style={{ background: 'rgba(34,197,94,0.12)', color: '#4ade80' }}>Отправлен</span>
-                                : <span className='text-xs px-2 py-0.5 rounded-full' style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>В процессе</span>
+                                ? <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(34,197,94,0.12)', color: '#4ade80' }}>Отправлен</span>
+                                : <span className='text-[10px] px-1.5 py-0.5 rounded-full shrink-0' style={{ background: 'rgba(125,44,200,0.12)', color: '#a78bfa' }}>{prog}%</span>
                               }
                             </div>
-                            {/* Progress bar */}
-                            <div className='flex items-center gap-2 mb-2'>
-                              <div className='flex-1 h-1 bg-white/5 rounded-full overflow-hidden'>
-                                <div className='h-full rounded-full transition-all'
-                                  style={{ width: `${prog}%`, background: b.submitted ? 'rgba(74,222,128,0.6)' : 'linear-gradient(90deg, #7d2cc8, #0070f3)' }} />
-                              </div>
-                              <span className='text-xs text-[#555] shrink-0'>{prog}%</span>
-                            </div>
-                            <p className='text-xs text-[#444]'>
+                            <p className='text-[11px] text-[#444] mt-0.5'>
                               {b.submitted ? 'Отправлен' : 'Изменён'} {formatDate(b.updated_at)}
                             </p>
                           </div>
@@ -838,6 +831,7 @@ export default function BriefPage() {
                       </div>
                     )
                   })}
+                </div>
                 </div>
               )}
 
