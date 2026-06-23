@@ -440,6 +440,7 @@ export default function BriefPage() {
   const [loginError, setLoginError] = useState('')
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
+  const [openTooltip, setOpenTooltip] = useState<string | null>(null)
 
   // Текущий редактируемый бриф
   const [briefId, setBriefId] = useState<number | null>(null)
@@ -990,15 +991,19 @@ export default function BriefPage() {
                     <label className='flex items-center gap-1.5 text-xs text-[#555] uppercase tracking-wider mb-2'>
                       {q.label}
                       {q.required && <span className='text-purple-400'>*</span>}
-                      <span className='relative group ml-auto normal-case'>
-                        <span className='w-4 h-4 rounded-full flex items-center justify-center text-[10px] cursor-help select-none'
-                          style={{ background: 'rgba(255,255,255,0.05)', color: '#444', border: '1px solid rgba(255,255,255,0.07)' }}>
+                      <span className='relative ml-auto normal-case'>
+                        <span
+                          onClick={e => { e.preventDefault(); setOpenTooltip(openTooltip === q.id ? null : q.id) }}
+                          className='w-4 h-4 rounded-full flex items-center justify-center text-[10px] cursor-pointer select-none'
+                          style={{ background: 'rgba(255,255,255,0.05)', color: '#555', border: '1px solid rgba(255,255,255,0.07)' }}>
                           ?
                         </span>
-                        <span className='absolute bottom-full right-0 mb-2 w-60 px-3 py-2.5 rounded-xl text-[11px] text-[#888] leading-relaxed opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150 z-30'
-                          style={{ background: '#1c1c1c', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
-                          Не знаете что написать — оставьте пустым или напишите «не знаю». Разработчик уточнит всё при созвоне.
-                        </span>
+                        {openTooltip === q.id && (
+                          <span className='absolute bottom-full right-0 mb-2 w-60 px-3 py-2.5 rounded-xl text-[11px] text-[#888] leading-relaxed z-30'
+                            style={{ background: '#1c1c1c', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                            Не знаете что написать — оставьте пустым или напишите «не знаю». Разработчик уточнит всё при созвоне.
+                          </span>
+                        )}
                       </span>
                     </label>
                     <textarea value={answers[q.id] ?? ''}
