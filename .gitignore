@@ -46,8 +46,9 @@ yarn-error.log*
 /.claude/MEMORY.md
 /.claude/
 
-#vscode
-/.vscode/*
-/.vscode
+# vscode
+.vscode/
 
 /src/generated/prisma
+
+PROJECT_TASKS.md
