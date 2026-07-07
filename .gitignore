@@ -49,6 +49,11 @@ yarn-error.log*
 # vscode
 .vscode/
 
+.playwright-mcp
+.playwright-mcp/*
+ADVERTISING_IGNORE_IMAGES
+ADVERTISING_IGNORE_IMAGES/*
+
 /src/generated/prisma
 
 PROJECT_TASKS.md
