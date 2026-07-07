@@ -68,7 +68,7 @@ export default function Services() {
           </p>
         </div>
 
-        <div className='grid md:grid-cols-3 gap-5'>
+        <div className='grid md:grid-cols-3 gap-5 mb-10'>
           {services.map(service => (
             <div
               key={service.title}
@@ -152,6 +152,42 @@ export default function Services() {
             </div>
           ))}
         </div>
+        {/* Портфолио */}
+        <a
+          href='https://vronskyvitaly.ru'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl transition-all hover:border-purple-500/30 hover:bg-white/5 group'
+          style={{
+            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'rgba(255,255,255,0.025)'
+          }}
+        >
+          <div>
+            <p className='text-xs uppercase tracking-[0.2em] text-gray-500 mb-1 font-mono'>Портфолио</p>
+            <p className='text-white font-semibold mb-1'>
+              Посмотрите мои работы и технологии на&nbsp;
+              <span
+                className='bg-clip-text text-transparent'
+                style={{ backgroundImage: 'linear-gradient(90deg, #c084fc, #60a5fa)' }}
+              >
+                vronskyvitaly.ru
+              </span>
+            </p>
+            <p className='text-sm text-gray-500'>
+              Реальные проекты — сайты, боты, автоматизация и ИИ-решения
+            </p>
+          </div>
+          <span
+            className='shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium text-white transition-all group-hover:scale-105 whitespace-nowrap'
+            style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}
+          >
+            Открыть портфолио
+            <svg width='14' height='14' viewBox='0 0 14 14' fill='none'>
+              <path d='M2 12L12 2M12 2H5M12 2v7' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/>
+            </svg>
+          </span>
+        </a>
       </div>
     </section>
   )

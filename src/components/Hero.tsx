@@ -94,7 +94,7 @@ export default function Hero() {
         </div>
 
         {/* CTA */}
-        <div className='flex justify-center mb-8 sm:mb-14'>
+        <div className='flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-14'>
           <a
             href='#contact'
             className='inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-white text-base transition-all hover:scale-105'
@@ -104,6 +104,22 @@ export default function Hero() {
             }}
           >
             Обсудить проект →
+          </a>
+          <a
+            href='https://vronskyvitaly.ru'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-sm transition-all hover:scale-105'
+            style={{
+              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(255,255,255,0.04)',
+              color: 'rgba(255,255,255,0.7)'
+            }}
+          >
+            Моё портфолио
+            <svg width='14' height='14' viewBox='0 0 14 14' fill='none'>
+              <path d='M2 12L12 2M12 2H5M12 2v7' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/>
+            </svg>
           </a>
         </div>
 

@@ -2,6 +2,17 @@ import Link from 'next/link'
 
 const posts = [
   {
+    href: '/blog/telegram-boty-dlya-biznesa',
+    tag: 'Telegram-боты',
+    tagColor: 'rgba(0,136,204,0.35)',
+    tagBg: 'rgba(0,136,204,0.1)',
+    tagText: '#38b6e6',
+    date: '7 июля 2026',
+    title: 'Telegram-бот для бизнеса: продаёт и отвечает 24/7',
+    excerpt:
+      'Что реально умеет Telegram-бот, какие задачи он закрывает лучше менеджера и когда его внедрение окупается за первый же месяц.'
+  },
+  {
     href: '/blog/sozdanie-sajtov-nado-znat',
     tag: 'Разработка',
     tagColor: 'rgba(0,112,243,0.35)',
