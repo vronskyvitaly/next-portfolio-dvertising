@@ -13,14 +13,21 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  title: {
+    default: 'Виталий Вронский — разработка сайтов и автоматизация бизнеса',
+    template: '%s | Виталий Вронский'
+  },
+  description:
+    'Разрабатываю сайты и веб-приложения, автоматизирую бизнес-процессы, внедряю ИИ. Работаю в Москве и Санкт-Петербурге.',
+  metadataBase: new URL('https://vitalyvronsky.ru'),
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.png', sizes: '120x120', type: 'image/png' },
+      { url: '/favicon.png', sizes: '120x120', type: 'image/png' }
     ],
     shortcut: '/favicon.ico',
-    apple: '/favicon.png',
+    apple: '/favicon.png'
   }
 }
 
