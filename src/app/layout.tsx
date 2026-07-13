@@ -13,10 +13,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Виталий Вронский — разработка сайтов и автоматизация бизнеса',
-    template: '%s | Виталий Вронский'
-  },
+  title: 'Виталий Вронский — разработка сайтов и автоматизация бизнеса',
   description:
     'Разрабатываю сайты и веб-приложения, автоматизирую бизнес-процессы, внедряю ИИ. Работаю в Москве и Санкт-Петербурге.',
   metadataBase: new URL('https://vitalyvronsky.ru'),
