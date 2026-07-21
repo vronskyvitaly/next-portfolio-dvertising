@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { CookieBanner } from '@/components/legal/CookieBanner'
 import './globals.css'
 
 const geistSans = Geist({
@@ -68,6 +69,7 @@ export default function RootLayout({
         `}} />
         <noscript dangerouslySetInnerHTML={{ __html: `<div><img src="https://mc.yandex.ru/watch/110092238" style="position:absolute;left:-9999px;" alt="" /></div>` }} />
         {children}
+        <CookieBanner />
       </body>
     </html>
   )

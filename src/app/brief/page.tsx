@@ -764,10 +764,17 @@ export default function BriefPage() {
                 </button>
                 <p className='text-xs leading-relaxed mt-4' style={{ color: 'rgba(255,255,255,0.2)' }}>
                   Нажимая кнопку, вы подтверждаете, что являетесь правообладателем
-                  предоставляемых материалов и информации, даёте согласие на их
-                  обработку в целях подготовки коммерческого предложения, а также
-                  на обработку персональных данных в соответствии с&nbsp;Федеральным
-                  законом&nbsp;№&nbsp;152-ФЗ «О персональных данных».
+                  предоставляемых материалов и информации, даёте{' '}
+                  <a href='/legal/personal-data-consent' target='_blank' rel='noopener noreferrer'
+                    style={{ color: 'rgba(255,255,255,0.35)', textDecoration: 'underline' }}>
+                    согласие на обработку персональных данных
+                  </a>{' '}
+                  в целях подготовки коммерческого предложения в соответствии с{' '}
+                  <a href='/legal/privacy-policy' target='_blank' rel='noopener noreferrer'
+                    style={{ color: 'rgba(255,255,255,0.35)', textDecoration: 'underline' }}>
+                    Политикой конфиденциальности
+                  </a>{' '}
+                  и Федеральным законом&nbsp;№&nbsp;152-ФЗ «О персональных данных».
                 </p>
               </div>
             </div>
