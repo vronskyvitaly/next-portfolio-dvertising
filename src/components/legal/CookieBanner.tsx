@@ -1,15 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { useSyncExternalStore } from 'react'
-import { onConsentChange, readConsent, writeConsent } from '@/lib/legal/consent'
-
-const getServerSnapshot = () => null
+import { useEffect, useState } from 'react'
+import { readConsent, writeConsent } from '@/lib/legal/consent'
 
 export function CookieBanner() {
-  const consent = useSyncExternalStore(onConsentChange, readConsent, getServerSnapshot)
+  const [visible, setVisible] = useState(false)
 
-  if (consent !== null) return null
+  useEffect(() => {
+    if (readConsent() === null) setVisible(true)
+  }, [])
+
+  const handleConsent = (state: 'granted' | 'denied') => {
+    writeConsent(state)
+    setVisible(false)
+  }
+
+  if (!visible) return null
 
   return (
     <div
@@ -46,7 +53,7 @@ export function CookieBanner() {
         <div className='flex items-center gap-2 shrink-0'>
           <button
             type='button'
-            onClick={() => writeConsent('denied')}
+            onClick={() => handleConsent('denied')}
             className='px-4 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white transition-colors'
             style={{ border: '1px solid rgba(255,255,255,0.1)' }}
           >
@@ -54,7 +61,7 @@ export function CookieBanner() {
           </button>
           <button
             type='button'
-            onClick={() => writeConsent('granted')}
+            onClick={() => handleConsent('granted')}
             className='px-4 py-2 rounded-xl text-xs font-semibold text-white transition-all hover:scale-105'
             style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}
           >
