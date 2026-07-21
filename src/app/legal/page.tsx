@@ -41,8 +41,16 @@ export default function LegalIndexPage() {
             Юридические документы
           </h1>
           <p className='text-gray-400'>
-            Документы {siteConfig.site.name}, регулирующие обработку персональных данных
-            и условия использования сайта.
+            Документы сайта{' '}
+            <a
+              href={siteConfig.site.url}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-gray-300 hover:text-white transition-colors underline underline-offset-2'
+            >
+              {siteConfig.site.domain}
+            </a>
+            , регулирующие обработку персональных данных и условия использования сайта.
           </p>
         </header>
 
