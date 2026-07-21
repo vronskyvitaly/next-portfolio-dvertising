@@ -61,19 +61,19 @@ export default function LegalIndexPage() {
               <li key={doc.slug}>
                 <Link
                   href={`/legal/${doc.slug}`}
-                  className='group flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl transition-all hover:border-purple-500/30 hover:bg-white/5'
+                  className='group flex flex-row items-center gap-3 p-5 rounded-2xl transition-all hover:border-purple-500/30 hover:bg-white/5'
                   style={{
                     border: '1px solid rgba(255,255,255,0.07)',
                     background: 'rgba(255,255,255,0.025)'
                   }}
                 >
-                  <div className='flex-1'>
-                    <div className='flex items-start gap-3 mb-1'>
+                  <div className='flex-1 min-w-0'>
+                    <div className='flex flex-wrap items-start gap-2 mb-1'>
                       <h2 className='text-sm font-semibold text-white group-hover:text-purple-300 transition-colors leading-snug'>
                         {doc.title}
                       </h2>
                       <span
-                        className='shrink-0 text-xs px-2 py-0.5 rounded-full mt-0.5'
+                        className='shrink-0 text-xs px-2 py-0.5 rounded-full'
                         style={{
                           background: 'rgba(125,44,200,0.15)',
                           border: '1px solid rgba(125,44,200,0.3)',
