@@ -2,6 +2,17 @@ import Link from 'next/link'
 
 const posts = [
   {
+    href: '/blog/bitrix24-i-claude-avtomatizaciya-crm',
+    tag: 'Автоматизация CRM',
+    tagColor: 'rgba(251,146,60,0.35)',
+    tagBg: 'rgba(251,146,60,0.1)',
+    tagText: '#fb923c',
+    date: '21 июля 2026',
+    title: 'Bitrix24 + Claude: автоматизация CRM без программиста',
+    excerpt:
+      'Как подключить Claude к Bitrix24 через MCP-сервер, автоматизировать сделки через Claude Code и создавать UI через Claude Design.'
+  },
+  {
     href: '/blog/telegram-boty-dlya-biznesa',
     tag: 'Telegram-боты',
     tagColor: 'rgba(0,136,204,0.35)',

@@ -27,10 +27,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8
     },
     {
-      url: 'https://vitalyvronsky.ru/brief',
-      lastModified: new Date('2026-06-22'),
-      changeFrequency: 'monthly',
-      priority: 0.9
+      url: 'https://vitalyvronsky.ru/blog/telegram-boty-dlya-biznesa',
+      lastModified: new Date('2026-07-07'),
+      changeFrequency: 'yearly',
+      priority: 0.8
+    },
+    {
+      url: 'https://vitalyvronsky.ru/blog/bitrix24-i-claude-avtomatizaciya-crm',
+      lastModified: new Date('2026-07-21'),
+      changeFrequency: 'yearly',
+      priority: 0.8
     }
   ]
 }
