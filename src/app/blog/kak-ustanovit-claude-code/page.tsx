@@ -463,8 +463,14 @@ export default function Page() {
                 Что можно попросить — примеры
               </h2>
               <p className='mb-6'>
-                Просто пишите задачу в свободной форме. Вот несколько примеров
-                того, что Claude Code умеет делать:
+                Просто пишите задачу в свободной форме — от правки файлов до{' '}
+                <Link
+                  href='/blog/bitrix24-i-claude-avtomatizaciya-crm'
+                  className='text-blue-300 hover:text-blue-200 underline underline-offset-2'
+                >
+                  интеграции Claude с CRM Bitrix24
+                </Link>
+                . Вот несколько примеров того, что Claude Code умеет делать:
               </p>
               <div className='space-y-3'>
                 {[

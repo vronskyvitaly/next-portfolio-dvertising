@@ -7,6 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import PriceMosaic from '@/components/PriceMosaic'
 import ContactCta from '@/components/ContactCta'
 import { contacts, SITE_URL } from '@/config/contacts'
+import { getNiches, getNicheService } from '@/config/niches'
 import { getPosts } from '@/config/posts'
 import { CATALOG_ROW, formatPrice, getServices } from '@/config/services'
 import { siteConfig } from '@/config/site.config'
@@ -342,6 +343,7 @@ const hubFaq: ServiceFaqItem[] = [
 
 export default function Page() {
   const services = getServices()
+  const niches = getNiches()
   const posts = getPosts()
 
   const priceRows = [
@@ -920,6 +922,32 @@ export default function Page() {
                       style={{ color: service.accent }}
                     >
                       {formatPrice(service.priceFrom)} · {service.duration}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              <h2 className='text-2xl sm:text-3xl font-bold mb-8'>
+                Сайты для отраслей
+              </h2>
+              <div className='grid sm:grid-cols-2 gap-4 mb-16'>
+                {niches.map(niche => (
+                  <Link
+                    key={niche.slug}
+                    href={`${URL_PATH}/${niche.slug}`}
+                    className='group p-6 rounded-2xl border border-white/8 bg-white/3 hover:border-purple-500/30 hover:bg-white/5 transition-all'
+                  >
+                    <h3 className='text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors'>
+                      {niche.name}
+                    </h3>
+                    <p className='text-sm text-gray-400 leading-relaxed mb-3'>
+                      {niche.purpose}
+                    </p>
+                    <span
+                      className='text-xs font-medium'
+                      style={{ color: niche.accent }}
+                    >
+                      {formatPrice(getNicheService(niche).priceFrom)}
                     </span>
                   </Link>
                 ))}

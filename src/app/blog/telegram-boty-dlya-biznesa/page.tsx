@@ -365,8 +365,21 @@ export default function Page() {
                 Кому это подходит
               </h2>
               <p className='mb-6'>
-                Telegram-бот — не только для интернет-магазинов. Вот бизнесы,
-                которые получают ощутимый результат:
+                Telegram-бот — не только для{' '}
+                <Link
+                  href='/sozdanie-saytov/internet-magazin'
+                  className='text-sky-300 hover:text-sky-200 underline underline-offset-2'
+                >
+                  интернет-магазинов
+                </Link>
+                , и часто он становится первым шагом в{' '}
+                <Link
+                  href='/blog/avtomatizaciya-biznesa'
+                  className='text-sky-300 hover:text-sky-200 underline underline-offset-2'
+                >
+                  автоматизации бизнеса
+                </Link>
+                . Вот бизнесы, которые получают ощутимый результат:
               </p>
               <div className='grid sm:grid-cols-2 gap-4'>
                 {[

@@ -372,8 +372,14 @@ export default function Page() {
               </div>
               <p>
                 Всё это работает. Можно быстро получить приличный внешний вид.
-                Но внешний вид — это меньше трети того, что делает сайт
-                эффективным инструментом.
+                Но внешний вид — это меньше трети того, что делает сайт{' '}
+                <Link
+                  href='/blog/zachem-biznesu-sajt'
+                  className='text-blue-300 hover:text-blue-200 underline underline-offset-2'
+                >
+                  рабочим инструментом для бизнеса
+                </Link>
+                .
               </p>
             </section>
 
@@ -414,7 +420,13 @@ export default function Page() {
                 Что нужно знать, чтобы сайт работал
               </h2>
               <p className='mb-8'>
-                Профессиональная разработка сайтов — это не про «написать
+                <Link
+                  href='/sozdanie-saytov'
+                  className='text-blue-300 hover:text-blue-200 underline underline-offset-2'
+                >
+                  Профессиональная разработка сайтов
+                </Link>{' '}
+                — это не про «написать
                 красивый код». Это про знания в четырёх ключевых областях,
                 каждая из которых влияет на результат:
               </p>
@@ -466,7 +478,21 @@ export default function Page() {
               <p className='mb-6'>
                 Я не против конструкторов — они решают свои задачи. Но вот как
                 выглядит реальное сравнение по критериям, которые влияют на
-                бизнес:
+                бизнес, будь то{' '}
+                <Link
+                  href='/sozdanie-saytov/lending'
+                  className='text-blue-300 hover:text-blue-200 underline underline-offset-2'
+                >
+                  лендинг
+                </Link>{' '}
+                или{' '}
+                <Link
+                  href='/sozdanie-saytov/korporativnyy-sayt'
+                  className='text-blue-300 hover:text-blue-200 underline underline-offset-2'
+                >
+                  корпоративный сайт
+                </Link>
+                :
               </p>
               <div className='overflow-x-auto'>
                 <table className='w-full text-sm'>

@@ -524,7 +524,21 @@ export default function Page() {
               <p className='mb-6'>
                 Чтобы цена и срок не «поплыли» на середине проекта, я веду
                 разработку по одним и тем же шести шагам вне зависимости от
-                того, лендинг это или интернет-магазин:
+                того,{' '}
+                <Link
+                  href='/sozdanie-saytov/lending'
+                  className='text-amber-300 hover:text-amber-200 underline underline-offset-2'
+                >
+                  лендинг
+                </Link>{' '}
+                это или{' '}
+                <Link
+                  href='/sozdanie-saytov/internet-magazin'
+                  className='text-amber-300 hover:text-amber-200 underline underline-offset-2'
+                >
+                  интернет-магазин
+                </Link>
+                :
               </p>
               <div className='space-y-3'>
                 {stages.map((item, i) => (
@@ -715,7 +729,14 @@ export default function Page() {
               </p>
               <p className='mb-4'>
                 В другом проекте простая переделка первого экрана и формы
-                заявки на корпоративном сайте подняла конверсию из посетителя
+                заявки на{' '}
+                <Link
+                  href='/sozdanie-saytov/korporativnyy-sayt'
+                  className='text-amber-300 hover:text-amber-200 underline underline-offset-2'
+                >
+                  корпоративном сайте
+                </Link>{' '}
+                подняла конверсию из посетителя
                 в заявку с 1,2% до 3,4% без единого рубля дополнительной
                 рекламы - разница была именно в том, насколько быстро
                 посетитель понимал, что ему предлагают и что делать дальше.

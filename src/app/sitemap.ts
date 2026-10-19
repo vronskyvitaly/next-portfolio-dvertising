@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/config/contacts'
 import { getPosts } from '@/config/posts'
+import { getNiches } from '@/config/niches'
 import { getServices } from '@/config/services'
 import { getLegalDocuments } from '@/lib/legal/registry'
 import { siteConfig } from '@/config/site.config'
@@ -14,9 +15,11 @@ import { siteConfig } from '@/config/site.config'
  * Дату правьте при существенном обновлении коммерческого раздела.
  */
 const SECTION_UPDATED = new Date('2026-07-29')
+const NICHES_UPDATED = new Date('2026-10-19')
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const services = getServices()
+  const niches = getNiches()
   const posts = getPosts()
   const legalDocs = getLegalDocuments()
 
@@ -36,6 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...services.map(service => ({
       url: `${SITE_URL}/sozdanie-saytov/${service.slug}`,
       lastModified: SECTION_UPDATED,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8
+    })),
+    ...niches.map(niche => ({
+      url: `${SITE_URL}/sozdanie-saytov/${niche.slug}`,
+      lastModified: NICHES_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.8
     })),

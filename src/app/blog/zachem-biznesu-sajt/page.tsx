@@ -430,8 +430,14 @@ export default function Page() {
               </h2>
               <p className='mb-6'>
                 Когда я делал расчёт для клиента из сферы услуг, оказалось, что
-                за год он платил маркетплейсу комиссией больше, чем стоила бы
-                разработка сайта, который окупился бы за два месяца. Вот как
+                за год он платил маркетплейсу комиссией больше, чем стоила бы{' '}
+                <Link
+                  href='/sozdanie-saytov'
+                  className='text-pink-300 hover:text-pink-200 underline underline-offset-2'
+                >
+                  разработка сайта
+                </Link>
+                , который окупился бы за два месяца. Вот как
                 выглядит сравнение по стоимости привлечения клиента для разных
                 каналов:
               </p>
@@ -720,8 +726,21 @@ export default function Page() {
                 Какой сайт нужен именно вам
               </h2>
               <p className='mb-6'>
-                Не любому бизнесу нужен интернет-магазин, и не каждому
-                хватит одностраничника. Вот ориентир по типам сайтов,
+                Не любому бизнесу нужен{' '}
+                <Link
+                  href='/sozdanie-saytov/internet-magazin'
+                  className='text-pink-300 hover:text-pink-200 underline underline-offset-2'
+                >
+                  интернет-магазин
+                </Link>
+                , и не каждому хватит{' '}
+                <Link
+                  href='/sozdanie-saytov/lending'
+                  className='text-pink-300 hover:text-pink-200 underline underline-offset-2'
+                >
+                  одностраничника-лендинга
+                </Link>
+                . Вот ориентир по типам сайтов,
                 срокам и бюджету:
               </p>
               <div className='overflow-x-auto'>

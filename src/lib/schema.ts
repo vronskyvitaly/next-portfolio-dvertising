@@ -1,5 +1,6 @@
 import { contacts, SITE_URL } from '@/config/contacts'
 import { siteConfig } from '@/config/site.config'
+import type { NicheType } from '@/config/niches'
 import type { ServiceFaqItem, ServiceType } from '@/config/services'
 
 /**
@@ -122,6 +123,37 @@ export function serviceOfferNode(service: ServiceType): Node {
       serviceType: service.name,
       provider: { '@id': PERSON_ID },
       areaServed: { '@type': 'Country', name: 'Россия' }
+    }
+  }
+}
+
+/** Отраслевая страница: Service с ценой базовой услуги */
+export function nicheServiceNode(
+  niche: NicheType,
+  baseService: ServiceType
+): Node {
+  const url = `${SITE_URL}/sozdanie-saytov/${niche.slug}`
+
+  return {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: niche.h1,
+    description: niche.purpose,
+    serviceType: niche.name,
+    url,
+    provider: { '@id': PERSON_ID },
+    areaServed: { '@type': 'Country', name: 'Россия' },
+    offers: {
+      '@type': 'Offer',
+      url,
+      price: baseService.priceFrom,
+      priceCurrency: 'RUB',
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        minPrice: baseService.priceFrom,
+        priceCurrency: 'RUB'
+      },
+      availability: 'https://schema.org/InStock'
     }
   }
 }

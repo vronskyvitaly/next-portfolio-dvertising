@@ -292,7 +292,14 @@ export default function Page() {
                 с человека на программу. Вместо того чтобы кто-то вручную
                 копировал данные из формы в CRM, программа делает это за
                 секунду. Вместо менеджера, который отвечает на «сколько стоит» в
-                час ночи, — бот, который ответит за 3 секунды.
+                час ночи, —{' '}
+                <Link
+                  href='/blog/telegram-boty-dlya-biznesa'
+                  className='text-purple-300 hover:text-purple-200 underline underline-offset-2'
+                >
+                  Telegram-бот для бизнеса
+                </Link>
+                , который ответит за 3 секунды.
               </p>
               <p>
                 Главный принцип: если задача выполняется по одному и тому же
@@ -346,7 +353,16 @@ export default function Page() {
               </h2>
               <p className='mb-6'>
                 Хорошая новость: большинство сценариев не требует написания кода
-                с нуля. Есть готовые инструменты для разного уровня сложности.
+                с нуля. Есть готовые инструменты для разного уровня сложности. А
+                если процессу нужна своя система с личным кабинетом, ролями и
+                интеграциями, это уже{' '}
+                <Link
+                  href='/sozdanie-saytov/veb-prilozhenie'
+                  className='text-purple-300 hover:text-purple-200 underline underline-offset-2'
+                >
+                  разработка веб-приложения на заказ
+                </Link>
+                .
               </p>
               <div className='grid sm:grid-cols-2 gap-4'>
                 {tools.map(tool => (

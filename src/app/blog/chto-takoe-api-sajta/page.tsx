@@ -988,7 +988,14 @@ export async function POST() {
                 заявок теряется просто потому, что письмо ушло в спам.
               </p>
               <p className='mb-6'>
-                Когда форма на сайте подключена к API CRM напрямую, заявка
+                Когда форма на сайте подключена к{' '}
+                <Link
+                  href='/blog/bitrix24-i-claude-avtomatizaciya-crm'
+                  className='text-emerald-300 hover:text-emerald-200 underline underline-offset-2'
+                >
+                  API CRM
+                </Link>{' '}
+                напрямую, заявка
                 становится сделкой за секунды, менеджер получает уведомление в
                 Telegram, а ручной перенос данных исчезает вообще. Это не
                 абстрактная «цифровизация» — это конкретные часы, которые
@@ -1003,8 +1010,14 @@ export async function POST() {
                 }}
               >
                 <p className='text-emerald-200 font-medium leading-relaxed'>
-                  Такая же логика работает с остатками на складе, статусами
-                  доставки и уведомлениями клиентам — везде, где сейчас данные
+                  Такая же логика работает с остатками на складе{' '}
+                  <Link
+                    href='/sozdanie-saytov/internet-magazin'
+                    className='text-emerald-100 hover:text-white underline underline-offset-2'
+                  >
+                    интернет-магазина
+                  </Link>
+                  , статусами доставки и уведомлениями клиентам — везде, где сейчас данные
                   вручную переносят из одной системы в другую.
                 </p>
               </div>

@@ -352,7 +352,13 @@ export default function Page() {
                 Способ 2: Claude Code + REST API Bitrix24
               </h2>
               <p className='mb-4'>
-                Claude Code — CLI-инструмент от Anthropic для разработки. Вы
+                <Link
+                  href='/blog/kak-ustanovit-claude-code'
+                  className='text-orange-300 hover:text-orange-200 underline underline-offset-2'
+                >
+                  Claude Code
+                </Link>{' '}
+                — CLI-инструмент от Anthropic для разработки. Вы
                 описываете задачу на русском языке, он пишет код, тестирует и
                 разворачивает. Для интеграции с Bitrix24 через REST API это
                 означает: один разговор с Claude Code — готовый рабочий скрипт.
@@ -445,7 +451,14 @@ export default function Page() {
               </p>
               <p className='mb-6'>
                 Применительно к Bitrix24: многие компании хотят кастомный
-                интерфейс для своих сотрудников — проще стандартного, заточенный
+                интерфейс для своих сотрудников, по сути{' '}
+                <Link
+                  href='/sozdanie-saytov/veb-prilozhenie'
+                  className='text-orange-300 hover:text-orange-200 underline underline-offset-2'
+                >
+                  внутреннее веб-приложение
+                </Link>{' '}
+                — проще стандартного, заточенный
                 под конкретный процесс. Claude Design создаёт такой прототип за
                 минуты, экспортирует в код и передаёт разработчику, которому
                 остаётся подключить реальный API.

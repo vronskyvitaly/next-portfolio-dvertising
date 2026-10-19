@@ -6,7 +6,9 @@ import FaqList from '@/components/FaqList'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import ContactCta from '@/components/ContactCta'
+import NichePage from '@/components/NichePage'
 import { contacts, SITE_URL } from '@/config/contacts'
+import { getNiche, getNiches } from '@/config/niches'
 import { formatPrice, getService, getServices } from '@/config/services'
 import { OG_SERVICES, ogImages } from '@/lib/og'
 import {
@@ -19,8 +21,9 @@ import {
 
 const BASE_PATH = '/sozdanie-saytov'
 
+/** В сегменте живут два реестра: типы сайтов и отраслевые страницы */
 export function generateStaticParams() {
-  return getServices().map(service => ({ slug: service.slug }))
+  return [...getServices(), ...getNiches()].map(item => ({ slug: item.slug }))
 }
 
 export async function generateMetadata({
@@ -29,31 +32,31 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const service = getService(slug)
-  if (!service) return {}
+  const page = getService(slug) ?? getNiche(slug)
+  if (!page) return {}
 
   const path = `${BASE_PATH}/${slug}`
 
   return {
-    title: service.title,
-    description: service.description,
+    title: page.title,
+    description: page.description,
     metadataBase: new URL(SITE_URL),
     alternates: { canonical: path },
-    keywords: service.keywords,
+    keywords: page.keywords,
     openGraph: {
       type: 'website',
       url: `${SITE_URL}${path}`,
       siteName: 'Виталий Вронский',
-      title: service.h1,
-      description: service.description,
+      title: page.h1,
+      description: page.description,
       locale: 'ru_RU',
-      images: ogImages(OG_SERVICES, service.h1)
+      images: ogImages(OG_SERVICES, page.h1)
     },
     twitter: {
       card: 'summary_large_image',
-      title: service.h1,
-      description: service.description,
-      images: ogImages(OG_SERVICES, service.h1)
+      title: page.h1,
+      description: page.description,
+      images: ogImages(OG_SERVICES, page.h1)
     },
     robots: { index: true, follow: true }
   }
@@ -65,6 +68,9 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+  const niche = getNiche(slug)
+  if (niche) return <NichePage niche={niche} />
+
   const service = getService(slug)
   if (!service) notFound()
 
