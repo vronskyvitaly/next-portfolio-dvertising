@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import BlogBreadcrumbs from '@/components/BlogBreadcrumbs'
 import { ogImages } from '@/lib/og'
-import coverImage from './ai-business-implementation.png'
+import coverImage from './ai-business-cover.png'
 
 const PUBLISHED = '2026-10-21'
 const URL_PATH = '/blog/vnedrenie-ii-v-biznes'
