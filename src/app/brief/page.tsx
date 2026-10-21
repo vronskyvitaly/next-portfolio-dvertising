@@ -819,7 +819,7 @@ export default function BriefPage() {
                   </button>
                   <button onClick={handleName}
                     disabled={!user.firstName.trim() || loading}
-                    className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed'
+                    className='flex-2 py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed'
                     style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
                     {loading ? 'Создаём...' : 'Зарегистрироваться'}
                   </button>
@@ -1093,7 +1093,7 @@ export default function BriefPage() {
                 </button>
                 {isLastSection ? (
                   <button onClick={handleSubmit} disabled={sending}
-                    className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
+                    className='flex-2 py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-60'
                     style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
                     {sending ? 'Отправляем...' : 'Отправить бриф'}
                   </button>
@@ -1108,7 +1108,7 @@ export default function BriefPage() {
                     }
                     setSectionIndex(i => i + 1)
                   }}
-                    className='flex-[2] py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90'
+                    className='flex-2 py-3 rounded-xl font-medium text-white text-sm transition-all hover:scale-[1.02] hover:opacity-90'
                     style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>
                     Далее →
                   </button>

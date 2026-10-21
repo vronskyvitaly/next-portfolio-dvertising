@@ -6,7 +6,7 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className='relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden px-6 py-16 sm:py-24'>
+    <section className='relative min-h-svh flex flex-col items-center justify-center overflow-hidden px-6 py-16 sm:py-24'>
       {/* Точечная сетка */}
       <div
         aria-hidden='true'
@@ -29,7 +29,7 @@ export default function Hero() {
       {/* Сферы */}
       <div
         aria-hidden='true'
-        className='absolute top-[-15%] left-[-10%] w-[700px] h-[700px] rounded-full pointer-events-none animate-pulse-slow'
+        className='absolute top-[-15%] left-[-10%] w-175 h-175 rounded-full pointer-events-none animate-pulse-slow'
         style={{
           background: 'radial-gradient(circle, #7d2cc8 0%, transparent 65%)',
           filter: 'blur(100px)'
@@ -37,7 +37,7 @@ export default function Hero() {
       />
       <div
         aria-hidden='true'
-        className='absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none animate-pulse-slow-2'
+        className='absolute bottom-[-15%] right-[-10%] w-150 h-150 rounded-full pointer-events-none animate-pulse-slow-2'
         style={{
           background: 'radial-gradient(circle, #0070f3 0%, transparent 65%)',
           filter: 'blur(100px)'

@@ -109,7 +109,7 @@ export default function Page() {
         />
         <div
           aria-hidden='true'
-          className='fixed top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none'
+          className='fixed top-0 right-0 w-125 h-125 rounded-full pointer-events-none'
           style={{
             background:
               'radial-gradient(circle, rgba(0,112,243,0.07) 0%, transparent 70%)',

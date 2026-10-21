@@ -139,7 +139,7 @@ export default function Services() {
                       className='flex items-center gap-3 text-sm text-gray-300'
                     >
                       <span
-                        className='flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold'
+                        className='shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold'
                         style={{
                           background: `${service.accent}22`,
                           color: service.accent,

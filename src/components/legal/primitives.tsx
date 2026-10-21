@@ -46,7 +46,7 @@ export function Definition({ term, children }: { term: string; children: ReactNo
 export function Table({ headers, rows }: { headers: string[]; rows: ReactNode[][] }) {
   return (
     <div className='-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0'>
-      <table className='w-full min-w-[36rem] border-collapse text-sm'>
+      <table className='w-full min-w-xl border-collapse text-sm'>
         <thead>
           <tr className='border-b border-white/10'>
             {headers.map(header => (
