@@ -4,6 +4,17 @@
 
 Сайт-портфолио автора: [vronskyvitaly.ru](https://vronskyvitaly.ru)
 
+<table>
+  <tr>
+    <td width="60%"><img src=".github/images/preview-desktop.png" alt="Главная страница на ноутбуке" /></td>
+    <td width="40%"><img src=".github/images/preview-mobile.png" alt="Главная страница на смартфоне" /></td>
+  </tr>
+  <tr>
+    <td align="center">Десктоп</td>
+    <td align="center">Мобильная версия</td>
+  </tr>
+</table>
+
 ---
 
 ## Стек
