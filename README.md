@@ -2,7 +2,8 @@
 
 Лендинг для продвижения услуг по **автоматизации бизнеса**, **созданию сайтов и веб-приложений** и **внедрению ИИ в организации**. Подготовлен под запуск рекламы в Яндекс.Директ.
 
-Сайт-портфолио автора: [vronskyvitaly.ru](https://vronskyvitaly.ru)
+- Сайт проекта: [vitalyvronsky.ru](https://vitalyvronsky.ru)
+- Сайт-портфолио автора: [vronskyvitaly.ru](https://vronskyvitaly.ru)
 
 <table>
   <tr>
