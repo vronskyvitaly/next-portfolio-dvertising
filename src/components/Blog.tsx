@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { formatPostDate, getPosts } from '@/config/posts'
 
+/** На главной — только свежие статьи, остальные в /blog */
+const HOME_POSTS_LIMIT = 3
+
 export default function Blog() {
-  const posts = getPosts()
+  const posts = getPosts().slice(0, HOME_POSTS_LIMIT)
 
   return (
     <section id='blog' className='py-24 px-6'>
