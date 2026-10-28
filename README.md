@@ -81,6 +81,8 @@ Lighthouse, главная страница [vitalyvronsky.ru](https://vitalyvro
 | Total Blocking Time | 10 ms |
 | Cumulative Layout Shift | 0.024 |
 
+<img src=".github/images/image.png" alt="Отчёт Lighthouse: 100 баллов во всех категориях" />
+
 Что для этого сделано:
 
 - cookie-баннер рендерится на сервере, а не после гидратации — он не становится поздним LCP
