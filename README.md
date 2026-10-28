@@ -65,6 +65,31 @@ npm run lint      # ESLint
 
 ---
 
+## Производительность
+
+![Performance](https://img.shields.io/badge/Performance-100-brightgreen)
+![Accessibility](https://img.shields.io/badge/Accessibility-100-brightgreen)
+![Best Practices](https://img.shields.io/badge/Best%20Practices-100-brightgreen)
+![SEO](https://img.shields.io/badge/SEO-100-brightgreen)
+
+Lighthouse, главная страница [vitalyvronsky.ru](https://vitalyvronsky.ru), мобильная эмуляция, режим инкогнито (28.10.2026):
+
+| Метрика | Значение |
+|---------|----------|
+| First Contentful Paint | 1.2 s |
+| Largest Contentful Paint | 1.7 s |
+| Total Blocking Time | 10 ms |
+| Cumulative Layout Shift | 0.024 |
+
+Что для этого сделано:
+
+- cookie-баннер рендерится на сервере, а не после гидратации — он не становится поздним LCP
+- CSS встроен в HTML (`experimental.inlineCss`) — нет блокирующего запроса стилей
+- `preconnect` к Яндекс.Метрике, скрипт Метрики грузится `afterInteractive`
+- контраст текста не ниже 4.5:1
+
+---
+
 ## Дизайн
 
 - **Тёмная тема** — единственная, без переключателя
