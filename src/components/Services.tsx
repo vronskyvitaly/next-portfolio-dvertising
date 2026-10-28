@@ -187,7 +187,7 @@ export default function Services() {
           }}
         >
           <div>
-            <p className='text-xs uppercase tracking-[0.2em] text-gray-500 mb-1 font-mono'>Портфолио</p>
+            <p className='text-xs uppercase tracking-[0.2em] text-gray-400 mb-1 font-mono'>Портфолио</p>
             <p className='text-white font-semibold mb-1'>
               Посмотрите мои работы и технологии на&nbsp;
               <span
@@ -197,7 +197,7 @@ export default function Services() {
                 vronskyvitaly.ru
               </span>
             </p>
-            <p className='text-sm text-gray-500'>
+            <p className='text-sm text-gray-400'>
               Реальные проекты — сайты, боты, автоматизация и ИИ-решения
             </p>
           </div>

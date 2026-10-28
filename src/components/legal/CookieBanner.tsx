@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { useSyncExternalStore } from 'react'
 import { onConsentChange, readConsent, writeConsent } from '@/lib/legal/consent'
 
-// Cookie доступны только в браузере, поэтому серверный снимок всегда скрывает
-// баннер — иначе он мигнёт при гидратации у посетителей с сохранённым выбором.
+// Баннер рендерится на сервере сразу видимым: если он появляется только после
+// гидратации, Lighthouse принимает его текст за LCP и считает его поздним.
+// Посетителям с сохранённым выбором баннер прячет инлайн-скрипт в layout
+// (атрибут data-consent на <html>) ещё до первой отрисовки, а после гидратации
+// клиентский снимок убирает его из DOM.
 const subscribe = (onStoreChange: () => void) => onConsentChange(onStoreChange)
 const getSnapshot = () => readConsent() === null
-const getServerSnapshot = () => false
+const getServerSnapshot = () => true
 
 export function CookieBanner() {
   const visible = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
@@ -17,6 +20,7 @@ export function CookieBanner() {
 
   return (
     <div
+      id='cookie-banner'
       role='dialog'
       aria-modal='false'
       aria-labelledby='cookie-banner-title'

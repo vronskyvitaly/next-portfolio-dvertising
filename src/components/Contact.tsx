@@ -6,11 +6,11 @@ export default function Contact() {
       <div className='max-w-4xl mx-auto'>
         {/* Заголовок секции */}
         <div className='text-center mb-8 sm:mb-12'>
-          <p className='text-xs uppercase tracking-widest text-[#555] mb-4'>Контакт</p>
+          <p className='text-xs uppercase tracking-widest text-[#8a8a8a] mb-4'>Контакт</p>
           <h2 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
             Готовы обсудить задачу?
           </h2>
-          <p className='text-[#777] text-base max-w-md mx-auto leading-relaxed'>
+          <p className='text-[#8a8a8a] text-base max-w-md mx-auto leading-relaxed'>
             Выберите удобный способ — отвечу лично в течение дня
           </p>
         </div>
@@ -41,12 +41,12 @@ export default function Contact() {
               </svg>
             </div>
             <div className='flex-1 min-w-0'>
-              <div className='text-xs uppercase tracking-widest text-[#555] mb-1'>Быстро</div>
+              <div className='text-xs uppercase tracking-widest text-[#8a8a8a] mb-1'>Быстро</div>
               <h3 className='text-base sm:text-lg font-semibold text-white mb-1 sm:mb-2'>Написать в Telegram</h3>
-              <p className='text-[#666] text-sm leading-relaxed hidden sm:block'>
+              <p className='text-[#8a8a8a] text-sm leading-relaxed hidden sm:block'>
                 Просто напишите что хотите сделать — обсудим детали в переписке и придём к решению
               </p>
-              <p className='text-[#555] text-xs sm:hidden'>@vitalyvronsky</p>
+              <p className='text-[#8a8a8a] text-xs sm:hidden'>@vitalyvronsky</p>
             </div>
             <div className='hidden sm:block mt-5 w-full py-3 rounded-xl text-center text-sm font-semibold text-white transition-all group-hover:opacity-90'
               style={{ background: 'linear-gradient(135deg, #0070f3, #1d9bf0)' }}>
@@ -100,7 +100,7 @@ export default function Contact() {
               <p className='text-[#888] text-sm leading-relaxed hidden sm:block'>
                 Ответьте на несколько вопросов о задаче — я получу всё нужное для старта и сразу предложу решение
               </p>
-              <p className='text-[#666] text-xs sm:hidden'>Заполнить бриф онлайн</p>
+              <p className='text-[#8a8a8a] text-xs sm:hidden'>Заполнить бриф онлайн</p>
             </div>
             <div className='hidden sm:block mt-5 w-full py-3 rounded-xl text-center text-sm font-semibold text-white transition-all group-hover:opacity-90'
               style={{ background: 'linear-gradient(135deg, #7d2cc8, #0070f3)' }}>

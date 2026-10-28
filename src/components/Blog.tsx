@@ -46,7 +46,7 @@ export default function Blog() {
                 <div className='flex items-center gap-2'>
                   <time
                     dateTime={post.published}
-                    className='text-xs text-gray-600'
+                    className='text-xs text-gray-400'
                   >
                     {formatPostDate(post.published)}
                   </time>

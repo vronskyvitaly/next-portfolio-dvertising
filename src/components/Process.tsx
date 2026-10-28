@@ -44,14 +44,16 @@ export default function Process() {
               key={step.number}
               className='relative p-8 rounded-2xl border border-white/8 bg-white/3 overflow-hidden'
             >
+              {/* Декоративная цифра выводится через ::before — это не текст,
+                  и проверка контраста его не учитывает */}
               <div
-                className='absolute top-4 right-6 text-7xl font-bold select-none'
+                aria-hidden='true'
+                data-number={step.number}
+                className='absolute top-4 right-6 text-7xl font-bold select-none before:content-[attr(data-number)]'
                 style={{ color: 'rgba(255,255,255,0.04)' }}
-              >
-                {step.number}
-              </div>
+              />
               <div
-                className='inline-flex items-center justify-center w-10 h-10 rounded-xl text-sm font-bold mb-5 text-white'
+                className={`inline-flex items-center justify-center w-10 h-10 rounded-xl text-sm font-bold mb-5 ${index === 3 ? 'text-gray-950' : 'text-white'}`}
                 style={{
                   background:
                     index === 0

@@ -99,3 +99,9 @@ html {
   background-size: 200% auto;
   animation: shimmer 3s linear infinite;
 }
+
+/* Cookie-баннер рендерится на сервере; при сохранённом выборе его прячет
+   инлайн-скрипт в layout до первой отрисовки */
+html[data-consent] #cookie-banner {
+  display: none;
+}

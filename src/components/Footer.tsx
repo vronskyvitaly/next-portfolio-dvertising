@@ -14,7 +14,7 @@ export default function Footer() {
           >
             {contacts.phone}
           </a>
-          <div className='flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-gray-500'>
+          <div className='flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-gray-400'>
             <Link
               href='/sozdanie-saytov'
               className='hover:text-white transition-colors'
@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className='text-center sm:text-left text-sm text-gray-600'>
+        <div className='text-center sm:text-left text-sm text-gray-400'>
           © {currentYear} Виталий Вронский. Все права защищены.
         </div>
       </div>

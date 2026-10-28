@@ -49,7 +49,18 @@ export default function RootLayout({
     <html
       lang='ru'
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // data-consent ставит инлайн-скрипт ниже до гидратации
+      suppressHydrationWarning
     >
+      <head>
+        {/* Прячет cookie-баннер до первой отрисовки, если выбор уже сохранён */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if(/(?:^|; )cookie_consent=(granted|denied)/.test(document.cookie))document.documentElement.dataset.consent='1'`
+          }}
+        />
+        <link rel='preconnect' href='https://mc.yandex.ru' />
+      </head>
       <body
         className='min-h-full flex flex-col bg-[#0a0a0a] text-[#f0f0f0]'
         suppressHydrationWarning
