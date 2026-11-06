@@ -4,12 +4,12 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import BlogBreadcrumbs from '@/components/BlogBreadcrumbs'
 import { ogImages } from '@/lib/og'
-import coverImage from './own-server-cover.png'
+import coverImage from './perenos-sayta-na-vydelennyy-server.webp'
 
 const PUBLISHED = '2026-11-06'
-const URL_PATH = '/blog/perenos-sayta-na-svoy-server-coolify'
+const URL_PATH = '/blog/perenos-sayta-na-vydelennyy-server'
 const FULL_URL = `https://vitalyvronsky.ru${URL_PATH}`
-const TITLE = 'Как защитить сайт, если хостинг взломают: перенос на свой сервер'
+const TITLE = 'Как защитить сайт, если хостинг взломают: перенос на выделенный сервер'
 const COVER_ALT =
   'Схема разнесения: сервер с сайтами, резервные копии в другом хранилище и домен у отдельного регистратора'
 const coverOg = [
@@ -25,13 +25,13 @@ const coverOg = [
 export const metadata: Metadata = {
   title: `${TITLE} | Виталий Вронский`,
   description:
-    'Что делать владельцу бизнеса, если сайт на обычном хостинге: как не потерять данные при сбое или взломе и зачем переносить сайт на свой сервер с Coolify.',
+    'Что делать владельцу бизнеса, если сайт на обычном хостинге: как не потерять данные при сбое или взломе и зачем переносить сайт на выделенный сервер с Coolify.',
   metadataBase: new URL('https://vitalyvronsky.ru'),
   alternates: { canonical: URL_PATH },
   keywords: [
     'как защитить сайт если взломают хостинг',
-    'перенос сайта на свой сервер',
-    'свой сервер вместо хостинга',
+    'перенос сайта на выделенный сервер',
+    'выделенный сервер вместо хостинга',
     'coolify',
     'резервная копия сайта',
     'взлом хостинга что делать',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     images: coverOg,
     title: TITLE,
     description:
-      'Что делать владельцу сайта, чтобы сбой или взлом хостинга не стоил бизнеса: копии и домен вне хостинга, свой сервер с Coolify.'
+      'Что делать владельцу сайта, чтобы сбой или взлом хостинга не стоил бизнеса: копии и домен вне хостинга, выделенный сервер с Coolify.'
   },
   robots: { index: true, follow: true }
 }
@@ -117,7 +117,7 @@ const jsonLd = {
       mainEntityOfPage: { '@type': 'WebPage', '@id': FULL_URL },
       inLanguage: 'ru',
       keywords:
-        'перенос сайта на свой сервер, защита сайта, резервная копия сайта, coolify'
+        'перенос сайта на выделенный сервер, защита сайта, резервная копия сайта, coolify'
     },
     {
       '@type': 'FAQPage',
@@ -157,7 +157,7 @@ const todaySteps = [
 const separation = [
   {
     name: 'Сайт',
-    who: 'Ваш сервер у компании A',
+    who: 'Выделенный сервер у компании A',
     desc: 'Здесь работает сайт. Если эта компания пострадала, сайт можно поднять на другом сервере.',
     color: '#fb923c'
   },
@@ -199,9 +199,33 @@ const benefits = [
 ]
 
 const notNeeded = [
+  'Для одного небольшого сайта целый выделенный сервер часто избыточен. Хватит сервера попроще, виртуального, схема с копиями и доменом остаётся той же.',
   'Простая визитка или лендинг, который легко пересобрать, вполне может остаться на хостинге, если у вас есть копия вне его и домен под вашим контролем.',
   'Если за сервером некому следить, лучше обычный хостинг с автоматическими копиями.',
   'Если проект требует сертификации или резервного сервера на случай отказа, это отдельная задача, и один свой сервер её не решит.'
+]
+
+const beforeAfter = [
+  {
+    label: 'Где работает сайт',
+    before: 'На общем сервере хостинга вместе с чужими сайтами',
+    after: 'На выделенном сервере, только ваши проекты'
+  },
+  {
+    label: 'Где лежат копии',
+    before: 'Обычно у того же хостинга',
+    after: 'У другой компании, делаются по расписанию'
+  },
+  {
+    label: 'Где домен',
+    before: 'Часто там же, где сайт',
+    after: 'Отдельно, под вашим контролем'
+  },
+  {
+    label: 'Если площадка пострадала',
+    before: 'Ждёте, пока хостинг всё восстановит',
+    after: 'Поднимаете сайт из копии на другом сервере'
+  }
 ]
 
 const moveSteps = [
@@ -211,11 +235,11 @@ const moveSteps = [
   },
   {
     title: 'Забираем копии',
-    desc: 'Пока есть доступ, выгружаем файлы и базы и сохраняем в двух местах.'
+    desc: 'Пока есть доступ к хостингу, выгружаем файлы и базы и сохраняем в двух местах.'
   },
   {
-    title: 'Готовим сервер',
-    desc: 'Выбираем компанию, настраиваем защиту, ставим Coolify, подключаем хранилище для копий у другой компании.'
+    title: 'Арендуем выделенный сервер',
+    desc: 'Выбираем мощность под ваши сайты и закрываем сервер от посторонних. Устанавливаем Coolify и настраиваем автоматические копии в другую компанию.'
   },
   {
     title: 'Проверяем сайт на временном адресе',
@@ -359,7 +383,7 @@ export default function Page() {
                     'linear-gradient(90deg, #fdba74, #fb923c, #f87171)'
                 }}
               >
-                перенос на свой сервер
+                перенос на выделенный сервер
               </span>
             </h1>
 
@@ -481,8 +505,13 @@ export default function Page() {
 
             <section>
               <h2 className='text-2xl font-bold text-white mb-4'>
-                Что даёт свой сервер с Coolify
+                Что даёт выделенный сервер с Coolify
               </h2>
+              <p className='mb-4'>
+                Выделенный сервер это целый компьютер в дата-центре, который
+                работает только на ваши проекты. На обычном хостинге один сервер
+                делят много клиентов.
+              </p>
               <p className='mb-4'>
                 Coolify это панель, которая сама выкладывает сайт на сервер и
                 делает копии по расписанию. Вот что это даёт бизнесу:
@@ -514,7 +543,7 @@ export default function Page() {
                 Минусы и кому это не нужно
               </h2>
               <p className='mb-4'>
-                Свой сервер нужно обслуживать: обновлять, следить за копиями и
+                Выделенный сервер нужно обслуживать: обновлять, следить за копиями и
                 доступностью. Для этого нужен человек, сотрудник или подрядчик.
               </p>
               <p className='mb-4'>
@@ -540,8 +569,28 @@ export default function Page() {
 
             <section>
               <h2 className='text-2xl font-bold text-white mb-4'>
-                Как проходит переезд
+                Как проходит перенос на выделенный сервер
               </h2>
+              <div className='mb-6 overflow-hidden rounded-2xl' style={tableCard}>
+                <div className='grid grid-cols-2 border-b border-white/10 text-sm font-semibold'>
+                  <p className='p-4 text-gray-300'>На обычном хостинге</p>
+                  <p className='p-4 text-orange-300'>На выделенном сервере</p>
+                </div>
+                {beforeAfter.map(row => (
+                  <div
+                    key={row.label}
+                    className='border-b border-white/5 last:border-0'
+                  >
+                    <p className='px-4 pt-4 text-xs uppercase tracking-wide text-gray-400'>
+                      {row.label}
+                    </p>
+                    <div className='grid grid-cols-2 text-sm'>
+                      <p className='p-4 text-gray-400'>{row.before}</p>
+                      <p className='p-4 text-white'>{row.after}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
               <NumberedList items={moveSteps} />
             </section>
 
@@ -552,36 +601,21 @@ export default function Page() {
               >
                 <div className='flex-1'>
                   <p className='font-semibold text-white mb-1'>
-                    Настройку и сопровождение можно поручить мне
+                    Возьму рутину на себя
                   </p>
                   <p className='text-sm text-gray-400'>
-                    Перенесу сайт, настрою копии у другой компании, проверю
-                    восстановление и буду обновлять сервер. Беру ограниченное
-                    число проектов, чтобы вести каждый без спешки. Если сайт
-                    пора пересобрать, посмотрите{' '}
-                    <Link href='/sozdanie-saytov' className={linkCls}>
-                      создание сайтов
-                    </Link>
-                    .
+                    Просто напишите в Telegram.
                   </p>
                 </div>
-                <div className='shrink-0 flex flex-col gap-2'>
-                  <a
-                    href='https://t.me/vitalyvronsky'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all hover:scale-105 whitespace-nowrap'
-                    style={ctaStyle}
-                  >
-                    Написать в Telegram →
-                  </a>
-                  <Link
-                    href='/brief'
-                    className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white border border-white/15 transition-all hover:bg-white/5 whitespace-nowrap'
-                  >
-                    Заполнить бриф
-                  </Link>
-                </div>
+                <a
+                  href='https://t.me/vitalyvronsky'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all hover:scale-105 whitespace-nowrap'
+                  style={ctaStyle}
+                >
+                  Написать в Telegram →
+                </a>
               </div>
             </section>
 

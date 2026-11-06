@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import BlogBreadcrumbs from '@/components/BlogBreadcrumbs'
 import { ogImages } from '@/lib/og'
-import coverImage from './seo-competitor-analysis.png'
+import coverImage from './seo-competitor-analysis.webp'
 
 const PUBLISHED = '2026-10-19'
 const URL_PATH = '/blog/opredelenie-konkurentov-sajta'
