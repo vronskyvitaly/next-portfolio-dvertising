@@ -20,6 +20,17 @@ export interface BlogPost {
 /** Отсортированы от новых к старым — в этом же порядке выводятся в списках */
 const POSTS: BlogPost[] = [
   {
+    slug: 'perenos-sayta-na-svoy-server-coolify',
+    published: '2026-11-06',
+    tag: 'Хостинг и серверы',
+    tagColor: 'rgba(251,146,60,0.35)',
+    tagBg: 'rgba(251,146,60,0.1)',
+    tagText: '#fdba74',
+    title: 'Перенос сайта с хостинга на свой сервер с Coolify: бэкапы и DNS вне провайдера',
+    excerpt:
+      'Зачем переносить сайт на свой сервер, чем помогает Coolify и чем рискует, как разнести сервер, копии и DNS, и что делать сегодня. Свежий пример: атака на Beget.'
+  },
+  {
     slug: 'vnedrenie-ii-v-biznes',
     published: '2026-10-21',
     tag: 'ИИ в бизнесе',
