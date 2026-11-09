@@ -20,6 +20,17 @@ export interface BlogPost {
 /** Отсортированы от новых к старым — в этом же порядке выводятся в списках */
 const POSTS: BlogPost[] = [
   {
+    slug: 'podklyuchenie-domena-i-ssl',
+    published: '2026-11-09',
+    tag: 'Домены и SSL',
+    tagColor: 'rgba(45,212,191,0.35)',
+    tagBg: 'rgba(45,212,191,0.1)',
+    tagText: '#5eead4',
+    title: 'Подключение домена и SSL-сертификата: инструкция для владельца сайта',
+    excerpt:
+      'Что такое домен, DNS и SSL, как подключить их по шагам и что делать, если сайт не открывается или браузер пишет «Не защищено».'
+  },
+  {
     slug: 'indeksaciya-sajta',
     published: '2026-11-09',
     tag: 'SEO и поиск',
