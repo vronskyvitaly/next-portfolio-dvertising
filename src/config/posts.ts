@@ -20,6 +20,17 @@ export interface BlogPost {
 /** Отсортированы от новых к старым — в этом же порядке выводятся в списках */
 const POSTS: BlogPost[] = [
   {
+    slug: 'indeksaciya-sajta',
+    published: '2026-11-09',
+    tag: 'SEO и поиск',
+    tagColor: 'rgba(163,230,53,0.35)',
+    tagBg: 'rgba(163,230,53,0.1)',
+    tagText: '#bef264',
+    title: 'Индексация сайта: как проверить и ускорить в Яндексе и Google',
+    excerpt:
+      'Почему страницы не находятся в поиске, как за пять минут узнать причину и что отправить в Вебмастер и Search Console, чтобы поисковик их заметил.'
+  },
+  {
     slug: 'perenos-sayta-na-vydelennyy-server',
     published: '2026-11-06',
     tag: 'Хостинг и серверы',
