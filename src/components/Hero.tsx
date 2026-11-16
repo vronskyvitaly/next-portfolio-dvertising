@@ -1,3 +1,17 @@
+import Link from 'next/link'
+
+const services: { icon: string; label: string; href?: string }[] = [
+  { icon: '🌐', label: 'Сайты', href: '/sozdanie-saytov' },
+  { icon: '🛒', label: 'Интернет-магазины', href: '/sozdanie-saytov/internet-magazin' },
+  { icon: '⚙️', label: 'Веб-приложения', href: '/sozdanie-saytov/veb-prilozhenie' },
+  { icon: '📱', label: 'Мобильные приложения' },
+  { icon: '💬', label: 'Telegram-боты' },
+  { icon: '🤖', label: 'AI-ассистенты' },
+  { icon: '🔗', label: 'Интеграция CRM' },
+  { icon: '🎓', label: 'Обучение Битрикс24 и amoCRM' },
+  { icon: '⚡', label: 'Автоматизация бизнеса' }
+]
+
 const stats = [
   { value: '5+', label: 'лет опыта', accent: false },
   { value: '✓', label: 'работаю по договору', accent: true },
@@ -52,10 +66,8 @@ export default function Hero() {
         </p>
 
         {/* Главный заголовок */}
-        <h1 className='text-[1.6rem] sm:text-5xl md:text-6xl font-bold leading-tight sm:leading-[1.1] tracking-tight mb-3 sm:mb-4'>
-          <span className='block text-white'>
-            Ваш бизнес работает сам<span className='hidden sm:inline'> —</span>
-          </span>
+        <h1 className='text-[1.75rem] sm:text-5xl md:text-6xl font-bold leading-tight sm:leading-[1.1] tracking-tight mb-3 sm:mb-4'>
+          <span className='block text-white'>Разработка сайтов</span>
           <span
             className='block bg-clip-text text-transparent animate-shimmer'
             style={{
@@ -64,34 +76,46 @@ export default function Hero() {
               backgroundSize: '200% auto'
             }}
           >
-            вы только считаете прибыль
+            и приложений под{' '}ключ
           </span>
         </h1>
 
         {/* Подзаголовок */}
-        <p className='text-sm sm:text-lg text-gray-400 mb-6 sm:mb-8 max-w-xl mx-auto leading-relaxed'>
-          Беру на себя рутину и общение с клиентами — через сайты, ботов и ИИ,
-          которые работают круглосуточно
+        <p className='text-sm sm:text-lg text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed'>
+          Сайты, веб- и мобильные приложения. Беру задачу целиком: структура,
+          дизайн, код, запуск и поддержка. Вам не нужно собирать команду из
+          дизайнера, верстальщика и программиста.
         </p>
 
-        {/* Услуги-пилюли */}
-        <div className='flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12'>
-          {[
-            { icon: '🌐', label: 'Сайты' },
-            { icon: '⚙️', label: 'Веб-приложения' },
-            { icon: '🤖', label: 'AI-ассистенты' },
-            { icon: '💬', label: 'Telegram-боты' },
-            { icon: '⚡', label: 'Автоматизация' }
-          ].map(item => (
-            <span
-              key={item.label}
-              className='inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm text-gray-300 border border-white/10 bg-white/4'
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </span>
-          ))}
-        </div>
+        {/* Услуги: всё, чем занимаюсь. Где есть страница услуги, плашка ведёт на неё */}
+        <ul className='flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12 max-w-3xl mx-auto'>
+          {services.map(item => {
+            const content = (
+              <>
+                <span aria-hidden='true' className='mr-1.5'>
+                  {item.icon}
+                </span>
+                {item.label}
+              </>
+            )
+            const cls =
+              'inline-flex items-center px-4 py-1.5 rounded-full text-sm text-gray-300 border border-white/10 bg-white/4'
+            return (
+              <li key={item.label}>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className={`${cls} transition-colors hover:text-white hover:border-white/25`}
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  <span className={cls}>{content}</span>
+                )}
+              </li>
+            )
+          })}
+        </ul>
 
         {/* CTA */}
         <div className='flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-14'>
@@ -184,7 +208,7 @@ export default function Hero() {
       {/* Стрелка */}
       <div
         aria-hidden='true'
-        className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-float pointer-events-none'
+        className='absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1 animate-float pointer-events-none'
       >
         <span className='text-[10px] text-gray-600 tracking-widest uppercase'>
           scroll
