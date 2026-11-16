@@ -7,19 +7,13 @@ export const siteConfig: SiteLegalConfig = {
     shortName: 'Вронский В.Ф.',
     inn: '505029904347',
     ogrn: null,
-    kpp: null,
-    legalAddress:
-      '142072, город Домодедово, микрорайон Востряково, улица Донская, дом 1, квартира 251',
-    actualAddress:
-      'город Домодедово, микрорайон Востряково, улица Донская, дом 1, квартира 251'
+    kpp: null
   },
 
   contacts: {
     email: 'vronskyvitaly@gmail.com',
     privacyEmail: 'vronskyvitaly@gmail.com',
-    phone: '+7 (925) 131-31-78',
-    postalAddress:
-      '142072, город Домодедово, микрорайон Востряково, улица Донская, дом 1, квартира 251'
+    phone: '+7 (925) 131-31-78'
   },
 
   site: {
@@ -121,9 +115,9 @@ export const siteConfig: SiteLegalConfig = {
   },
 
   revisions: {
-    'privacy-policy': { effectiveDate: '2026-07-21', version: '1.0' },
-    'personal-data-consent': { effectiveDate: '2026-07-21', version: '1.0' },
+    'privacy-policy': { effectiveDate: '2026-11-16', version: '1.1' },
+    'personal-data-consent': { effectiveDate: '2026-11-16', version: '1.1' },
     'cookie-policy': { effectiveDate: '2026-07-21', version: '1.0' },
-    'terms-of-use': { effectiveDate: '2026-07-21', version: '1.0' }
+    'terms-of-use': { effectiveDate: '2026-11-16', version: '1.1' }
   }
 }
