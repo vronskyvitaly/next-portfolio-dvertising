@@ -20,6 +20,17 @@ export interface BlogPost {
 /** Отсортированы от новых к старым — в этом же порядке выводятся в списках */
 const POSTS: BlogPost[] = [
   {
+    slug: 'obuchenie-rabote-v-bitrix24-i-amocrm',
+    published: '2026-11-16',
+    tag: 'Обучение CRM',
+    tagColor: 'rgba(129,140,248,0.35)',
+    tagBg: 'rgba(129,140,248,0.1)',
+    tagText: '#a5b4fc',
+    title: 'Обучение сотрудников работе в Битрикс24 и amoCRM',
+    excerpt:
+      'CRM куплена, а менеджеры в ней не работают. Как проходит обучение команды: разбор настройки, программа по ролям, инструкции и проверка через несколько недель.'
+  },
+  {
     slug: 'trendy-avtomatizacii-biznesa-2026',
     published: '2026-11-10',
     tag: 'Автоматизация',

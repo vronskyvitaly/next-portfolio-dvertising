@@ -8,7 +8,7 @@ const services: { icon: string; label: string; href?: string }[] = [
   { icon: '💬', label: 'Telegram-боты' },
   { icon: '🤖', label: 'AI-ассистенты' },
   { icon: '🔗', label: 'Интеграция CRM' },
-  { icon: '🎓', label: 'Обучение Битрикс24 и amoCRM' },
+  { icon: '🎓', label: 'Обучение Битрикс24 и amoCRM', href: '/blog/obuchenie-rabote-v-bitrix24-i-amocrm' },
   { icon: '⚡', label: 'Автоматизация бизнеса' }
 ]
 
