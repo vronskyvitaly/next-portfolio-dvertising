@@ -20,6 +20,17 @@ export interface BlogPost {
 /** Отсортированы от новых к старым — в этом же порядке выводятся в списках */
 const POSTS: BlogPost[] = [
   {
+    slug: 'ii-dlya-sozdaniya-sajta-besplatno',
+    published: '2026-11-17',
+    tag: 'Сайт с ИИ',
+    tagColor: 'rgba(56,189,248,0.35)',
+    tagBg: 'rgba(56,189,248,0.1)',
+    tagText: '#7dd3fc',
+    title: 'ИИ для создания сайта бесплатно: как сделать сайт с Claude',
+    excerpt:
+      'Что Claude делает без подписки, сколько стоит Pro, где генерировать картинки и что придётся оплатить и настроить, чтобы сайт приводил клиентов.'
+  },
+  {
     slug: 'obuchenie-rabote-v-bitrix24-i-amocrm',
     published: '2026-11-16',
     tag: 'Обучение CRM',
