@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
 import { CookieBanner } from '@/components/legal/CookieBanner'
+import { GoogleAnalytics } from '@/components/legal/GoogleAnalytics'
 import './globals.css'
 
 const geistSans = Geist({
@@ -87,6 +88,7 @@ export default function RootLayout({
             />
           </div>
         </noscript>
+        <GoogleAnalytics />
         <CookieBanner />
       </body>
     </html>

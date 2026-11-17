@@ -32,7 +32,9 @@ export const siteConfig: SiteLegalConfig = {
 
   crossBorderTransfer: {
     enabled: true,
-    countries: ['США (Google LLC — обработка почты через Gmail при ответе на обращения)']
+    countries: [
+      'США (Google LLC: обработка почты через Gmail при ответе на обращения; Google Аналитика при согласии посетителя на аналитические cookie)'
+    ]
   },
 
   dataSubjects: [
@@ -81,6 +83,12 @@ export const siteConfig: SiteLegalConfig = {
       purpose: 'анализ посещаемости и поведения пользователей на Сайте',
       dataCategories: ['cookie-файлы', 'IP-адрес', 'данные о браузере и устройстве'],
       country: 'Российская Федерация'
+    },
+    {
+      name: 'Google LLC (сервис Google Аналитика)',
+      purpose: 'анализ посещаемости и поведения пользователей на Сайте (только при согласии на аналитические cookie)',
+      dataCategories: ['cookie-файлы', 'IP-адрес', 'данные о браузере и устройстве', 'действия на Сайте'],
+      country: 'США'
     }
   ],
 
@@ -98,6 +106,13 @@ export const siteConfig: SiteLegalConfig = {
       provider: 'Яндекс Метрика',
       purpose: 'идентификация уникальных посетителей и сбор статистики',
       lifetime: '12 месяцев'
+    },
+    {
+      name: '_ga, _ga_1LRNM663EV',
+      category: 'analytics',
+      provider: 'Google Аналитика',
+      purpose: 'различение посетителей и сбор статистики посещений (устанавливаются только после согласия)',
+      lifetime: '2 года'
     }
   ],
 
@@ -115,9 +130,9 @@ export const siteConfig: SiteLegalConfig = {
   },
 
   revisions: {
-    'privacy-policy': { effectiveDate: '2026-11-16', version: '1.1' },
-    'personal-data-consent': { effectiveDate: '2026-11-16', version: '1.1' },
-    'cookie-policy': { effectiveDate: '2026-07-21', version: '1.0' },
+    'privacy-policy': { effectiveDate: '2026-11-17', version: '1.2' },
+    'personal-data-consent': { effectiveDate: '2026-11-17', version: '1.2' },
+    'cookie-policy': { effectiveDate: '2026-11-17', version: '1.1' },
     'terms-of-use': { effectiveDate: '2026-11-16', version: '1.1' }
   }
 }
