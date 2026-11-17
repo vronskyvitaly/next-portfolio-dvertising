@@ -19,11 +19,13 @@ import {
 } from '@/lib/schema'
 import type { Metadata } from 'next'
 
+const HOME_TITLE = 'Разработка сайтов и приложений под ключ — Виталий Вронский'
+const HOME_DESCRIPTION =
+  'Создаю сайты, интернет-магазины, веб- и мобильные приложения под ключ. Telegram-боты, интеграция CRM и автоматизация. Работаю по договору по всей России, консультация бесплатно.'
+
 export const metadata: Metadata = {
-  title:
-    'Автоматизация бизнеса и внедрение ИИ — Виталий Вронский | Москва и СПб',
-  description:
-    'Автоматизирую бизнес-процессы, создаю сайты и веб-приложения, внедряю ИИ в организации. Работаю в Москве и Санкт-Петербурге. Telegram-боты и автоматизация 24/7.',
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/'
@@ -32,18 +34,14 @@ export const metadata: Metadata = {
     type: 'website',
     url: SITE_URL,
     siteName: 'Виталий Вронский',
-    title:
-      'Автоматизация бизнеса и внедрение ИИ — Виталий Вронский | Москва и СПб',
-    description:
-      'Автоматизирую бизнес-процессы, создаю сайты и внедряю ИИ в организации. Работаю в Москве и Санкт-Петербурге.',
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     locale: 'ru_RU'
   },
   twitter: {
     card: 'summary_large_image',
-    title:
-      'Автоматизация бизнеса и внедрение ИИ — Виталий Вронский | Москва и СПб',
-    description:
-      'Автоматизирую бизнес-процессы, создаю сайты и внедряю ИИ. Работаю в Москве и Санкт-Петербурге.'
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION
   },
   robots: {
     index: true,
