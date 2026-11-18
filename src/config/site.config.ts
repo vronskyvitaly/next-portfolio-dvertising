@@ -24,8 +24,8 @@ export const siteConfig: SiteLegalConfig = {
 
   rkn: {
     submitted: true,
-    registryNumber: '100349765',
-    registeredAt: '2026-07-13'
+    registryNumber: '77-26-561759',
+    registeredAt: '2026-07-15'
   },
 
   dataLocalizedInRussia: true,

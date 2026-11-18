@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
 import { CookieBanner } from '@/components/legal/CookieBanner'
-import { GoogleAnalytics } from '@/components/legal/GoogleAnalytics'
+// import { GoogleAnalytics } from '@/components/legal/GoogleAnalytics'
 import './globals.css'
 
 export { metadata, viewport } from '@/components/layout/metadata'
@@ -65,7 +65,10 @@ export default function RootLayout({
             />
           </div>
         </noscript>
-        <GoogleAnalytics />
+        {/* Google Аналитика выключена до окончания проверки уведомления РКН
+            о трансграничной передаче (№100505898, примерно до 02.12.2026).
+            Вернуть: раскомментировать строку ниже и импорт сверху. */}
+        {/* <GoogleAnalytics /> */}
         <CookieBanner />
       </body>
     </html>
