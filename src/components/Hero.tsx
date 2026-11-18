@@ -20,7 +20,7 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className='relative min-h-svh flex flex-col items-center justify-center overflow-hidden px-6 py-16 sm:py-24'>
+    <section className='relative sm:min-h-svh flex flex-col items-center justify-center overflow-hidden px-5 sm:px-6 pt-12 pb-10 sm:py-24'>
       {/* Точечная сетка */}
       <div
         aria-hidden='true'
@@ -61,13 +61,14 @@ export default function Hero() {
       {/* Контент */}
       <div className='relative z-10 w-full max-w-5xl mx-auto text-center'>
         {/* Имя */}
-        <p className='text-xs uppercase tracking-[0.25em] text-gray-500 mb-4 sm:mb-5 font-mono'>
+        <p className='text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gray-500 mb-3 sm:mb-5 font-mono'>
           Виталий Вронский — разработчик
         </p>
 
         {/* Главный заголовок */}
         <h1 className='text-[1.75rem] sm:text-5xl md:text-6xl font-bold leading-tight sm:leading-[1.1] tracking-tight mb-3 sm:mb-4'>
           <span className='block text-white'>Разработка сайтов</span>
+          {' '}
           <span
             className='block bg-clip-text text-transparent animate-shimmer'
             style={{
@@ -81,25 +82,25 @@ export default function Hero() {
         </h1>
 
         {/* Подзаголовок */}
-        <p className='text-sm sm:text-lg text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed'>
-          Сайты, веб- и мобильные приложения. Беру задачу целиком: структура,
-          дизайн, код, запуск и поддержка. Вам не нужно собирать команду из
-          дизайнера, верстальщика и программиста.
+        <p className='text-sm sm:text-lg text-gray-400 mb-5 sm:mb-8 max-w-2xl mx-auto leading-snug sm:leading-relaxed'>
+            Сайты, веб- и мобильные приложения. Беру задачу целиком: структура,
+            дизайн, код, запуск и поддержка. Вам не нужно собирать команду из
+            дизайнера, верстальщика и программиста.
         </p>
 
         {/* Услуги: всё, чем занимаюсь. Где есть страница услуги, плашка ведёт на неё */}
-        <ul className='flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12 max-w-3xl mx-auto'>
+        <ul className='flex flex-wrap justify-center gap-1 sm:gap-2 mb-6 sm:mb-12 max-w-3xl mx-auto'>
           {services.map(item => {
             const content = (
               <>
-                <span aria-hidden='true' className='mr-1.5'>
+                <span aria-hidden='true' className='hidden sm:inline sm:mr-1.5'>
                   {item.icon}
                 </span>
                 {item.label}
               </>
             )
             const cls =
-              'inline-flex items-center px-4 py-1.5 rounded-full text-sm text-gray-300 border border-white/10 bg-white/4'
+              'inline-flex items-center px-2 py-0.5 sm:px-4 sm:py-1.5 rounded-full text-[11px] leading-4 sm:leading-normal sm:text-sm text-gray-300 border border-white/10 bg-white/4'
             return (
               <li key={item.label}>
                 {item.href ? (
@@ -118,10 +119,10 @@ export default function Hero() {
         </ul>
 
         {/* CTA */}
-        <div className='flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 sm:mb-14'>
+        <div className='flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-7 sm:mb-14'>
           <a
             href='#contact'
-            className='inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-white text-base transition-all hover:scale-105'
+            className='inline-flex items-center justify-center px-5 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-white text-sm sm:text-base transition-all hover:scale-105'
             style={{
               background: 'linear-gradient(135deg, #7d2cc8, #0070f3)',
               boxShadow: '0 0 32px rgba(125,44,200,0.4)'
@@ -133,7 +134,7 @@ export default function Hero() {
             href='https://vronskyvitaly.ru'
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-sm transition-all hover:scale-105'
+            className='inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-sm transition-all hover:scale-105'
             style={{
               border: '1px solid rgba(255,255,255,0.12)',
               background: 'rgba(255,255,255,0.04)',
