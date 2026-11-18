@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Callout, Clause, Doc, List, Mail, Section, Table, Text } from "@/components/legal/primitives";
 import { operatorCredentials } from "@/lib/legal/format";
 import type { SiteLegalConfig } from "@/lib/legal/types";
+import { LEGAL_ROUTES } from "@/config/routes";
 
 export function PersonalDataConsent({ config }: { config: SiteLegalConfig }) {
   const { operator, contacts, site, purposes, processors } = config;
@@ -106,7 +107,7 @@ export function PersonalDataConsent({ config }: { config: SiteLegalConfig }) {
           Проставляя отметку в поле согласия и отправляя форму, Пользователь подтверждает, что ознакомлен
           с настоящим Согласием и{" "}
           <Link
-            href="/legal/privacy-policy"
+            href={LEGAL_ROUTES.privacyPolicy}
             className="font-medium text-neutral-900 underline underline-offset-4 hover:no-underline dark:text-neutral-100"
           >
             Политикой конфиденциальности

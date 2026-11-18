@@ -2,6 +2,7 @@ import { contacts, SITE_URL } from '@/config/contacts'
 import { siteConfig } from '@/config/site.config'
 import type { NicheType } from '@/config/niches'
 import type { ServiceFaqItem, ServiceType } from '@/config/services'
+import { ROUTES, servicePath } from '@/config/routes'
 
 /**
  * Сборка JSON-LD. Идентификаторы узлов стабильные (`#person`, `#organization`),
@@ -101,7 +102,7 @@ export function faqNode(faq: ServiceFaqItem[], id: string): Node {
 
 /** Offer с реальной ценой — коммерческий фактор, который поисковики читают */
 export function serviceOfferNode(service: ServiceType): Node {
-  const url = `${SITE_URL}/sozdanie-saytov/${service.slug}`
+  const url = `${SITE_URL}${servicePath(service.slug)}`
 
   return {
     '@type': 'Offer',
@@ -132,7 +133,7 @@ export function nicheServiceNode(
   niche: NicheType,
   baseService: ServiceType
 ): Node {
-  const url = `${SITE_URL}/sozdanie-saytov/${niche.slug}`
+  const url = `${SITE_URL}${servicePath(niche.slug)}`
 
   return {
     '@type': 'Service',
@@ -161,12 +162,12 @@ export function nicheServiceNode(
 export function serviceCatalogNode(services: ServiceType[]): Node {
   return {
     '@type': 'Service',
-    '@id': `${SITE_URL}/sozdanie-saytov#service`,
+    '@id': `${SITE_URL}${ROUTES.services}#service`,
     name: 'Создание сайтов под ключ',
     description:
       'Разработка лендингов, корпоративных сайтов, интернет-магазинов и веб-приложений под ключ. Фиксированный состав работ и сроки в договоре.',
     serviceType: 'Разработка сайтов',
-    url: `${SITE_URL}/sozdanie-saytov`,
+    url: `${SITE_URL}${ROUTES.services}`,
     provider: { '@id': PERSON_ID },
     areaServed: [
       { '@type': 'Country', name: 'Россия' },

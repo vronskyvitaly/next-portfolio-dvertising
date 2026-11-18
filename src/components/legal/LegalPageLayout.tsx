@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { formatRussianDate } from '@/lib/legal/format'
 import type { DocumentRevision } from '@/lib/legal/types'
+import { ROUTES } from '@/config/routes'
 
 export function LegalPageLayout({
   title,
@@ -17,7 +18,7 @@ export function LegalPageLayout({
       <div className='max-w-3xl mx-auto px-6 py-16 sm:py-24'>
         <nav aria-label='Хлебные крошки' className='mb-10'>
           <Link
-            href='/legal'
+            href={ROUTES.legal}
             className='inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-300 transition-colors'
           >
             <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
@@ -50,7 +51,7 @@ export function LegalPageLayout({
 
         <div className='mt-12 pt-8 border-t border-white/8'>
           <Link
-            href='/legal'
+            href={ROUTES.legal}
             className='inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-300 transition-colors'
           >
             <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>

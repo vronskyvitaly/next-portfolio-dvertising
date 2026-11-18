@@ -1,43 +1,8 @@
-import { notFound } from 'next/navigation'
-import type { Metadata } from 'next'
-import { siteConfig } from '@/config/site.config'
-import { getLegalDocument, getLegalDocuments } from '@/lib/legal/registry'
-import { LegalPageLayout } from '@/components/legal/LegalPageLayout'
+import { LegalDocumentPage } from '@/components/pages/legal/document'
 
-export function generateStaticParams() {
-  return getLegalDocuments().map(doc => ({ slug: doc.slug }))
-}
+export { generateMetadata } from '@/components/pages/legal/document/metadata'
+export { generateStaticParams } from '@/components/pages/legal/document/params'
 
-export async function generateMetadata({
-  params
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
-  const { slug } = await params
-  const doc = getLegalDocument(slug)
-  if (!doc) return {}
-  return {
-    title: doc.title,
-    description: doc.description,
-    alternates: { canonical: `/legal/${slug}` }
-  }
-}
-
-export default async function LegalDocPage({
-  params
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const doc = getLegalDocument(slug)
-  if (!doc) notFound()
-
-  const revision = siteConfig.revisions[doc.slug]
-  if (!revision) notFound()
-
-  return (
-    <LegalPageLayout title={doc.title} revision={revision}>
-      <doc.Component config={siteConfig} />
-    </LegalPageLayout>
-  )
+export default function Page({ params }: PageProps<'/legal/[slug]'>) {
+  return <LegalDocumentPage params={params} />
 }

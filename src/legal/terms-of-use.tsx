@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Clause, Definition, Doc, List, Mail, Section, Text } from "@/components/legal/primitives";
 import { operatorCredentials } from "@/lib/legal/format";
 import type { SiteLegalConfig } from "@/lib/legal/types";
+import { LEGAL_ROUTES } from "@/config/routes";
 
 export function TermsOfUse({ config }: { config: SiteLegalConfig }) {
   const { operator, contacts, site } = config;
@@ -69,7 +70,7 @@ export function TermsOfUse({ config }: { config: SiteLegalConfig }) {
         <Clause>
           Администрация обязуется обрабатывать персональные данные Пользователя в соответствии с{" "}
           <Link
-            href="/legal/privacy-policy"
+            href={LEGAL_ROUTES.privacyPolicy}
             className="font-medium text-neutral-900 underline underline-offset-4 hover:no-underline dark:text-neutral-100"
           >
             Политикой в отношении обработки персональных данных

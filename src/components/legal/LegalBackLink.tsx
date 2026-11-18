@@ -1,7 +1,8 @@
 import Link from 'next/link'
+import { ROUTES } from '@/config/routes'
 
 export function LegalBackLink({
-  href = '/',
+  href = ROUTES.home,
   label = 'На главную'
 }: {
   href?: string

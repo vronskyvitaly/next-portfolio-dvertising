@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useSyncExternalStore } from 'react'
 import { onConsentChange, readConsent, writeConsent } from '@/lib/legal/consent'
+import { LEGAL_ROUTES } from '@/config/routes'
 
 // Баннер рендерится на сервере сразу видимым: если он появляется только после
 // гидратации, Lighthouse принимает его текст за LCP и считает его поздним.
@@ -43,7 +44,7 @@ export function CookieBanner() {
             Технические cookie необходимы для работы сайта. Аналитические устанавливаются только
             с вашего согласия. Подробнее —{' '}
             <Link
-              href='/legal/cookie-policy'
+              href={LEGAL_ROUTES.cookiePolicy}
               className='text-purple-400 hover:text-purple-300 underline underline-offset-2'
             >
               Политика использования cookie

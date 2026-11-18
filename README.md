@@ -34,18 +34,42 @@
 
 ```
 src/
-├── app/
-│   ├── layout.tsx       # Корневой layout, метатеги, шрифты
-│   ├── page.tsx         # Главная страница — сборка секций
-│   └── globals.css      # Tailwind v4, CSS-переменные, keyframe-анимации
-└── components/
-    ├── Hero.tsx          # Первый экран: заголовок, CTA, статистика
-    ├── Services.tsx      # Три направления услуг
-    ├── Benefits.tsx      # Преимущества работы
-    ├── Process.tsx       # Этапы сотрудничества
-    ├── Faq.tsx           # Часто задаваемые вопросы (аккордеон)
-    ├── Contact.tsx       # Блок контактов и CTA
-    └── Footer.tsx        # Подвал
+├── app/                     # Только маршрутизация: page.tsx/layout.tsx реэкспортируют
+│   │                        # компонент страницы и её metadata
+│   ├── layout.tsx           # Корневой layout: html/body, шрифты, Метрика, GA, cookie-баннер
+│   ├── page.tsx             # / → components/pages/home
+│   ├── blog/                # /blog и /blog/<slug>
+│   ├── brief/               # /brief
+│   ├── legal/               # /legal и /legal/[slug]
+│   ├── sozdanie-saytov/     # /sozdanie-saytov и /sozdanie-saytov/[slug]
+│   ├── api/                 # API-роуты
+│   ├── sitemap.ts, robots.ts, opengraph-image.tsx
+│   └── globals.css          # Tailwind v4, CSS-переменные, keyframe-анимации
+├── components/              # Разметка
+│   ├── pages/               # Страницы целиком: <маршрут>/index.tsx, metadata.ts,
+│   │   │                    # constants.ts, ассеты (обложки .webp)
+│   │   ├── home/
+│   │   ├── blog/            # индекс блога и blog/<slug>/ для каждой статьи
+│   │   ├── brief/
+│   │   ├── legal/           # индекс, metadata.ts, document/ для [slug]
+│   │   └── sozdanie-saytov/ # хаб и service/ для [slug] (+ NichePage)
+│   ├── layout/              # Footer, metadata.ts корневого layout
+│   ├── sections/
+│   │   ├── home/            # Секции главной: Hero, Services, Benefits, Process, Blog, Faq, Contact
+│   │   └── shared/          # Общие блоки страниц услуг: ContactCta, PriceMosaic
+│   ├── ui/                  # Мелкие элементы: Breadcrumbs, BlogBreadcrumbs, FaqList
+│   ├── forms/               # LeadForm
+│   ├── seo/                 # JsonLd
+│   └── legal/               # Cookie-баннер, Google Аналитика, правовые документы
+├── common/
+│   ├── data/
+│   │   ├── pages/<маршрут>/ # Статические данные страниц (массивы, FAQ, JSON-LD) и их типы
+│   │   └── sections/        # Данные секций: home/hero.ts, home/services.ts, shared/price-mosaic.ts…
+│   └── helpers/             # Хелперы (отправка почты и др.)
+└── config/                  # Реестры и конфиги
+    ├── routes.ts            # Единый реестр внутренних путей сайта
+    ├── posts.ts             # Реестр статей блога
+    └── services.ts          # Услуги и цены
 ```
 
 ---

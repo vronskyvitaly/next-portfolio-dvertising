@@ -2,8 +2,9 @@ import { CATALOG_ROW, formatPrice, getService } from './services'
 import type { ServiceFaqItem } from './services'
 
 /**
- * FAQ главной страницы. Один источник для src/components/Faq.tsx и для
- * FAQPage-разметки в src/app/page.tsx — раньше текст дублировался и разъезжался.
+ * FAQ главной страницы. Один источник для src/components/sections/home/Faq.tsx
+ * и для FAQPage-разметки главной (src/components/pages/home/data.ts) — раньше
+ * текст дублировался и разъезжался.
  *
  * Цены собираются из реестра услуг, а не пишутся руками.
  */

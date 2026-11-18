@@ -1,3 +1,5 @@
+import { ROUTES } from '@/config/routes'
+
 /**
  * Картинка для превью в соцсетях.
  *
@@ -11,7 +13,7 @@
  */
 
 export const OG_DEFAULT = '/opengraph-image'
-export const OG_SERVICES = '/sozdanie-saytov/opengraph-image'
+export const OG_SERVICES = `${ROUTES.services}/opengraph-image`
 
 export function ogImages(
   url: string = OG_DEFAULT,

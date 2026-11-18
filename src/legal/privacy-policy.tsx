@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Clause, Definition, Doc, List, Mail, Section, Table, Text } from "@/components/legal/primitives";
 import { legalBasisLabel, operatorCredentials } from "@/lib/legal/format";
 import type { SiteLegalConfig } from "@/lib/legal/types";
+import { LEGAL_ROUTES } from "@/config/routes";
 
 export function PrivacyPolicy({ config }: { config: SiteLegalConfig }) {
   const { operator, contacts, site, rkn, purposes, processors, crossBorderTransfer } = config;
@@ -186,7 +187,7 @@ export function PrivacyPolicy({ config }: { config: SiteLegalConfig }) {
         <Clause>
           Перечень используемых cookie приведён в{" "}
           <Link
-            href="/legal/cookie-policy"
+            href={LEGAL_ROUTES.cookiePolicy}
             className="font-medium text-neutral-900 underline underline-offset-4 hover:no-underline dark:text-neutral-100"
           >
             Политике использования cookie-файлов
@@ -214,7 +215,7 @@ export function PrivacyPolicy({ config }: { config: SiteLegalConfig }) {
         <Clause>
           Отзыв согласия осуществляется в порядке, предусмотренном{" "}
           <Link
-            href="/legal/personal-data-consent"
+            href={LEGAL_ROUTES.personalDataConsent}
             className="font-medium text-neutral-900 underline underline-offset-4 hover:no-underline dark:text-neutral-100"
           >
             Согласием на обработку персональных данных

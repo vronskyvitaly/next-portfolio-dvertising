@@ -1,3 +1,5 @@
+import { blogPath } from '@/config/routes'
+
 /**
  * Реестр статей блога — единственный источник списка публикаций.
  *
@@ -213,7 +215,7 @@ export function getPosts(): BlogPost[] {
 }
 
 export function getPostHref(post: BlogPost): string {
-  return `/blog/${post.slug}`
+  return blogPath(post.slug)
 }
 
 export function formatPostDate(published: string): string {

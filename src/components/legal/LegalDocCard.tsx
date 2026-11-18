@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { DocumentRevision } from '@/lib/legal/types'
 import type { LegalDocument } from '@/lib/legal/registry'
 import { formatRussianDate } from '@/lib/legal/format'
+import { legalPath } from '@/config/routes'
 
 export function LegalDocCard({
   doc,
@@ -13,7 +14,7 @@ export function LegalDocCard({
   return (
     <li>
       <Link
-        href={`/legal/${doc.slug}`}
+        href={legalPath(doc.slug)}
         className='group flex flex-row items-center gap-3 p-5 rounded-2xl transition-all hover:border-purple-500/30 hover:bg-white/5'
         style={{
           border: '1px solid rgba(255,255,255,0.07)',

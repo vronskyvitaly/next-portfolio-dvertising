@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Callout, Clause, Doc, List, Mail, Section, Table, Text } from "@/components/legal/primitives";
 import { cookieCategoryLabel, requiresConsent } from "@/lib/legal/format";
 import type { SiteLegalConfig } from "@/lib/legal/types";
+import { LEGAL_ROUTES } from "@/config/routes";
 
 export function CookiePolicy({ config }: { config: SiteLegalConfig }) {
   const { contacts, site, cookies } = config;
@@ -26,7 +27,7 @@ export function CookiePolicy({ config }: { config: SiteLegalConfig }) {
           Пользователя. Поэтому Оператор рассматривает такие данные как персональные и обрабатывает их в
           соответствии с{" "}
           <Link
-            href="/legal/privacy-policy"
+            href={LEGAL_ROUTES.privacyPolicy}
             className="font-medium text-neutral-900 underline underline-offset-4 hover:no-underline dark:text-neutral-100"
           >
             Политикой в отношении обработки персональных данных

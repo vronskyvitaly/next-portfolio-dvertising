@@ -5,6 +5,7 @@ import { getNiches } from '@/config/niches'
 import { getServices } from '@/config/services'
 import { getLegalDocuments } from '@/lib/legal/registry'
 import { siteConfig } from '@/config/site.config'
+import { ROUTES, blogPath, legalPath, servicePath } from '@/config/routes'
 
 /**
  * Карта сайта строится из реестров, а не руками — иначе новые страницы
@@ -31,43 +32,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1
     },
     {
-      url: `${SITE_URL}/sozdanie-saytov`,
+      url: `${SITE_URL}${ROUTES.services}`,
       lastModified: SECTION_UPDATED,
       changeFrequency: 'monthly',
       priority: 0.9
     },
     ...services.map(service => ({
-      url: `${SITE_URL}/sozdanie-saytov/${service.slug}`,
+      url: `${SITE_URL}${servicePath(service.slug)}`,
       lastModified: SECTION_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.8
     })),
     ...niches.map(niche => ({
-      url: `${SITE_URL}/sozdanie-saytov/${niche.slug}`,
+      url: `${SITE_URL}${servicePath(niche.slug)}`,
       lastModified: NICHES_UPDATED,
       changeFrequency: 'monthly' as const,
       priority: 0.8
     })),
     {
-      url: `${SITE_URL}/blog`,
+      url: `${SITE_URL}${ROUTES.blog}`,
       lastModified: new Date(posts[0]?.published ?? SECTION_UPDATED),
       changeFrequency: 'weekly',
       priority: 0.7
     },
     ...posts.map(post => ({
-      url: `${SITE_URL}/blog/${post.slug}`,
+      url: `${SITE_URL}${blogPath(post.slug)}`,
       lastModified: new Date(post.published),
       changeFrequency: 'yearly' as const,
       priority: 0.6
     })),
     {
-      url: `${SITE_URL}/legal`,
+      url: `${SITE_URL}${ROUTES.legal}`,
       lastModified: SECTION_UPDATED,
       changeFrequency: 'yearly',
       priority: 0.3
     },
     ...legalDocs.map(doc => ({
-      url: `${SITE_URL}/legal/${doc.slug}`,
+      url: `${SITE_URL}${legalPath(doc.slug)}`,
       lastModified: new Date(
         siteConfig.revisions[doc.slug]?.effectiveDate ?? SECTION_UPDATED
       ),
