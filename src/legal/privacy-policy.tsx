@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Clause, Definition, Doc, List, Mail, Section, Table, Text } from "@/components/legal/primitives";
-import { legalBasisLabel, operatorCredentials } from "@/lib/legal/format";
+import { formatRussianDate, legalBasisLabel, operatorCredentials } from "@/lib/legal/format";
 import type { SiteLegalConfig } from "@/lib/legal/types";
 import { LEGAL_ROUTES } from "@/config/routes";
 
@@ -34,7 +34,7 @@ export function PrivacyPolicy({ config }: { config: SiteLegalConfig }) {
           <Clause>
             Оператор включён в реестр операторов, осуществляющих обработку персональных данных,
             за регистрационным номером {rkn.registryNumber}
-            {rkn.registeredAt ? ` (дата включения — ${rkn.registeredAt})` : ""}.
+            {rkn.registeredAt ? ` (дата включения — ${formatRussianDate(rkn.registeredAt)})` : ""}.
           </Clause>
         ) : null}
         <Clause>
